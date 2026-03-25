@@ -1,9 +1,10 @@
-const V = 'inkwell-v3';
-const FILES = ['/', '/index.html'];
+const V = 'inkwell-v4';
 
 self.addEventListener('install', e => {
   e.waitUntil(
-    caches.open(V).then(c => c.addAll(FILES)).then(() => self.skipWaiting())
+    caches.open(V)
+      .then(c => c.addAll(['./index.html', './manifest.json']))
+      .then(() => self.skipWaiting())
   );
 });
 
@@ -18,16 +19,14 @@ self.addEventListener('activate', e => {
 self.addEventListener('fetch', e => {
   if (e.request.method !== 'GET') return;
   e.respondWith(
-    caches.match(e.request).then(cached => {
-      if (cached) return cached;
-      return fetch(e.request)
+    caches.match(e.request)
+      .then(hit => hit || fetch(e.request)
         .then(res => {
-          if (!res || res.status !== 200 || res.type !== 'basic') return res;
           const clone = res.clone();
           caches.open(V).then(c => c.put(e.request, clone));
           return res;
         })
-        .catch(() => caches.match('/index.html'));
-    })
+        .catch(() => caches.match('./index.html'))
+      )
   );
 });
