@@ -21,77 +21,57 @@
   --Au:#c8914e; --AuL:#e0aa68; --AuD:#7a5830; --Aub:rgba(200,145,78,.12);
   --fg:#ede8e0; --f2:#9896a2; --f3:#585664; --f4:#383644;
   --gr:#5a9e74; --bl:#5a7e9e; --re:#9e5a5a; --pu:#7a5c9e;
-  --glass: rgba(10, 10, 12, 0.75);
+  --nb:rgba(10,10,14,.96);
 }
 [data-t=light]{
   --bg:#f4f2ee; --s1:#fff; --s2:#ede9e3; --s3:#e4dfd8; --s4:#d8d2c8;
   --ln:#e0dbd2; --ln2:#ccc6bc;
   --Au:#9e6e38; --AuD:#7a5428; --Aub:rgba(158,110,56,.1);
   --fg:#1c1a16; --f2:#5c5850; --f3:#8a8680; --f4:#aca8a2;
-  --gr:#3a7e58; --bl:#3a5e7e; --re:#7e3a3a; 
-  --glass: rgba(244, 242, 238, 0.85);
+  --gr:#3a7e58; --bl:#3a5e7e; --re:#7e3a3a; --nb:rgba(244,242,238,.96);
 }
 [data-t=sepia]{
   --bg:#1c1710; --s1:#241e14; --s2:#2c261a; --s3:#342e22; --s4:#3e362a;
   --ln:#3a3228; --ln2:#4a4238;
   --Au:#c8a060; --AuD:#8a6c2e; --Aub:rgba(200,160,96,.1);
   --fg:#f0e8d8; --f2:#b0a898; --f3:#706858; --f4:#504840;
-  --gr:#6a9e78; --bl:#6a8e9e; --re:#9e6a5a; 
-  --glass: rgba(28, 23, 16, 0.8);
+  --gr:#6a9e78; --bl:#6a8e9e; --re:#9e6a5a; --nb:rgba(28,23,16,.96);
 }
 [data-t=midnight]{
   --bg:#060812; --s1:#0c0e1c; --s2:#121628; --s3:#181e34; --s4:#20263e;
   --ln:#1e2434; --ln2:#28304a;
   --Au:#8a9ee0; --AuD:#5a6aaa; --Aub:rgba(138,158,224,.1);
   --fg:#dce0f4; --f2:#8890aa; --f3:#505872; --f4:#343854;
-  --gr:#5a9e8a; --bl:#5a7eaa; --re:#9e5a6c; 
-  --glass: rgba(6, 8, 18, 0.75);
+  --gr:#5a9e8a; --bl:#5a7eaa; --re:#9e5a6c; --nb:rgba(6,8,18,.96);
 }
 
-/* ─── RESET & STRUCTURAL FOUNDATION ─── */
+/* ─── RESET ─── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-
-html,body {
-  width:100%; height:100%; height:100dvh;
-  overflow:hidden; overscroll-behavior:none;
-  font-family:'DM Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased;
-  background:var(--bg); color:var(--fg);
-  transition:background .25s,color .25s;
-}
+html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+body{background:var(--bg);color:var(--fg);transition:background .25s,color .25s;}
 input,textarea,button,select{font-family:inherit;color:inherit;}
 button{cursor:pointer;border:none;background:none;}
 textarea{resize:none;}
 
-/* ─── APP SHELL ─── */
-#app {
-  position:fixed; inset:0;
+/* ─── SHELL ─── */
+#app{
+  position:fixed;
+  /* inset:0 does NOT work for us — we want the nav to sit at the real bottom */
+  top:0; left:0; right:0; bottom:0;
+  display:flex;
+  flex-direction:column;
   overflow:hidden;
 }
 
-/* ─── SCREEN (The Scrollable Area) ─── */
-#screen {
-  position:absolute; inset:0;
-  overflow-y:auto; overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-}
-#screen::-webkit-scrollbar{display:none;}
-
-/* The padding pushes the content out from behind the frosted glass bars */
-#page {
-  padding-top: calc(max(env(safe-area-inset-top), 16px) + 56px);
-  padding-bottom: calc(max(env(safe-area-inset-bottom), 12px) + 80px);
-  min-height: 100%;
-}
-
-/* ─── TOP BAR (Frosted Glass) ─── */
-#tb {
-  position:absolute; top:0; left:0; right:0;
-  display:flex; align-items:center; gap:8px;
-  padding:max(env(safe-area-inset-top),16px) 18px 12px;
-  background:var(--glass);
-  backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+/* ─── TOP BAR ─── */
+#tb{
+  display:flex;align-items:center;gap:8px;
+  /* Push below status bar / notch / Dynamic Island */
+  padding:max(env(safe-area-inset-top),44px) 18px 10px;
+  background:var(--bg);
   border-bottom:1px solid transparent;
-  z-index:60; transition:border-color .2s,background .25s;
+  flex-shrink:0;z-index:60;
+  transition:border-color .2s,background .25s;
 }
 #tb.lined{border-bottom-color:var(--ln);}
 #tb-title{flex:1;font-family:'Libre Baskerville',serif;font-size:20px;font-weight:400;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -102,107 +82,63 @@ textarea{resize:none;}
 .ib{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background .12s;color:var(--f2);flex-shrink:0;}
 .ib:active{background:var(--s3);}
 
-/* ─── BOTTOM NAV (Frosted Glass) ─── */
-#bnav {
-  position:absolute; bottom:0; left:0; right:0;
-  display:flex; align-items:center;
-  padding:8px 4px max(env(safe-area-inset-bottom), 12px);
-  background:var(--glass);
-  backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
-  border-top:1px solid var(--ln);
-  z-index:60; transition:background .25s,border-color .25s;
+/* ─── SCREEN ─── */
+#screen{flex:1;position:relative;overflow:hidden;}
+
+/* Scrollable page area — bottom padding must clear the nav */
+#page{
+  position:absolute;top:0;left:0;right:0;bottom:0;
+  overflow-y:auto;overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+  /* 58px = nav tab row, env() = home indicator on iPhone */
+  padding-bottom:calc(58px + env(safe-area-inset-bottom) + 16px);
 }
-.nt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;user-select:none;transition:all .2s;}
-.nt:active{transform:scale(0.94);}
+#page::-webkit-scrollbar{display:none;}
+
+/* ─── BOTTOM NAV ───
+   Key fix: use a REAL fixed footer approach — flex child, no position:fixed,
+   padding-bottom covers the home indicator on iPhones, zero on Android. */
+#bnav{
+  display:flex;
+  align-items:center;
+  /* Top padding = tab row padding. Bottom = home indicator only when present. */
+  padding:8px 4px env(safe-area-inset-bottom);
+  background:var(--nb);
+  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  border-top:1px solid var(--ln);
+  flex-shrink:0;
+  z-index:60;
+  transition:background .25s,border-color .25s;
+}
+.nt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;user-select:none;transition:opacity .1s;}
+.nt:active{opacity:.6;}
 .nt svg{display:block;transition:stroke .2s;}
 .nt-l{font-size:9.5px;font-weight:500;letter-spacing:.03em;color:var(--f3);transition:color .2s;}
 .nt.on .nt-l{color:var(--Au);}
-.nt-p{width:4px;height:4px;border-radius:50%;background:var(--Au);opacity:0;transform:translateY(4px);transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);margin-top:1px;}
-.nt.on .nt-p{opacity:1; transform:translateY(0);}
+.nt-p{width:3px;height:3px;border-radius:50%;background:var(--Au);opacity:0;transition:opacity .2s;margin-top:1px;}
+.nt.on .nt-p{opacity:1;}
 
-/* ─── PREMIUM ANIMATIONS ─── */
-.fade { animation: pageFade .3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
-@keyframes pageFade {
-  from { opacity: 0; transform: translateY(12px) scale(0.98); }
-  to { opacity: 1; transform: translateY(0) scale(1); }
-}
-.su { animation: su .35s cubic-bezier(0.32, 1, 0.24, 1) forwards; }
-@keyframes su {
-  from { transform: translateY(100%); }
-  to { transform: translateY(0); }
-}
-.sl { animation: sl .3s cubic-bezier(0.32, 1, 0.24, 1) forwards; }
-@keyframes sl {
-  from { transform: translateX(-100%); }
-  to { transform: translateX(0); }
-}
-
-/* ─── ULTIMATE LOCK SCREEN ─── */
-#lock {
-  position:fixed; inset:0; z-index:9999;
-  background: radial-gradient(circle at 50% 20%, var(--s3), var(--bg) 80%);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  padding:40px 20px max(env(safe-area-inset-bottom),40px);
-  animation: lockIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
-}
-@keyframes lockIn {
-  from { opacity: 0; backdrop-filter: blur(0px); transform: scale(1.05); }
-  to { opacity: 1; backdrop-filter: blur(20px); transform: scale(1); }
-}
-.lock-logo {
-  font-family:'Libre Baskerville',serif; font-size:56px;
-  background: linear-gradient(135deg, var(--AuL), var(--AuD));
-  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
-  margin-bottom:12px; letter-spacing:-.02em;
-  filter: drop-shadow(0 8px 16px var(--Aub));
-}
-.lock-title { font-family:'Libre Baskerville',serif; font-size:24px; color:var(--fg); margin-bottom:8px; font-weight:400; }
-.lock-sub { font-size:14px; color:var(--f3); margin-bottom:48px; letter-spacing:.02em; }
-.lock-dots { display:flex; gap:20px; margin-bottom:50px; height: 16px; align-items:center; }
-.ldot {
-  width:14px; height:14px; border-radius:50%;
-  background: rgba(128,128,128,0.1);
-  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
-  border: 1px solid rgba(255,255,255,0.05);
-  transition:all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
-}
-[data-t="light"] .ldot { background: rgba(0,0,0,0.05); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.1); }
-.ldot.filled {
-  background: var(--Au);
-  border-color: var(--AuL);
-  box-shadow: 0 0 16px var(--Aub), inset 0 1px 2px rgba(255,255,255,0.6);
-  transform: scale(1.3);
-}
-.shake { animation: shake .4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
-@keyframes shake {
-  10%, 90% { transform: translateX(-2px); }
-  20%, 80% { transform: translateX(4px); }
-  30%, 50%, 70% { transform: translateX(-6px); }
-  40%, 60% { transform: translateX(6px); }
-}
-.lock-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; width:100%; max-width:280px; }
-.lkey {
-  aspect-ratio:1; border-radius:50%;
-  background: rgba(255, 255, 255, 0.03);
-  border: 1px solid rgba(255, 255, 255, 0.04);
-  display:flex; flex-direction:column; align-items:center; justify-content:center;
-  cursor:pointer; transition:all .15s ease;
-  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
-  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
-}
-[data-t="light"] .lkey { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
-.lkey:active {
-  transform:scale(.9); background:var(--Aub); border-color:var(--Au); box-shadow: 0 0 16px var(--Aub);
-}
-.lkey.empty { background:transparent; border-color:transparent; box-shadow:none; backdrop-filter:none; cursor:default; }
-.lkey-num { font-family:'DM Sans',sans-serif; font-size:28px; font-weight:400; color:var(--fg); line-height:1; }
-.lkey-letters { font-family:'DM Sans',sans-serif; font-size:9px; color:var(--f3); letter-spacing:.15em; margin-top:3px; font-weight:500; }
-.lock-del { font-size:20px; color:var(--f2); }
-.lock-msg { font-size:13.5px; color:var(--re); margin-top:24px; min-height:20px; font-weight:500; }
-.lock-setup { font-size:13.5px; color:var(--Au); cursor:pointer; margin-top:20px; font-weight:500; }
+/* ─── ANIMATIONS ─── */
+.fade{animation:fade .22s ease;}
+@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
+.su{animation:su .26s cubic-bezier(.32,1,.64,1);}
+@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
+.sl{animation:sl .25s cubic-bezier(.32,1,.64,1);}
+@keyframes sl{from{transform:translateX(-100%)}to{transform:translateX(0)}}
 
 /* ─── DRAWER ─── */
-.dtop{ padding:max(env(safe-area-inset-top),16px) 22px 18px; border-bottom:1px solid var(--ln); }
+#dbg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;backdrop-filter:blur(6px);animation:fade .18s;}
+#drw{
+  position:fixed;top:0;left:0;bottom:0;width:min(288px,82vw);
+  background:var(--s1);border-right:1px solid var(--ln);
+  z-index:201;display:flex;flex-direction:column;
+  animation:sl .25s cubic-bezier(.32,1,.64,1);
+  transition:background .25s;
+}
+.dtop{
+  padding:max(env(safe-area-inset-top),44px) 22px 18px;
+  border-bottom:1px solid var(--ln);
+}
 .dav{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--AuD),var(--Au));display:flex;align-items:center;justify-content:center;font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;color:#1a1000;margin-bottom:12px;margin-top:6px;}
 .dname{font-family:'Libre Baskerville',serif;font-size:21px;color:var(--fg);}
 .dplan{font-size:11px;color:var(--Au);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
@@ -227,11 +163,10 @@ textarea{resize:none;}
 .panel{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;transition:background .25s;}
 .ph{
   display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:max(env(safe-area-inset-top),16px) 18px 12px;
-  background:var(--glass);
-  backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
+  padding:max(env(safe-area-inset-top),44px) 18px 12px;
   border-bottom:1px solid var(--ln);
-  flex-shrink:0; transition:background .25s; z-index:10;
+  flex-shrink:0;background:var(--bg);
+  transition:background .25s;
 }
 .ph-lft{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
 .back-btn{display:flex;align-items:center;gap:6px;color:var(--Au);font-size:13.5px;font-weight:500;cursor:pointer;flex-shrink:0;min-height:44px;}
@@ -256,6 +191,244 @@ textarea{resize:none;}
 .mdl{padding:13px 20px 5px;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);letter-spacing:.12em;text-transform:uppercase;}
 .empty{text-align:center;padding:60px 24px;color:var(--f4);font-size:14px;line-height:2;}
 .empty a{color:var(--Au);cursor:pointer;}
+
+/* ─── SPLASH SCREEN ─── */
+#splash{
+  position:fixed;inset:0;z-index:900;
+  background:#0a0a0c;
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  gap:0;
+  pointer-events:none;
+}
+#splash.hide{
+  animation:splashOut .55s cubic-bezier(.4,0,1,1) forwards;
+}
+@keyframes splashOut{
+  0%{opacity:1;transform:scale(1);}
+  60%{opacity:1;transform:scale(1.04);}
+  100%{opacity:0;transform:scale(1.08);}
+}
+.splash-mark{
+  font-family:'Libre Baskerville',serif;
+  font-size:72px;
+  color:#c8914e;
+  line-height:1;
+  animation:splashMarkIn .7s cubic-bezier(.34,1.56,.64,1) .1s both;
+  letter-spacing:-.02em;
+}
+@keyframes splashMarkIn{
+  from{opacity:0;transform:scale(.6);}
+  to{opacity:1;transform:scale(1);}
+}
+.splash-name{
+  font-family:'Libre Baskerville',serif;
+  font-size:28px;
+  font-weight:400;
+  color:#ede8e0;
+  letter-spacing:.08em;
+  margin-top:16px;
+  animation:splashNameIn .6s ease .4s both;
+}
+@keyframes splashNameIn{
+  from{opacity:0;transform:translateY(8px);}
+  to{opacity:1;transform:translateY(0);}
+}
+.splash-tagline{
+  font-size:12px;
+  color:#585664;
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin-top:6px;
+  animation:splashNameIn .6s ease .6s both;
+}
+
+/* ─── LOCK SCREEN ─── */
+#lock{
+  position:fixed;inset:0;z-index:500;
+  /* Layered background for depth */
+  background:var(--bg);
+  display:flex;flex-direction:column;
+  align-items:center;
+  /* Top section: logo + time. Bottom section: keypad */
+  padding-top:max(env(safe-area-inset-top),44px);
+  padding-bottom:max(env(safe-area-inset-bottom),24px);
+  overflow:hidden;
+}
+/* Subtle radial glow behind everything */
+#lock::before{
+  content:'';
+  position:absolute;
+  top:-20%;left:50%;
+  transform:translateX(-50%);
+  width:340px;height:340px;
+  background:radial-gradient(circle,rgba(200,145,78,.1) 0%,transparent 70%);
+  pointer-events:none;
+}
+
+/* Top area (logo + time + dots) */
+.lock-top{
+  display:flex;flex-direction:column;align-items:center;
+  flex:1;justify-content:center;
+  padding-bottom:20px;
+}
+.lock-wordmark{
+  font-family:'Libre Baskerville',serif;
+  font-size:22px;
+  font-weight:400;
+  color:var(--f3);
+  letter-spacing:.14em;
+  text-transform:uppercase;
+  margin-bottom:32px;
+}
+.lock-time{
+  font-family:'DM Mono',monospace;
+  font-size:72px;
+  font-weight:400;
+  color:var(--fg);
+  line-height:1;
+  letter-spacing:-.03em;
+}
+.lock-date{
+  font-size:15px;
+  color:var(--f2);
+  margin-top:8px;
+  letter-spacing:.04em;
+}
+.lock-label{
+  font-size:13px;
+  color:var(--f3);
+  margin-top:32px;
+  letter-spacing:.04em;
+}
+
+/* PIN dots */
+.lock-dots{
+  display:flex;gap:18px;
+  margin-top:14px;
+}
+.ldot{
+  width:12px;height:12px;
+  border-radius:50%;
+  background:transparent;
+  border:1.5px solid var(--f3);
+  transition:all .18s cubic-bezier(.34,1.56,.64,1);
+}
+.ldot.filled{
+  background:var(--Au);
+  border-color:var(--Au);
+  transform:scale(1.15);
+}
+
+/* Bottom keypad area */
+.lock-pad-wrap{
+  width:100%;
+  padding:0 32px;
+  display:flex;flex-direction:column;align-items:center;
+  gap:0;
+}
+.lock-pad{
+  display:grid;
+  grid-template-columns:repeat(3,1fr);
+  gap:14px;
+  width:100%;
+  max-width:300px;
+}
+.lkey{
+  display:flex;flex-direction:column;align-items:center;justify-content:center;
+  height:74px;
+  border-radius:18px;
+  background:var(--s2);
+  border:1px solid var(--ln);
+  cursor:pointer;
+  transition:all .12s;
+  user-select:none;
+  -webkit-tap-highlight-color:transparent;
+  position:relative;
+  overflow:hidden;
+}
+.lkey::after{
+  content:'';
+  position:absolute;inset:0;
+  background:var(--fg);
+  opacity:0;
+  border-radius:inherit;
+  transition:opacity .08s;
+}
+.lkey:active::after{opacity:.06;}
+.lkey:active{transform:scale(.95);}
+.lkey.empty{background:transparent;border-color:transparent;cursor:default;}
+.lkey.empty:active{transform:none;}
+.lkey.empty::after{display:none;}
+.lkey-num{
+  font-family:'DM Mono',monospace;
+  font-size:26px;
+  font-weight:400;
+  color:var(--fg);
+  line-height:1;
+}
+.lkey-letters{
+  font-size:9px;
+  color:var(--f3);
+  letter-spacing:.14em;
+  margin-top:3px;
+  font-weight:500;
+}
+.lock-del-btn{
+  display:flex;align-items:center;justify-content:center;
+  height:74px;
+  cursor:pointer;
+  -webkit-tap-highlight-color:transparent;
+  user-select:none;
+}
+.lock-del-btn:active{opacity:.5;}
+.lock-del-ico{
+  font-size:24px;
+  color:var(--f2);
+  /* Custom backspace using CSS — cleaner than emoji */
+}
+.lock-msg{
+  font-size:13px;
+  color:var(--re);
+  min-height:22px;
+  margin-top:14px;
+  text-align:center;
+  letter-spacing:.02em;
+  animation:none;
+}
+.lock-msg.shake{animation:shake .4s ease;}
+@keyframes shake{
+  0%,100%{transform:translateX(0);}
+  20%{transform:translateX(-8px);}
+  40%{transform:translateX(8px);}
+  60%{transform:translateX(-6px);}
+  80%{transform:translateX(6px);}
+}
+.lock-forgot{
+  font-size:13px;
+  color:var(--f3);
+  cursor:pointer;
+  padding:12px;
+  margin-top:4px;
+  letter-spacing:.02em;
+}
+.lock-forgot:active{color:var(--Au);}
+
+/* Setup PIN header */
+.lock-setup-header{
+  text-align:center;
+  margin-bottom:24px;
+}
+.lock-setup-title{
+  font-family:'Libre Baskerville',serif;
+  font-size:26px;
+  color:var(--fg);
+  margin-bottom:6px;
+}
+.lock-setup-sub{
+  font-size:13px;
+  color:var(--f3);
+  letter-spacing:.02em;
+}
 
 /* ─── HOME ─── */
 .hero{padding:20px 20px 0;}
@@ -421,11 +594,9 @@ textarea{resize:none;}
 .nc-t{font-family:'Libre Baskerville',serif;font-size:16px;font-weight:400;color:var(--fg);line-height:1.25;margin-bottom:5px;}
 .nc-b{font-size:12.5px;color:var(--f2);line-height:1.55;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;}
 .nc-d{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);margin-top:9px;}
-
-/* Pinned dynamically to clear the frosted bottom nav */
 #nfab{
   position:fixed;
-  bottom:calc(max(env(safe-area-inset-bottom), 12px) + 64px + 16px);
+  bottom:calc(58px + env(safe-area-inset-bottom) + 14px);
   right:20px;
   width:50px;height:50px;border-radius:50%;
   background:var(--Au);color:#1a1000;font-size:26px;font-weight:300;
@@ -544,12 +715,12 @@ textarea{resize:none;}
 .signout{display:block;padding:14px 20px;font-size:14px;color:var(--re);cursor:pointer;}
 .ver{padding:2px 20px 36px;font-family:'DM Mono',monospace;font-size:10px;color:var(--f4);letter-spacing:.07em;}
 
-/* ─── OVERLAYS ─── */
-#pv{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:500;display:flex;align-items:center;justify-content:center;
-  padding:max(env(safe-area-inset-top),16px) 20px max(env(safe-area-inset-bottom),16px);animation:fade .18s;}
+/* ─── PHOTO VIEWER ─── */
+#pv{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:500;display:flex;align-items:center;justify-content:center;padding:max(env(safe-area-inset-top),44px) 20px max(env(safe-area-inset-bottom),20px);animation:fade .18s;}
 #pv img{max-width:100%;max-height:100%;object-fit:contain;}
-#pv-x{position:absolute;top:max(env(safe-area-inset-top),16px);right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
+#pv-x{position:absolute;top:max(env(safe-area-inset-top),44px);right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 
+/* ─── BOTTOM SHEET ─── */
 #mbg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;backdrop-filter:blur(6px);display:flex;align-items:flex-end;animation:fade .18s;}
 .msheet{width:100%;max-height:72vh;background:var(--s1);border-radius:20px 20px 0 0;overflow:hidden;display:flex;flex-direction:column;animation:su .24s ease;}
 .msh-h{padding:14px 20px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
@@ -563,9 +734,10 @@ textarea{resize:none;}
 .msh-in{font-size:14px;font-weight:500;color:var(--fg);margin-bottom:3px;}
 .msh-id{font-size:12px;color:var(--f3);}
 
+/* ─── TOAST ─── */
 #toast{
   position:fixed;left:50%;
-  bottom:calc(max(env(safe-area-inset-bottom), 12px) + 64px + 12px);
+  bottom:calc(58px + env(safe-area-inset-bottom) + 12px);
   transform:translateX(-50%) translateY(10px);
   background:var(--s1);border:1px solid var(--ln);border-radius:12px;
   padding:11px 20px;font-size:13.5px;color:var(--fg);
@@ -574,38 +746,97 @@ textarea{resize:none;}
 }
 #toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
 
+/* ─── ONBOARDING ─── */
 #onboard{
   position:fixed;inset:0;z-index:600;
   background:var(--bg);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px; text-align:center;
+  padding:max(env(safe-area-inset-top),44px) 36px max(env(safe-area-inset-bottom),36px);
+  text-align:center;
+  animation:fade .4s ease;
 }
-.ob-logo{font-family:'Libre Baskerville',serif;font-size:52px;color:var(--Au);margin-bottom:8px;}
-.ob-name{font-family:'Libre Baskerville',serif;font-size:32px;font-weight:400;color:var(--fg);margin-bottom:8px;}
-.ob-sub{font-size:15px;color:var(--f2);line-height:1.6;margin-bottom:40px;max-width:260px;}
+#onboard::before{
+  content:'';
+  position:absolute;
+  bottom:-10%;left:50%;
+  transform:translateX(-50%);
+  width:360px;height:360px;
+  background:radial-gradient(circle,rgba(200,145,78,.07) 0%,transparent 70%);
+  pointer-events:none;
+}
+.ob-mark{
+  font-family:'Libre Baskerville',serif;
+  font-size:56px;
+  color:var(--Au);
+  line-height:1;
+  margin-bottom:10px;
+  animation:splashMarkIn .6s cubic-bezier(.34,1.56,.64,1) .1s both;
+}
+.ob-wordmark{
+  font-family:'Libre Baskerville',serif;
+  font-size:36px;
+  font-weight:400;
+  color:var(--fg);
+  letter-spacing:.04em;
+  margin-bottom:10px;
+}
+.ob-tagline{
+  font-size:12px;
+  color:var(--f3);
+  letter-spacing:.18em;
+  text-transform:uppercase;
+  margin-bottom:52px;
+}
+.ob-inp-wrap{width:100%;max-width:300px;position:relative;margin-bottom:14px;}
 .ob-inp{
-  width:100%;max-width:280px;background:var(--s2);border:1px solid var(--ln);
-  border-radius:13px;padding:14px 18px;font-size:16px;color:var(--fg);outline:none;
-  text-align:center;margin-bottom:14px;
+  width:100%;
+  background:var(--s2);
+  border:1px solid var(--ln);
+  border-radius:14px;
+  padding:16px 20px;
+  font-size:17px;
+  color:var(--fg);
+  outline:none;
+  text-align:center;
+  transition:border-color .2s;
+  letter-spacing:.02em;
 }
 .ob-inp::placeholder{color:var(--f4);}
+.ob-inp:focus{border-color:var(--Au);}
 .ob-btn{
-  width:100%;max-width:280px;padding:15px;border-radius:13px;
-  background:var(--Au);color:#1a1000;font-size:16px;font-weight:600;
-  cursor:pointer;border:none;transition:opacity .15s;margin-bottom:12px;
+  width:100%;max-width:300px;
+  padding:16px;
+  border-radius:14px;
+  background:var(--Au);
+  color:#1a1000;
+  font-size:16px;
+  font-weight:600;
+  cursor:pointer;border:none;
+  transition:opacity .15s;
+  margin-bottom:14px;
+  letter-spacing:.02em;
 }
 .ob-btn:active{opacity:.85;}
-.ob-skip{font-size:13px;color:var(--f3);cursor:pointer;padding:8px;}
+.ob-note{
+  font-size:12px;
+  color:var(--f4);
+  line-height:1.6;
+  max-width:240px;
+  letter-spacing:.02em;
+}
 </style>
 </head>
 <body>
 <input type="file" id="photo-inp" accept="image/*">
 
-<div id="app">
-  <div id="screen">
-    <div id="page" class="fade"></div>
-  </div>
+<!-- SPLASH SCREEN -->
+<div id="splash">
+  <div class="splash-mark">✦</div>
+  <div class="splash-name">Inkwell</div>
+  <div class="splash-tagline">Your private journal</div>
+</div>
 
+<div id="app">
   <div id="tb">
     <button class="ham" onclick="openDrw()">
       <div class="hl" style="width:20px"></div>
@@ -614,6 +845,10 @@ textarea{resize:none;}
     </button>
     <span id="tb-title">Inkwell</span>
     <div id="tb-right"></div>
+  </div>
+
+  <div id="screen">
+    <div id="page" class="fade"></div>
   </div>
 
   <nav id="bnav">
@@ -740,15 +975,24 @@ function showOnboard() {
   const d = document.createElement('div');
   d.id = 'onboard';
   d.innerHTML = `
-    <div class="ob-logo">✦</div>
-    <div class="ob-name">Inkwell</div>
-    <div class="ob-sub">Your private space to think, feel, and remember. Everything stays on your device.</div>
-    <input class="ob-inp" id="ob-name" placeholder="What's your name?" maxlength="30" autocomplete="off">
-    <button class="ob-btn" onclick="finishOnboard()">Get Started</button>
-    <div class="ob-skip" onclick="finishOnboard()">Skip</div>
+    <div class="ob-mark">✦</div>
+    <div class="ob-wordmark">Inkwell</div>
+    <div class="ob-tagline">Your private journal</div>
+    <div class="ob-inp-wrap">
+      <input class="ob-inp" id="ob-name" placeholder="What's your name?" maxlength="30" autocomplete="off" autocorrect="off">
+    </div>
+    <button class="ob-btn" onclick="finishOnboard()">Begin journaling</button>
+    <div class="ob-note">Everything stays on your device.<br>Private by default. Export anytime.</div>
   `;
   document.body.appendChild(d);
-  setTimeout(() => document.getElementById('ob-name')?.focus(), 300);
+  setTimeout(() => {
+    const inp = document.getElementById('ob-name');
+    if (inp) inp.focus();
+  }, 400);
+  // Allow pressing Enter to continue
+  setTimeout(() => {
+    document.getElementById('ob-name')?.addEventListener('keydown', e => { if (e.key === 'Enter') finishOnboard(); });
+  }, 450);
 }
 
 function finishOnboard() {
@@ -762,64 +1006,104 @@ function finishOnboard() {
 }
 
 // ════════════════════════════════════════════════
-//  ULTIMATE LOCK SCREEN
+//  LOCK SCREEN
 // ════════════════════════════════════════════════
 let lockInput = '';
+
+function getLockTime() {
+  const n = new Date();
+  return n.toLocaleTimeString('en-US', { hour: '2-digit', minute: '2-digit', hour12: false });
+}
+function getLockDate() {
+  return new Date().toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
+}
 
 function showLock(onSuccess) {
   const isSetup = !A.pin;
   const d = document.createElement('div');
   d.id = 'lock';
-  d.innerHTML = `
-    <div class="lock-logo">✦</div>
-    <div class="lock-title">${isSetup ? 'Set a PIN' : 'Inkwell'}</div>
-    <div class="lock-sub">${isSetup ? 'Choose a 4-digit PIN to protect your journal' : 'Enter your PIN to unlock'}</div>
-    <div class="lock-dots" id="ldots">
-      <div class="ldot" id="ld0"></div><div class="ldot" id="ld1"></div>
-      <div class="ldot" id="ld2"></div><div class="ldot" id="ld3"></div>
-    </div>
-    <div class="lock-pad">
-      ${[1,2,3,4,5,6,7,8,9,'','0','⌫'].map(k => {
-        if (k === '') return `<div class="lkey empty"></div>`;
-        if (k === '⌫') return `<div class="lkey" onclick="lockDel()"><div class="lock-del">⌫</div></div>`;
-        const letters = {2:'ABC',3:'DEF',4:'GHI',5:'JKL',6:'MNO',7:'PQRS',8:'TUV',9:'WXYZ'};
-        return `<div class="lkey" onclick="lockTap('${k}')">
-          <div class="lkey-num">${k}</div>
-          ${letters[k] ? `<div class="lkey-letters">${letters[k]}</div>` : ''}
-        </div>`;
-      }).join('')}
-    </div>
-    <div class="lock-msg" id="lock-msg"></div>
-    ${!isSetup ? `<div class="lock-setup" onclick="forgotPin()">Forgot PIN?</div>` : ''}
-  `;
-  document.body.appendChild(d);
-  lockInput = '';
   d._onSuccess = onSuccess;
   d._isSetup = isSetup;
   d._confirm = '';
-}
-
-function triggerLockError(msg) {
-  const ldots = document.getElementById('ldots');
   lockInput = '';
-  for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-  document.getElementById('lock-msg').textContent = msg;
-  
-  // Trigger physical shake animation
-  ldots.classList.remove('shake');
-  void ldots.offsetWidth; // force reflow
-  ldots.classList.add('shake');
+
+  const keyRows = [
+    [1, 2, 3],
+    [4, 5, 6],
+    [7, 8, 9],
+    [null, 0, '⌫'],
+  ];
+  const letters = { 2: 'ABC', 3: 'DEF', 4: 'GHI', 5: 'JKL', 6: 'MNO', 7: 'PQRS', 8: 'TUV', 9: 'WXYZ' };
+
+  const padHTML = keyRows.map(row => row.map(k => {
+    if (k === null) return `<div class="lkey empty"></div>`;
+    if (k === '⌫') return `<div class="lock-del-btn" onclick="lockDel()">
+      <svg width="28" height="20" viewBox="0 0 28 20" fill="none">
+        <path d="M10 2H26C27.1 2 28 2.9 28 4V16C28 17.1 27.1 18 26 18H10L2 10L10 2Z" stroke="var(--f2)" stroke-width="1.5" stroke-linejoin="round" fill="none"/>
+        <path d="M17 7L23 13M23 7L17 13" stroke="var(--f2)" stroke-width="1.5" stroke-linecap="round"/>
+      </svg>
+    </div>`;
+    return `<div class="lkey" onclick="lockTap('${k}')">
+      <div class="lkey-num">${k}</div>
+      ${letters[k] ? `<div class="lkey-letters">${letters[k]}</div>` : ''}
+    </div>`;
+  }).join('')).join('');
+
+  if (isSetup) {
+    d.innerHTML = `
+      <div class="lock-top">
+        <div class="lock-wordmark">Inkwell</div>
+        <div class="lock-setup-header">
+          <div class="lock-setup-title">Set a PIN</div>
+          <div class="lock-setup-sub">Choose a 4-digit code to protect your journal</div>
+        </div>
+        <div class="lock-label" id="lock-label">Enter PIN</div>
+        <div class="lock-dots" id="ldots">
+          <div class="ldot" id="ld0"></div><div class="ldot" id="ld1"></div>
+          <div class="ldot" id="ld2"></div><div class="ldot" id="ld3"></div>
+        </div>
+        <div class="lock-msg" id="lock-msg"></div>
+      </div>
+      <div class="lock-pad-wrap">
+        <div class="lock-pad">${padHTML}</div>
+      </div>`;
+  } else {
+    d.innerHTML = `
+      <div class="lock-top">
+        <div class="lock-wordmark">Inkwell</div>
+        <div class="lock-time" id="lock-time">${getLockTime()}</div>
+        <div class="lock-date">${getLockDate()}</div>
+        <div class="lock-label">Enter PIN</div>
+        <div class="lock-dots" id="ldots">
+          <div class="ldot" id="ld0"></div><div class="ldot" id="ld1"></div>
+          <div class="ldot" id="ld2"></div><div class="ldot" id="ld3"></div>
+        </div>
+        <div class="lock-msg" id="lock-msg"></div>
+      </div>
+      <div class="lock-pad-wrap">
+        <div class="lock-pad">${padHTML}</div>
+        <div class="lock-forgot" onclick="forgotPin()">Forgot PIN?</div>
+      </div>`;
+    // Live clock update
+    d._clockInterval = setInterval(() => {
+      const el = document.getElementById('lock-time');
+      if (el) el.textContent = getLockTime();
+      else clearInterval(d._clockInterval);
+    }, 10000);
+  }
+
+  document.body.appendChild(d);
 }
 
 function lockTap(k) {
   const d = document.getElementById('lock');
   if (!d || lockInput.length >= 4) return;
   lockInput += k;
-  
+  // Haptic feedback on supporting devices
+  if (navigator.vibrate) navigator.vibrate(8);
   for (let i = 0; i < 4; i++) {
     document.getElementById('ld' + i)?.classList.toggle('filled', i < lockInput.length);
   }
-  
   if (lockInput.length === 4) {
     setTimeout(() => {
       if (d._isSetup) {
@@ -827,48 +1111,62 @@ function lockTap(k) {
           d._confirm = lockInput;
           lockInput = '';
           for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-          document.getElementById('lock-msg').textContent = '';
-          d.querySelector('.lock-title').textContent = 'Confirm PIN';
-          d.querySelector('.lock-sub').textContent = 'Enter it again to confirm';
+          const lbl = document.getElementById('lock-label');
+          const msg = document.getElementById('lock-msg');
+          if (lbl) lbl.textContent = 'Confirm PIN';
+          if (msg) { msg.textContent = 'Enter it again to confirm'; msg.style.color = 'var(--f3)'; }
         } else if (d._confirm === lockInput) {
+          clearInterval(d._clockInterval);
           A.pin = lockInput; DB.set('pin', A.pin);
-          d.style.opacity = '0'; d.style.transform = 'scale(1.05)';
-          setTimeout(() => d.remove(), 300);
-          toast('PIN saved successfully');
+          document.getElementById('lock')?.remove();
+          toast('PIN set — your journal is now locked');
           d._onSuccess?.();
         } else {
-          d._confirm = '';
-          triggerLockError('PINs do not match');
-          d.querySelector('.lock-title').textContent = 'Set a PIN';
-          d.querySelector('.lock-sub').textContent = 'Choose a 4-digit PIN to protect your journal';
+          d._confirm = ''; lockInput = '';
+          for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
+          const lbl = document.getElementById('lock-label');
+          const msg = document.getElementById('lock-msg');
+          if (lbl) lbl.textContent = 'Enter PIN';
+          if (msg) { msg.textContent = "PINs don't match — try again"; msg.style.color = 'var(--re)'; msg.className = 'lock-msg shake'; setTimeout(() => msg && (msg.className = 'lock-msg'), 400); }
+          if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
         }
       } else {
         if (lockInput === A.pin) {
-          d.style.opacity = '0'; d.style.transform = 'scale(1.05)';
-          setTimeout(() => d.remove(), 300);
-          d._onSuccess?.();
+          clearInterval(d._clockInterval);
+          // Success animation — fade out
+          d.style.animation = 'splashOut .35s ease forwards';
+          setTimeout(() => {
+            document.getElementById('lock')?.remove();
+            d._onSuccess?.();
+          }, 320);
         } else {
-          triggerLockError('Incorrect PIN');
+          lockInput = '';
+          for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
+          const msg = document.getElementById('lock-msg');
+          if (msg) { msg.textContent = 'Incorrect PIN'; msg.className = 'lock-msg shake'; setTimeout(() => msg && (msg.className = 'lock-msg'), 400); }
+          if (navigator.vibrate) navigator.vibrate([40, 30, 40]);
         }
       }
-    }, 150); // slight delay to show the final dot filling
+    }, 80);
   }
 }
 
 function lockDel() {
   if (!lockInput.length) return;
   lockInput = lockInput.slice(0, -1);
+  if (navigator.vibrate) navigator.vibrate(4);
   for (let i = 0; i < 4; i++) {
     document.getElementById('ld' + i)?.classList.toggle('filled', i < lockInput.length);
   }
-  document.getElementById('lock-msg').textContent = '';
 }
 
 function forgotPin() {
-  if (confirm('Reset PIN? This will require your data export password or clear the PIN entirely.')) {
+  if (confirm('Reset PIN? Your journal data will be kept.')) {
+    const d = document.getElementById('lock');
+    if (d?._clockInterval) clearInterval(d._clockInterval);
     A.pin = ''; DB.set('pin', '');
     document.getElementById('lock')?.remove();
-    toast('PIN cleared');
+    toast('PIN removed');
     go('home');
   }
 }
@@ -889,22 +1187,12 @@ function go(tab) {
     ? `<button class="ib" onclick="document.querySelector('.sinp')?.focus()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--f2)" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>` : '';
-  
-  // Force reset scroll to top on tab change
-  const screen = document.getElementById('screen');
-  if (screen) screen.scrollTop = 0;
-  
   renderPage();
 }
 
 function renderPage() {
   const p = document.getElementById('page');
-  
-  // Trigger animation reflow
-  p.classList.remove('fade');
-  void p.offsetWidth;
-  p.classList.add('fade');
-  
+  p.className = 'fade';
   const fns = { home: rHome, journal: rJournal, notes: rNotes, gallery: rGallery, progress: rProgress, insights: rInsights, me: rMe };
   p.innerHTML = (fns[A.tab] || rHome)();
   document.getElementById('nfab')?.style && (document.getElementById('nfab').style.display = A.tab === 'notes' ? 'flex' : 'none');
@@ -1022,7 +1310,6 @@ function viewEntry(id) {
       </div>
     </div>
     <div class="pscroll">
-      <div style="padding-top: calc(max(env(safe-area-inset-top), 16px) + 50px)"></div>
       <div class="ed-title">${e.title || 'Untitled'}</div>
       <div class="echips">
         ${e.mood ? `<div class="ech"><div class="ecd" style="background:${e.mc}"></div>${e.mood}</div>` : ''}
@@ -1119,34 +1406,29 @@ function renderWP() {
       </div>
       <div class="ph-rgt"><button class="btn btn-p" id="sbtn" onclick="saveEntry()">${w.id ? 'Update' : 'Save'}</button></div>
     </div>
-    
+    <div class="wchips">
+      <div class="wch">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+      ${w.mood ? `<div class="wch on" id="mchip"><div class="wch-d" style="background:${w.mc}"></div>${w.mood} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span></div>` : ''}
+      <div class="wch">🔒 Private</div>
+    </div>
+    <div class="tbar">
+      <button class="tb2" onclick="iFmt('**','**')"><b>B</b></button>
+      <button class="tb2" onclick="iFmt('*','*')"><i>I</i></button>
+      <button class="tb2" onclick="iFmt('# ','')">H1</button>
+      <button class="tb2" onclick="iFmt('## ','')">H2</button>
+      <div class="tbsep"></div>
+      <button class="tb2" onclick="iFmt('\\n• ','')">•</button>
+      <button class="tb2" onclick="iFmt('> ','')">❝</button>
+      <button class="tb2" onclick="iFmt('\\n---\\n','')">—</button>
+      <div class="tbsep"></div>
+      <button class="tb2" onclick="trigCam()">📷</button>
+      <button class="tb2" onclick="trigLib()">🖼</button>
+      <button class="tb2" onclick="togRec()">⏺</button>
+      <div class="tbsep"></div>
+      <button class="tb2" onclick="showTmpls()" style="padding:0 8px;font-size:11px">Templates</button>
+      <button class="tb2" onclick="showPrompts()" style="padding:0 8px;font-size:11px">Prompts</button>
+    </div>
     <div class="pscroll" id="wscroll">
-      <div style="padding-top: calc(max(env(safe-area-inset-top), 16px) + 50px)"></div>
-      
-      <div class="wchips">
-        <div class="wch">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
-        ${w.mood ? `<div class="wch on" id="mchip"><div class="wch-d" style="background:${w.mc}"></div>${w.mood} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span></div>` : ''}
-        <div class="wch">🔒 Private</div>
-      </div>
-      
-      <div class="tbar">
-        <button class="tb2" onclick="iFmt('**','**')"><b>B</b></button>
-        <button class="tb2" onclick="iFmt('*','*')"><i>I</i></button>
-        <button class="tb2" onclick="iFmt('# ','')">H1</button>
-        <button class="tb2" onclick="iFmt('## ','')">H2</button>
-        <div class="tbsep"></div>
-        <button class="tb2" onclick="iFmt('\\n• ','')">•</button>
-        <button class="tb2" onclick="iFmt('> ','')">❝</button>
-        <button class="tb2" onclick="iFmt('\\n---\\n','')">—</button>
-        <div class="tbsep"></div>
-        <button class="tb2" onclick="trigCam()">📷</button>
-        <button class="tb2" onclick="trigLib()">🖼</button>
-        <button class="tb2" onclick="togRec()">⏺</button>
-        <div class="tbsep"></div>
-        <button class="tb2" onclick="showTmpls()" style="padding:0 8px;font-size:11px">Templates</button>
-        <button class="tb2" onclick="showPrompts()" style="padding:0 8px;font-size:11px">Prompts</button>
-      </div>
-    
       <textarea class="wt" id="wt" placeholder="Untitled entry…" rows="2">${w.title}</textarea>
       <div style="height:1px;background:var(--ln);margin:0 20px"></div>
       <textarea class="wb" id="wb" placeholder="No rules. No judgment.&#10;This space is entirely yours…" rows="12">${w.body}</textarea>
@@ -1185,7 +1467,7 @@ function renderWP() {
         <div class="msec-l" style="margin-bottom:6px">Writing Prompts</div>
         ${PROMPTS.map((p, i) => `<div class="pmt" onclick="applyP(${i})">${p}</div>`).join('')}
       </div>
-      <div style="height:40px"></div>
+      <div style="height:24px"></div>
     </div>`;
   bindWP();
 }
@@ -1360,7 +1642,6 @@ function openNote(id) {
         <button class="btn btn-p" onclick="saveNote()">Save</button>
       </div>
     </div>
-    <div style="padding-top: calc(max(env(safe-area-inset-top), 16px) + 50px)"></div>
     <div style="border-bottom:1px solid var(--ln);display:flex;align-items:stretch;padding-left:20px">
       <div id="ne-bar" style="width:3px;background:${NS.acc};flex-shrink:0;align-self:stretch"></div>
       <input id="ne-t" type="text" style="flex:1;background:transparent;border:none;outline:none;font-family:'Libre Baskerville',serif;font-size:23px;color:var(--fg);padding:13px 18px 13px 14px;line-height:1.2;min-height:52px" placeholder="Note title…" value="${NS.title}">
@@ -1538,7 +1819,7 @@ function togS(k) { A.settings[k] = !A.settings[k]; DB.set('settings', A.settings
 function chTheme(t) { setTheme(t); renderPage(); }
 function editName() { const n = prompt('Your name:', A.name); if (n?.trim()) { A.name = n.trim(); DB.set('name', A.name); renderPage(); toast('Name updated'); } }
 function setGoal() { const g = parseInt(prompt('Daily goal (words):', A.goal)); if (g > 0) { A.goal = g; DB.set('goal', g); renderPage(); toast('Goal set to ' + g + ' words'); } }
-function setupPin() { showLock(() => { renderPage(); }); document.getElementById('lock')._isSetup = true; document.getElementById('lock')._confirm = ''; }
+function setupPin() { const prev = A.pin; A.pin = ''; showLock(() => { renderPage(); }); const chk = setInterval(() => { if (!document.getElementById('lock')) { clearInterval(chk); if (!A.pin) A.pin = prev; } }, 500); }
 function removePin() { if (confirm('Remove PIN lock?')) { A.pin = ''; DB.set('pin', ''); renderPage(); toast('PIN removed'); } }
 
 function exportData() {
@@ -1620,8 +1901,8 @@ function openDrw() {
     <div class="dfoot">
       <div class="dver">Inkwell</div>
     </div>`;
-  document.getElementById('app').appendChild(bg);
-  document.getElementById('app').appendChild(d);
+  document.getElementById('screen').appendChild(bg);
+  document.getElementById('screen').appendChild(d);
 }
 function closeDrw() { document.getElementById('dbg')?.remove(); document.getElementById('drw')?.remove(); }
 function drwGo(tab) { closeDrw(); if (tab === 'write') openWrite(null); else go(tab); }
@@ -1637,21 +1918,40 @@ function toast(msg) {
 }
 
 // ════════════════════════════════════════════════
-//  INIT
+//  INIT — splash → lock → onboard → home
 // ════════════════════════════════════════════════
 setTheme(A.theme);
 
-// Show lock if PIN is set, otherwise onboard or go home
-if (A.pin) {
-  showLock(() => {
-    if (!A.name) showOnboard();
-    else go('home');
-  });
-} else if (!A.name) {
-  showOnboard();
-} else {
-  go('home');
+// Show splash, then proceed
+const splashEl = document.getElementById('splash');
+const SPLASH_MIN = 1600; // ms minimum splash time
+const splashStart = Date.now();
+
+function afterSplash() {
+  if (splashEl) {
+    splashEl.classList.add('hide');
+    setTimeout(() => splashEl?.remove(), 600);
+  }
+  if (A.pin) {
+    showLock(() => {
+      if (!A.name) showOnboard();
+      else go('home');
+    });
+  } else if (!A.name) {
+    showOnboard();
+  } else {
+    go('home');
+  }
 }
+
+// Wait for fonts + minimum splash time
+document.fonts.ready.then(() => {
+  const elapsed = Date.now() - splashStart;
+  const remaining = Math.max(0, SPLASH_MIN - elapsed);
+  setTimeout(afterSplash, remaining);
+}).catch(() => {
+  setTimeout(afterSplash, SPLASH_MIN);
+});
 
 // Service Worker
 if ('serviceWorker' in navigator) {
