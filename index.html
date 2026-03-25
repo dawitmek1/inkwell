@@ -3,112 +3,30 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-  <title>My PWA App</title>
+  <title>One-File PWA</title>
   
-  <link rel="manifest" href='data:application/manifest+json,{"name":"My PWA Starter","short_name":"PWAApp","start_url":".","display":"standalone","background_color":"#f5f5f5","theme_color":"#6200ea","icons":[{"src":"https://via.placeholder.com/192/6200ea/ffffff?text=Icon","sizes":"192x192","type":"image/png"},{"src":"https://via.placeholder.com/512/6200ea/ffffff?text=Icon","sizes":"512x512","type":"image/png"}]}'>
-  <meta name="theme-color" content="#6200ea">
+  <link rel="manifest" href='data:application/manifest+json,{"name":"Single File App","short_name":"OneFile","start_url":".","display":"standalone","background_color":"#f5f5f5","theme_color":"#000000","icons":[{"src":"https://via.placeholder.com/192/000000/ffffff?text=App","sizes":"192x192","type":"image/png"},{"src":"https://via.placeholder.com/512/000000/ffffff?text=App","sizes":"512x512","type":"image/png"}]}'>
+  <meta name="theme-color" content="#000000">
   
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
   <style>
-    /* --- CSS STYLES --- */
-    * {
-      box-sizing: border-box;
-      margin: 0;
-      padding: 0;
-      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
-    }
-
-    body {
-      background-color: #f5f5f5;
-      color: #333;
-      /* Padding prevents content from hiding behind the top and bottom bars */
-      padding-top: 56px; 
-      padding-bottom: 70px; 
-    }
-
-    /* Top Title Bar */
-    .top-bar {
-      position: fixed;
-      top: 0;
-      left: 0;
-      right: 0;
-      height: 56px;
-      background-color: #6200ea;
-      color: #ffffff;
-      display: flex;
-      align-items: center;
-      padding: 0 16px;
-      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
-      z-index: 1000;
-      padding-top: env(safe-area-inset-top); /* Notch support for modern phones */
-    }
-
-    .top-bar h1 {
-      font-size: 20px;
-      font-weight: 500;
-    }
-
-    /* Page Content Formatting */
-    .page {
-      display: none;
-      padding: 20px;
-      animation: fadeIn 0.3s ease;
-    }
-
-    .page.active {
-      display: block;
-    }
-
-    @keyframes fadeIn {
-      from { opacity: 0; transform: translateY(5px); }
-      to { opacity: 1; transform: translateY(0); }
-    }
-
-    /* Bottom Navigation Bar */
-    .bottom-nav {
-      position: fixed;
-      bottom: 0;
-      left: 0;
-      right: 0;
-      height: 65px;
-      background-color: #ffffff;
-      display: flex;
-      justify-content: space-around;
-      align-items: center;
-      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
-      padding-bottom: env(safe-area-inset-bottom);
-      z-index: 1000;
-    }
-
-    .nav-item {
-      background: none;
-      border: none;
-      outline: none;
-      color: #757575;
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-      justify-content: center;
-      cursor: pointer;
-      width: 100%;
-      height: 100%;
-      transition: color 0.2s ease;
-    }
-
-    .nav-item .material-icons {
-      font-size: 24px;
-      margin-bottom: 2px;
-    }
-
-    .nav-item .nav-label {
-      font-size: 12px;
-      font-weight: 500;
-    }
-
-    .nav-item.active {
-      color: #6200ea;
-    }
+    /* 2. All CSS Styling */
+    * { box-sizing: border-box; margin: 0; padding: 0; font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, sans-serif; }
+    body { background-color: #f5f5f5; color: #333; padding-top: 56px; padding-bottom: 70px; }
+    
+    .top-bar { position: fixed; top: 0; left: 0; right: 0; height: 56px; background-color: #000000; color: #ffffff; display: flex; align-items: center; padding: 0 16px; box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2); z-index: 1000; padding-top: env(safe-area-inset-top); }
+    .top-bar h1 { font-size: 20px; font-weight: 500; }
+    
+    .page { display: none; padding: 20px; animation: fadeIn 0.3s ease; }
+    .page.active { display: block; }
+    @keyframes fadeIn { from { opacity: 0; transform: translateY(5px); } to { opacity: 1; transform: translateY(0); } }
+    
+    .bottom-nav { position: fixed; bottom: 0; left: 0; right: 0; height: 65px; background-color: #ffffff; display: flex; justify-content: space-around; align-items: center; box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05); padding-bottom: env(safe-area-inset-bottom); z-index: 1000; }
+    .nav-item { background: none; border: none; outline: none; color: #757575; display: flex; flex-direction: column; align-items: center; justify-content: center; cursor: pointer; width: 100%; height: 100%; transition: color 0.2s ease; }
+    .nav-item .material-icons { font-size: 24px; margin-bottom: 2px; }
+    .nav-item .nav-label { font-size: 12px; font-weight: 500; }
+    .nav-item.active { color: #000000; }
   </style>
 </head>
 <body>
@@ -119,18 +37,18 @@
 
   <main id="app-content">
     <section id="home" class="page active">
-      <h2>Welcome Back</h2>
-      <p>This is your main dashboard. Content scrolls naturally between the top and bottom bars.</p>
+      <h2>Welcome</h2>
+      <p>This entire app runs from a single HTML file.</p>
     </section>
     
     <section id="search" class="page">
       <h2>Discover</h2>
-      <p>Find what you are looking for here.</p>
+      <p>Search for things here.</p>
     </section>
     
     <section id="profile" class="page">
-      <h2>Your Profile</h2>
-      <p>Manage your account settings and preferences.</p>
+      <h2>Profile</h2>
+      <p>Your settings live here.</p>
     </section>
   </main>
 
@@ -150,39 +68,45 @@
   </nav>
 
   <script>
-    /* --- JAVASCRIPT LOGIC --- */
+    // 3. Navigation Logic
     document.addEventListener('DOMContentLoaded', () => {
       const navItems = document.querySelectorAll('.nav-item');
       const pages = document.querySelectorAll('.page');
       const topBarTitle = document.getElementById('top-bar-title');
 
-      // Navigation Logic
       navItems.forEach(item => {
         item.addEventListener('click', () => {
-          // 1. Remove active state from all
           navItems.forEach(nav => nav.classList.remove('active'));
           pages.forEach(page => page.classList.remove('active'));
-
-          // 2. Add active state to clicked tab
           item.classList.add('active');
-
-          // 3. Show target page
-          const targetId = item.getAttribute('data-target');
-          document.getElementById(targetId).classList.add('active');
-
-          // 4. Update Top Bar Title based on the clicked nav label
-          const labelText = item.querySelector('.nav-label').textContent;
-          topBarTitle.textContent = labelText;
+          document.getElementById(item.getAttribute('data-target')).classList.add('active');
+          topBarTitle.textContent = item.querySelector('.nav-label').textContent;
         });
       });
 
-      // Service Worker Registration (Requires an external sw.js file to function fully)
+      // 4. The Service Worker Blob Magic
       if ('serviceWorker' in navigator) {
-        window.addEventListener('load', () => {
-          navigator.serviceWorker.register('/sw.js')
-            .then(reg => console.log('SW setup ready. Create sw.js to enable offline mode!'))
-            .catch(err => console.log('SW registration will fail until sw.js is created.', err));
-        });
+        // We write the Service Worker code as a string
+        const swCode = `
+          self.addEventListener('install', e => self.skipWaiting());
+          self.addEventListener('activate', e => self.clients.claim());
+          self.addEventListener('fetch', e => {
+            e.respondWith(
+              caches.match(e.request).then(res => res || fetch(e.request))
+            );
+          });
+        `;
+        
+        // Convert the string into a JavaScript File object (Blob) in memory
+        const blob = new Blob([swCode], { type: 'application/javascript' });
+        
+        // Create a temporary URL for the browser to read the Blob
+        const swUrl = URL.createObjectURL(blob);
+
+        // Register the in-memory Service Worker
+        navigator.serviceWorker.register(swUrl)
+          .then(reg => console.log('Single-file Service Worker registered successfully!'))
+          .catch(err => console.error('Service Worker registration failed:', err));
       }
     });
   </script>
