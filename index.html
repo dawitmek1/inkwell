@@ -85,24 +85,28 @@ textarea{resize:none;}
 /* ─── SCREEN ─── */
 #screen{flex:1;position:relative;overflow:hidden;}
 
-/* Scrollable page area — bottom padding must clear the nav */
+/* Scrollable page area — bottom padding must clear the nav exactly */
 #page{
   position:absolute;top:0;left:0;right:0;bottom:0;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
-  /* 58px = nav tab row, env() = home indicator on iPhone */
-  padding-bottom:calc(58px + env(safe-area-inset-bottom) + 16px);
+  /* 58px = tab row height, env() = home indicator (0 on Android) */
+  padding-bottom:calc(58px + env(safe-area-inset-bottom,0px) + 16px);
 }
 #page::-webkit-scrollbar{display:none;}
 
-/* ─── BOTTOM NAV ───
-   Key fix: use a REAL fixed footer approach — flex child, no position:fixed,
-   padding-bottom covers the home indicator on iPhones, zero on Android. */
+/* ─── BOTTOM NAV ─── */
 #bnav{
   display:flex;
-  align-items:center;
-  /* Top padding = tab row padding. Bottom = home indicator only when present. */
-  padding:8px 4px env(safe-area-inset-bottom);
+  /* Items sit at the TOP of the nav bar, home indicator space fills below */
+  align-items:flex-start;
+  padding-top:8px;
+  padding-left:4px;
+  padding-right:4px;
+  /* This is the critical part:
+     env() = real home indicator height (34px on iPhone, 0 on Android/browser)
+     No fallback value = true zero on devices without home indicator */
+  padding-bottom:env(safe-area-inset-bottom,0px);
   background:var(--nb);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-top:1px solid var(--ln);
@@ -596,7 +600,7 @@ textarea{resize:none;}
 .nc-d{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);margin-top:9px;}
 #nfab{
   position:fixed;
-  bottom:calc(58px + env(safe-area-inset-bottom) + 14px);
+  bottom:calc(58px + env(safe-area-inset-bottom,0px) + 14px);
   right:20px;
   width:50px;height:50px;border-radius:50%;
   background:var(--Au);color:#1a1000;font-size:26px;font-weight:300;
@@ -737,7 +741,7 @@ textarea{resize:none;}
 /* ─── TOAST ─── */
 #toast{
   position:fixed;left:50%;
-  bottom:calc(58px + env(safe-area-inset-bottom) + 12px);
+  bottom:calc(58px + env(safe-area-inset-bottom,0px) + 12px);
   transform:translateX(-50%) translateY(10px);
   background:var(--s1);border:1px solid var(--ln);border-radius:12px;
   padding:11px 20px;font-size:13.5px;color:var(--fg);
@@ -1080,6 +1084,10 @@ function showLock(onSuccess) {
         </div>
         <div class="lock-msg" id="lock-msg"></div>
       </div>
+      <div class="lock-pad-wrap">
+        <div class="lock-pad">${padHTML}</div>
+        <div class="lock-forgot" onclick="forgotPin()">Forgot PIN?</div>
+      </div>`;
     // Live clock update
     d._clockInterval = setInterval(() => {
       const el = document.getElementById('lock-time');
