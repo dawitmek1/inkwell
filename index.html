@@ -90,6 +90,8 @@ textarea{resize:none;}
   position:absolute;top:0;left:0;right:0;bottom:0;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
+  /* 58px = nav tab row, env() = home indicator on iPhone */
+  padding-bottom:calc(58px + env(safe-area-inset-bottom) + 16px);
 }
 #page::-webkit-scrollbar{display:none;}
 
