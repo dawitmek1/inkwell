@@ -1,26 +1,22 @@
 {
-  "name": "Inkwell — Private Journal",
-  "short_name": "Inkwell",
-  "description": "Your private journaling space",
-  "start_url": "./index.html",
-  "scope": "./",
+  "name": "My Custom App",
+  "short_name": "MyApp",
+  "start_url": "/index.html",
   "display": "standalone",
-  "orientation": "portrait-primary",
-  "background_color": "#0a0a0c",
-  "theme_color": "#0a0a0c",
-  "lang": "en",
+  "background_color": "#ffffff",
+  "theme_color": "#6200ea",
   "icons": [
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 512 512'%3E%3Crect width='512' height='512' rx='112' fill='%230a0a0c'/%3E%3Ctext x='256' y='350' font-size='300' text-anchor='middle' fill='%23c8914e'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E",
-      "sizes": "512x512",
-      "type": "image/svg+xml",
-      "purpose": "any"
+      "src": "https://via.placeholder.com/192/6200ea/ffffff?text=Icon",
+      "sizes": "192x192",
+      "type": "image/png",
+      "purpose": "any maskable"
     },
     {
-      "src": "data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 192 192'%3E%3Crect width='192' height='192' rx='40' fill='%230a0a0c'/%3E%3Ctext x='96' y='130' font-size='112' text-anchor='middle' fill='%23c8914e'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E",
-      "sizes": "192x192",
-      "type": "image/svg+xml",
-      "purpose": "maskable"
+      "src": "https://via.placeholder.com/512/6200ea/ffffff?text=Icon",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any maskable"
     }
   ]
 }
