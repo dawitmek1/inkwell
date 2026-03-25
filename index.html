@@ -21,68 +21,77 @@
   --Au:#c8914e; --AuL:#e0aa68; --AuD:#7a5830; --Aub:rgba(200,145,78,.12);
   --fg:#ede8e0; --f2:#9896a2; --f3:#585664; --f4:#383644;
   --gr:#5a9e74; --bl:#5a7e9e; --re:#9e5a5a; --pu:#7a5c9e;
-  --nb:rgba(10,10,14,.96);
+  --glass: rgba(10, 10, 12, 0.75);
 }
 [data-t=light]{
   --bg:#f4f2ee; --s1:#fff; --s2:#ede9e3; --s3:#e4dfd8; --s4:#d8d2c8;
   --ln:#e0dbd2; --ln2:#ccc6bc;
   --Au:#9e6e38; --AuD:#7a5428; --Aub:rgba(158,110,56,.1);
   --fg:#1c1a16; --f2:#5c5850; --f3:#8a8680; --f4:#aca8a2;
-  --gr:#3a7e58; --bl:#3a5e7e; --re:#7e3a3a; --nb:rgba(244,242,238,.96);
+  --gr:#3a7e58; --bl:#3a5e7e; --re:#7e3a3a; 
+  --glass: rgba(244, 242, 238, 0.85);
 }
 [data-t=sepia]{
   --bg:#1c1710; --s1:#241e14; --s2:#2c261a; --s3:#342e22; --s4:#3e362a;
   --ln:#3a3228; --ln2:#4a4238;
   --Au:#c8a060; --AuD:#8a6c2e; --Aub:rgba(200,160,96,.1);
   --fg:#f0e8d8; --f2:#b0a898; --f3:#706858; --f4:#504840;
-  --gr:#6a9e78; --bl:#6a8e9e; --re:#9e6a5a; --nb:rgba(28,23,16,.96);
+  --gr:#6a9e78; --bl:#6a8e9e; --re:#9e6a5a; 
+  --glass: rgba(28, 23, 16, 0.8);
 }
 [data-t=midnight]{
   --bg:#060812; --s1:#0c0e1c; --s2:#121628; --s3:#181e34; --s4:#20263e;
   --ln:#1e2434; --ln2:#28304a;
   --Au:#8a9ee0; --AuD:#5a6aaa; --Aub:rgba(138,158,224,.1);
   --fg:#dce0f4; --f2:#8890aa; --f3:#505872; --f4:#343854;
-  --gr:#5a9e8a; --bl:#5a7eaa; --re:#9e5a6c; --nb:rgba(6,8,18,.96);
+  --gr:#5a9e8a; --bl:#5a7eaa; --re:#9e5a6c; 
+  --glass: rgba(6, 8, 18, 0.75);
 }
 
-/* ─── RESET & NEW ROCK-SOLID FRAME ─── */
+/* ─── RESET & STRUCTURAL FOUNDATION ─── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
 
 html,body {
-  width:100%;
-  height:100%;
-  height:100dvh; /* Locks exactly to dynamic viewport */
-  overflow:hidden; /* Prevents the whole page from bouncing */
-  overscroll-behavior-y:none;
-  font-family:'DM Sans',system-ui,sans-serif;
-  -webkit-font-smoothing:antialiased;
-  background:var(--bg);color:var(--fg);
+  width:100%; height:100%; height:100dvh;
+  overflow:hidden; overscroll-behavior:none;
+  font-family:'DM Sans',system-ui,sans-serif; -webkit-font-smoothing:antialiased;
+  background:var(--bg); color:var(--fg);
   transition:background .25s,color .25s;
 }
-
 input,textarea,button,select{font-family:inherit;color:inherit;}
 button{cursor:pointer;border:none;background:none;}
 textarea{resize:none;}
 
-/* ─── APP SHELL (Flex Column) ─── */
+/* ─── APP SHELL ─── */
 #app {
-  position:fixed;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  width:100%;
-  height:100%;
+  position:fixed; inset:0;
+  overflow:hidden;
 }
 
-/* ─── TOP BAR (Physical Block) ─── */
+/* ─── SCREEN (The Scrollable Area) ─── */
+#screen {
+  position:absolute; inset:0;
+  overflow-y:auto; overflow-x:hidden;
+  -webkit-overflow-scrolling:touch;
+}
+#screen::-webkit-scrollbar{display:none;}
+
+/* The padding pushes the content out from behind the frosted glass bars */
+#page {
+  padding-top: calc(max(env(safe-area-inset-top), 16px) + 56px);
+  padding-bottom: calc(max(env(safe-area-inset-bottom), 12px) + 80px);
+  min-height: 100%;
+}
+
+/* ─── TOP BAR (Frosted Glass) ─── */
 #tb {
-  flex-shrink:0; /* Prevents squishing */
-  display:flex;align-items:center;gap:8px;
-  padding:max(env(safe-area-inset-top),16px) 18px 10px;
-  background:var(--bg);
+  position:absolute; top:0; left:0; right:0;
+  display:flex; align-items:center; gap:8px;
+  padding:max(env(safe-area-inset-top),16px) 18px 12px;
+  background:var(--glass);
+  backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
   border-bottom:1px solid transparent;
-  z-index:60;
-  transition:border-color .2s,background .25s;
+  z-index:60; transition:border-color .2s,background .25s;
 }
 #tb.lined{border-bottom-color:var(--ln);}
 #tb-title{flex:1;font-family:'Libre Baskerville',serif;font-size:20px;font-weight:400;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
@@ -93,63 +102,107 @@ textarea{resize:none;}
 .ib{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background .12s;color:var(--f2);flex-shrink:0;}
 .ib:active{background:var(--s3);}
 
-/* ─── SCREEN (The Only Thing That Scrolls) ─── */
-#screen {
-  flex:1 1 auto; /* Expands to fill middle */
-  min-height:0; /* Required for nested flex scrolling */
-  position:relative;
-  overflow-y:auto;
-  overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-}
-#screen::-webkit-scrollbar{display:none;}
-
-#page {
-  min-height:100%;
-  padding-bottom:24px; /* Standard spacing, nav is outside this container */
-}
-
-/* ─── BOTTOM NAV (Physical Block) ─── */
+/* ─── BOTTOM NAV (Frosted Glass) ─── */
 #bnav {
-  flex-shrink:0; /* Anchors it to bottom, prevents squishing */
-  display:flex;
-  align-items:center;
+  position:absolute; bottom:0; left:0; right:0;
+  display:flex; align-items:center;
   padding:8px 4px max(env(safe-area-inset-bottom), 12px);
-  background:var(--nb);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
+  background:var(--glass);
+  backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
   border-top:1px solid var(--ln);
-  z-index:60;
-  transition:background .25s,border-color .25s;
+  z-index:60; transition:background .25s,border-color .25s;
 }
-.nt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;user-select:none;transition:opacity .1s;}
-.nt:active{opacity:.6;}
+.nt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;user-select:none;transition:all .2s;}
+.nt:active{transform:scale(0.94);}
 .nt svg{display:block;transition:stroke .2s;}
 .nt-l{font-size:9.5px;font-weight:500;letter-spacing:.03em;color:var(--f3);transition:color .2s;}
 .nt.on .nt-l{color:var(--Au);}
-.nt-p{width:3px;height:3px;border-radius:50%;background:var(--Au);opacity:0;transition:opacity .2s;margin-top:1px;}
-.nt.on .nt-p{opacity:1;}
+.nt-p{width:4px;height:4px;border-radius:50%;background:var(--Au);opacity:0;transform:translateY(4px);transition:all .25s cubic-bezier(0.34, 1.56, 0.64, 1);margin-top:1px;}
+.nt.on .nt-p{opacity:1; transform:translateY(0);}
 
-/* ─── ANIMATIONS ─── */
-.fade{animation:fade .22s ease;}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.su{animation:su .26s cubic-bezier(.32,1,.64,1);}
-@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.sl{animation:sl .25s cubic-bezier(.32,1,.64,1);}
-@keyframes sl{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+/* ─── PREMIUM ANIMATIONS ─── */
+.fade { animation: pageFade .3s cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+@keyframes pageFade {
+  from { opacity: 0; transform: translateY(12px) scale(0.98); }
+  to { opacity: 1; transform: translateY(0) scale(1); }
+}
+.su { animation: su .35s cubic-bezier(0.32, 1, 0.24, 1) forwards; }
+@keyframes su {
+  from { transform: translateY(100%); }
+  to { transform: translateY(0); }
+}
+.sl { animation: sl .3s cubic-bezier(0.32, 1, 0.24, 1) forwards; }
+@keyframes sl {
+  from { transform: translateX(-100%); }
+  to { transform: translateX(0); }
+}
+
+/* ─── ULTIMATE LOCK SCREEN ─── */
+#lock {
+  position:fixed; inset:0; z-index:9999;
+  background: radial-gradient(circle at 50% 20%, var(--s3), var(--bg) 80%);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  padding:40px 20px max(env(safe-area-inset-bottom),40px);
+  animation: lockIn 0.5s cubic-bezier(0.2, 0.8, 0.2, 1) forwards;
+}
+@keyframes lockIn {
+  from { opacity: 0; backdrop-filter: blur(0px); transform: scale(1.05); }
+  to { opacity: 1; backdrop-filter: blur(20px); transform: scale(1); }
+}
+.lock-logo {
+  font-family:'Libre Baskerville',serif; font-size:56px;
+  background: linear-gradient(135deg, var(--AuL), var(--AuD));
+  -webkit-background-clip: text; -webkit-text-fill-color: transparent;
+  margin-bottom:12px; letter-spacing:-.02em;
+  filter: drop-shadow(0 8px 16px var(--Aub));
+}
+.lock-title { font-family:'Libre Baskerville',serif; font-size:24px; color:var(--fg); margin-bottom:8px; font-weight:400; }
+.lock-sub { font-size:14px; color:var(--f3); margin-bottom:48px; letter-spacing:.02em; }
+.lock-dots { display:flex; gap:20px; margin-bottom:50px; height: 16px; align-items:center; }
+.ldot {
+  width:14px; height:14px; border-radius:50%;
+  background: rgba(128,128,128,0.1);
+  box-shadow: inset 0 2px 4px rgba(0,0,0,0.3);
+  border: 1px solid rgba(255,255,255,0.05);
+  transition:all .3s cubic-bezier(0.34, 1.56, 0.64, 1);
+}
+[data-t="light"] .ldot { background: rgba(0,0,0,0.05); box-shadow: inset 0 2px 4px rgba(0,0,0,0.1); border-color: rgba(0,0,0,0.1); }
+.ldot.filled {
+  background: var(--Au);
+  border-color: var(--AuL);
+  box-shadow: 0 0 16px var(--Aub), inset 0 1px 2px rgba(255,255,255,0.6);
+  transform: scale(1.3);
+}
+.shake { animation: shake .4s cubic-bezier(0.36, 0.07, 0.19, 0.97) both; }
+@keyframes shake {
+  10%, 90% { transform: translateX(-2px); }
+  20%, 80% { transform: translateX(4px); }
+  30%, 50%, 70% { transform: translateX(-6px); }
+  40%, 60% { transform: translateX(6px); }
+}
+.lock-pad { display:grid; grid-template-columns:repeat(3,1fr); gap:16px; width:100%; max-width:280px; }
+.lkey {
+  aspect-ratio:1; border-radius:50%;
+  background: rgba(255, 255, 255, 0.03);
+  border: 1px solid rgba(255, 255, 255, 0.04);
+  display:flex; flex-direction:column; align-items:center; justify-content:center;
+  cursor:pointer; transition:all .15s ease;
+  backdrop-filter: blur(12px); -webkit-backdrop-filter: blur(12px);
+  box-shadow: 0 4px 12px rgba(0,0,0,0.1);
+}
+[data-t="light"] .lkey { background: rgba(0,0,0,0.02); border-color: rgba(0,0,0,0.05); box-shadow: 0 4px 12px rgba(0,0,0,0.03); }
+.lkey:active {
+  transform:scale(.9); background:var(--Aub); border-color:var(--Au); box-shadow: 0 0 16px var(--Aub);
+}
+.lkey.empty { background:transparent; border-color:transparent; box-shadow:none; backdrop-filter:none; cursor:default; }
+.lkey-num { font-family:'DM Sans',sans-serif; font-size:28px; font-weight:400; color:var(--fg); line-height:1; }
+.lkey-letters { font-family:'DM Sans',sans-serif; font-size:9px; color:var(--f3); letter-spacing:.15em; margin-top:3px; font-weight:500; }
+.lock-del { font-size:20px; color:var(--f2); }
+.lock-msg { font-size:13.5px; color:var(--re); margin-top:24px; min-height:20px; font-weight:500; }
+.lock-setup { font-size:13.5px; color:var(--Au); cursor:pointer; margin-top:20px; font-weight:500; }
 
 /* ─── DRAWER ─── */
-#dbg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;backdrop-filter:blur(6px);animation:fade .18s;}
-#drw{
-  position:fixed;top:0;left:0;bottom:0;width:min(288px,82vw);
-  background:var(--s1);border-right:1px solid var(--ln);
-  z-index:201;display:flex;flex-direction:column;
-  animation:sl .25s cubic-bezier(.32,1,.64,1);
-  transition:background .25s;
-}
-.dtop{
-  padding:max(env(safe-area-inset-top),16px) 22px 18px;
-  border-bottom:1px solid var(--ln);
-}
+.dtop{ padding:max(env(safe-area-inset-top),16px) 22px 18px; border-bottom:1px solid var(--ln); }
 .dav{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--AuD),var(--Au));display:flex;align-items:center;justify-content:center;font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;color:#1a1000;margin-bottom:12px;margin-top:6px;}
 .dname{font-family:'Libre Baskerville',serif;font-size:21px;color:var(--fg);}
 .dplan{font-size:11px;color:var(--Au);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
@@ -174,10 +227,11 @@ textarea{resize:none;}
 .panel{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;transition:background .25s;}
 .ph{
   display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:max(env(safe-area-inset-top),12px) 18px 12px;
+  padding:max(env(safe-area-inset-top),16px) 18px 12px;
+  background:var(--glass);
+  backdrop-filter:blur(24px) saturate(180%); -webkit-backdrop-filter:blur(24px) saturate(180%);
   border-bottom:1px solid var(--ln);
-  flex-shrink:0;background:var(--bg);
-  transition:background .25s;
+  flex-shrink:0; transition:background .25s; z-index:10;
 }
 .ph-lft{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
 .back-btn{display:flex;align-items:center;gap:6px;color:var(--Au);font-size:13.5px;font-weight:500;cursor:pointer;flex-shrink:0;min-height:44px;}
@@ -202,34 +256,6 @@ textarea{resize:none;}
 .mdl{padding:13px 20px 5px;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);letter-spacing:.12em;text-transform:uppercase;}
 .empty{text-align:center;padding:60px 24px;color:var(--f4);font-size:14px;line-height:2;}
 .empty a{color:var(--Au);cursor:pointer;}
-
-/* ─── LOCK SCREEN ─── */
-#lock{
-  position:fixed;inset:0;z-index:500;
-  background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px 40px max(env(safe-area-inset-bottom),40px);
-}
-.lock-logo{font-family:'Libre Baskerville',serif;font-size:48px;color:var(--Au);margin-bottom:8px;letter-spacing:-.02em;}
-.lock-sub{font-size:13px;color:var(--f3);margin-bottom:48px;letter-spacing:.04em;}
-.lock-dots{display:flex;gap:16px;margin-bottom:40px;}
-.ldot{width:14px;height:14px;border-radius:50%;background:var(--s3);border:1.5px solid var(--ln2);transition:all .15s;}
-.ldot.filled{background:var(--Au);border-color:var(--Au);}
-.lock-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:280px;}
-.lkey{
-  aspect-ratio:1;border-radius:50%;
-  background:var(--s2);border:1px solid var(--ln);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .15s;
-  font-family:'DM Sans',sans-serif;
-}
-.lkey:active{background:var(--s3);transform:scale(.94);}
-.lkey.empty{background:transparent;border-color:transparent;cursor:default;}
-.lkey-num{font-family:'DM Mono',monospace;font-size:24px;font-weight:400;color:var(--fg);line-height:1;}
-.lkey-letters{font-size:8.5px;color:var(--f3);letter-spacing:.12em;margin-top:2px;}
-.lock-del{font-size:20px;color:var(--f2);}
-.lock-msg{font-size:13px;color:var(--re);margin-top:16px;min-height:20px;}
-.lock-setup{font-size:13px;color:var(--Au);cursor:pointer;margin-top:20px;}
 
 /* ─── HOME ─── */
 .hero{padding:20px 20px 0;}
@@ -396,10 +422,10 @@ textarea{resize:none;}
 .nc-b{font-size:12.5px;color:var(--f2);line-height:1.55;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;}
 .nc-d{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);margin-top:9px;}
 
-/* Positioned relative to the window, avoiding the nav height */
+/* Pinned dynamically to clear the frosted bottom nav */
 #nfab{
   position:fixed;
-  bottom:calc(max(env(safe-area-inset-bottom), 12px) + 56px + 16px);
+  bottom:calc(max(env(safe-area-inset-bottom), 12px) + 64px + 16px);
   right:20px;
   width:50px;height:50px;border-radius:50%;
   background:var(--Au);color:#1a1000;font-size:26px;font-weight:300;
@@ -539,7 +565,7 @@ textarea{resize:none;}
 
 #toast{
   position:fixed;left:50%;
-  bottom:calc(max(env(safe-area-inset-bottom), 12px) + 56px + 12px);
+  bottom:calc(max(env(safe-area-inset-bottom), 12px) + 64px + 12px);
   transform:translateX(-50%) translateY(10px);
   background:var(--s1);border:1px solid var(--ln);border-radius:12px;
   padding:11px 20px;font-size:13.5px;color:var(--fg);
@@ -552,8 +578,7 @@ textarea{resize:none;}
   position:fixed;inset:0;z-index:600;
   background:var(--bg);
   display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px;
-  text-align:center;
+  padding:40px; text-align:center;
 }
 .ob-logo{font-family:'Libre Baskerville',serif;font-size:52px;color:var(--Au);margin-bottom:8px;}
 .ob-name{font-family:'Libre Baskerville',serif;font-size:32px;font-weight:400;color:var(--fg);margin-bottom:8px;}
@@ -577,6 +602,10 @@ textarea{resize:none;}
 <input type="file" id="photo-inp" accept="image/*">
 
 <div id="app">
+  <div id="screen">
+    <div id="page" class="fade"></div>
+  </div>
+
   <div id="tb">
     <button class="ham" onclick="openDrw()">
       <div class="hl" style="width:20px"></div>
@@ -585,10 +614,6 @@ textarea{resize:none;}
     </button>
     <span id="tb-title">Inkwell</span>
     <div id="tb-right"></div>
-  </div>
-
-  <div id="screen">
-    <div id="page" class="fade"></div>
   </div>
 
   <nav id="bnav">
@@ -737,7 +762,7 @@ function finishOnboard() {
 }
 
 // ════════════════════════════════════════════════
-//  LOCK SCREEN
+//  ULTIMATE LOCK SCREEN
 // ════════════════════════════════════════════════
 let lockInput = '';
 
@@ -747,8 +772,8 @@ function showLock(onSuccess) {
   d.id = 'lock';
   d.innerHTML = `
     <div class="lock-logo">✦</div>
-    <div style="font-family:'Libre Baskerville',serif;font-size:22px;color:var(--fg);margin-bottom:6px">${isSetup ? 'Set a PIN' : 'Inkwell'}</div>
-    <div class="lock-sub">${isSetup ? 'Choose a 4-digit PIN to protect your journal' : 'Enter your PIN'}</div>
+    <div class="lock-title">${isSetup ? 'Set a PIN' : 'Inkwell'}</div>
+    <div class="lock-sub">${isSetup ? 'Choose a 4-digit PIN to protect your journal' : 'Enter your PIN to unlock'}</div>
     <div class="lock-dots" id="ldots">
       <div class="ldot" id="ld0"></div><div class="ldot" id="ld1"></div>
       <div class="ldot" id="ld2"></div><div class="ldot" id="ld3"></div>
@@ -765,7 +790,7 @@ function showLock(onSuccess) {
       }).join('')}
     </div>
     <div class="lock-msg" id="lock-msg"></div>
-    ${!isSetup ? `<div class="lock-setup" onclick="forgotPin()">Forgot PIN</div>` : ''}
+    ${!isSetup ? `<div class="lock-setup" onclick="forgotPin()">Forgot PIN?</div>` : ''}
   `;
   document.body.appendChild(d);
   lockInput = '';
@@ -774,13 +799,27 @@ function showLock(onSuccess) {
   d._confirm = '';
 }
 
+function triggerLockError(msg) {
+  const ldots = document.getElementById('ldots');
+  lockInput = '';
+  for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
+  document.getElementById('lock-msg').textContent = msg;
+  
+  // Trigger physical shake animation
+  ldots.classList.remove('shake');
+  void ldots.offsetWidth; // force reflow
+  ldots.classList.add('shake');
+}
+
 function lockTap(k) {
   const d = document.getElementById('lock');
   if (!d || lockInput.length >= 4) return;
   lockInput += k;
+  
   for (let i = 0; i < 4; i++) {
     document.getElementById('ld' + i)?.classList.toggle('filled', i < lockInput.length);
   }
+  
   if (lockInput.length === 4) {
     setTimeout(() => {
       if (d._isSetup) {
@@ -788,30 +827,31 @@ function lockTap(k) {
           d._confirm = lockInput;
           lockInput = '';
           for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-          document.getElementById('lock-msg').textContent = 'Confirm your PIN';
+          document.getElementById('lock-msg').textContent = '';
+          d.querySelector('.lock-title').textContent = 'Confirm PIN';
           d.querySelector('.lock-sub').textContent = 'Enter it again to confirm';
         } else if (d._confirm === lockInput) {
           A.pin = lockInput; DB.set('pin', A.pin);
-          document.getElementById('lock')?.remove();
-          toast('PIN set');
+          d.style.opacity = '0'; d.style.transform = 'scale(1.05)';
+          setTimeout(() => d.remove(), 300);
+          toast('PIN saved successfully');
           d._onSuccess?.();
         } else {
-          d._confirm = ''; lockInput = '';
-          for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-          document.getElementById('lock-msg').textContent = 'PINs don\'t match — try again';
+          d._confirm = '';
+          triggerLockError('PINs do not match');
+          d.querySelector('.lock-title').textContent = 'Set a PIN';
           d.querySelector('.lock-sub').textContent = 'Choose a 4-digit PIN to protect your journal';
         }
       } else {
         if (lockInput === A.pin) {
-          document.getElementById('lock')?.remove();
+          d.style.opacity = '0'; d.style.transform = 'scale(1.05)';
+          setTimeout(() => d.remove(), 300);
           d._onSuccess?.();
         } else {
-          lockInput = '';
-          for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-          document.getElementById('lock-msg').textContent = 'Incorrect PIN — try again';
+          triggerLockError('Incorrect PIN');
         }
       }
-    }, 100);
+    }, 150); // slight delay to show the final dot filling
   }
 }
 
@@ -821,10 +861,11 @@ function lockDel() {
   for (let i = 0; i < 4; i++) {
     document.getElementById('ld' + i)?.classList.toggle('filled', i < lockInput.length);
   }
+  document.getElementById('lock-msg').textContent = '';
 }
 
 function forgotPin() {
-  if (confirm('Reset PIN? This will require your data export password or clear the PIN.')) {
+  if (confirm('Reset PIN? This will require your data export password or clear the PIN entirely.')) {
     A.pin = ''; DB.set('pin', '');
     document.getElementById('lock')?.remove();
     toast('PIN cleared');
@@ -848,12 +889,22 @@ function go(tab) {
     ? `<button class="ib" onclick="document.querySelector('.sinp')?.focus()">
         <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--f2)" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
       </button>` : '';
+  
+  // Force reset scroll to top on tab change
+  const screen = document.getElementById('screen');
+  if (screen) screen.scrollTop = 0;
+  
   renderPage();
 }
 
 function renderPage() {
   const p = document.getElementById('page');
-  p.className = 'fade';
+  
+  // Trigger animation reflow
+  p.classList.remove('fade');
+  void p.offsetWidth;
+  p.classList.add('fade');
+  
   const fns = { home: rHome, journal: rJournal, notes: rNotes, gallery: rGallery, progress: rProgress, insights: rInsights, me: rMe };
   p.innerHTML = (fns[A.tab] || rHome)();
   document.getElementById('nfab')?.style && (document.getElementById('nfab').style.display = A.tab === 'notes' ? 'flex' : 'none');
@@ -971,6 +1022,7 @@ function viewEntry(id) {
       </div>
     </div>
     <div class="pscroll">
+      <div style="padding-top: calc(max(env(safe-area-inset-top), 16px) + 50px)"></div>
       <div class="ed-title">${e.title || 'Untitled'}</div>
       <div class="echips">
         ${e.mood ? `<div class="ech"><div class="ecd" style="background:${e.mc}"></div>${e.mood}</div>` : ''}
@@ -1067,29 +1119,34 @@ function renderWP() {
       </div>
       <div class="ph-rgt"><button class="btn btn-p" id="sbtn" onclick="saveEntry()">${w.id ? 'Update' : 'Save'}</button></div>
     </div>
-    <div class="wchips">
-      <div class="wch">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
-      ${w.mood ? `<div class="wch on" id="mchip"><div class="wch-d" style="background:${w.mc}"></div>${w.mood} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span></div>` : ''}
-      <div class="wch">🔒 Private</div>
-    </div>
-    <div class="tbar">
-      <button class="tb2" onclick="iFmt('**','**')"><b>B</b></button>
-      <button class="tb2" onclick="iFmt('*','*')"><i>I</i></button>
-      <button class="tb2" onclick="iFmt('# ','')">H1</button>
-      <button class="tb2" onclick="iFmt('## ','')">H2</button>
-      <div class="tbsep"></div>
-      <button class="tb2" onclick="iFmt('\\n• ','')">•</button>
-      <button class="tb2" onclick="iFmt('> ','')">❝</button>
-      <button class="tb2" onclick="iFmt('\\n---\\n','')">—</button>
-      <div class="tbsep"></div>
-      <button class="tb2" onclick="trigCam()">📷</button>
-      <button class="tb2" onclick="trigLib()">🖼</button>
-      <button class="tb2" onclick="togRec()">⏺</button>
-      <div class="tbsep"></div>
-      <button class="tb2" onclick="showTmpls()" style="padding:0 8px;font-size:11px">Templates</button>
-      <button class="tb2" onclick="showPrompts()" style="padding:0 8px;font-size:11px">Prompts</button>
-    </div>
+    
     <div class="pscroll" id="wscroll">
+      <div style="padding-top: calc(max(env(safe-area-inset-top), 16px) + 50px)"></div>
+      
+      <div class="wchips">
+        <div class="wch">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+        ${w.mood ? `<div class="wch on" id="mchip"><div class="wch-d" style="background:${w.mc}"></div>${w.mood} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span></div>` : ''}
+        <div class="wch">🔒 Private</div>
+      </div>
+      
+      <div class="tbar">
+        <button class="tb2" onclick="iFmt('**','**')"><b>B</b></button>
+        <button class="tb2" onclick="iFmt('*','*')"><i>I</i></button>
+        <button class="tb2" onclick="iFmt('# ','')">H1</button>
+        <button class="tb2" onclick="iFmt('## ','')">H2</button>
+        <div class="tbsep"></div>
+        <button class="tb2" onclick="iFmt('\\n• ','')">•</button>
+        <button class="tb2" onclick="iFmt('> ','')">❝</button>
+        <button class="tb2" onclick="iFmt('\\n---\\n','')">—</button>
+        <div class="tbsep"></div>
+        <button class="tb2" onclick="trigCam()">📷</button>
+        <button class="tb2" onclick="trigLib()">🖼</button>
+        <button class="tb2" onclick="togRec()">⏺</button>
+        <div class="tbsep"></div>
+        <button class="tb2" onclick="showTmpls()" style="padding:0 8px;font-size:11px">Templates</button>
+        <button class="tb2" onclick="showPrompts()" style="padding:0 8px;font-size:11px">Prompts</button>
+      </div>
+    
       <textarea class="wt" id="wt" placeholder="Untitled entry…" rows="2">${w.title}</textarea>
       <div style="height:1px;background:var(--ln);margin:0 20px"></div>
       <textarea class="wb" id="wb" placeholder="No rules. No judgment.&#10;This space is entirely yours…" rows="12">${w.body}</textarea>
@@ -1128,7 +1185,7 @@ function renderWP() {
         <div class="msec-l" style="margin-bottom:6px">Writing Prompts</div>
         ${PROMPTS.map((p, i) => `<div class="pmt" onclick="applyP(${i})">${p}</div>`).join('')}
       </div>
-      <div style="height:24px"></div>
+      <div style="height:40px"></div>
     </div>`;
   bindWP();
 }
@@ -1303,6 +1360,7 @@ function openNote(id) {
         <button class="btn btn-p" onclick="saveNote()">Save</button>
       </div>
     </div>
+    <div style="padding-top: calc(max(env(safe-area-inset-top), 16px) + 50px)"></div>
     <div style="border-bottom:1px solid var(--ln);display:flex;align-items:stretch;padding-left:20px">
       <div id="ne-bar" style="width:3px;background:${NS.acc};flex-shrink:0;align-self:stretch"></div>
       <input id="ne-t" type="text" style="flex:1;background:transparent;border:none;outline:none;font-family:'Libre Baskerville',serif;font-size:23px;color:var(--fg);padding:13px 18px 13px 14px;line-height:1.2;min-height:52px" placeholder="Note title…" value="${NS.title}">
@@ -1562,8 +1620,8 @@ function openDrw() {
     <div class="dfoot">
       <div class="dver">Inkwell</div>
     </div>`;
-  document.getElementById('screen').appendChild(bg);
-  document.getElementById('screen').appendChild(d);
+  document.getElementById('app').appendChild(bg);
+  document.getElementById('app').appendChild(d);
 }
 function closeDrw() { document.getElementById('dbg')?.remove(); document.getElementById('drw')?.remove(); }
 function drwGo(tab) { closeDrw(); if (tab === 'write') openWrite(null); else go(tab); }
