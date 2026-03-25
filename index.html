@@ -1,1611 +1,190 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-<meta charset="UTF-8"/>
-<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover,user-scalable=no"/>
-<meta name="mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-capable" content="yes"/>
-<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent"/>
-<meta name="apple-mobile-web-app-title" content="Inkwell"/>
-<meta name="theme-color" content="#0a0a0c" id="tcm"/>
-<title>Inkwell Journal</title>
-<link rel="manifest" href="./manifest.json"/>
-<link rel="apple-touch-icon" href="data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 180 180'%3E%3Crect width='180' height='180' rx='38' fill='%230a0a0c'/%3E%3Ctext x='90' y='122' font-size='108' text-anchor='middle' fill='%23c8914e'%3E%E2%9C%A6%3C/text%3E%3C/svg%3E"/>
-<style>
-@import url('https://fonts.googleapis.com/css2?family=Libre+Baskerville:ital,wght@0,400;0,700;1,400&family=DM+Sans:opsz,wght@9..40,300;9..40,400;9..40,500;9..40,600&family=DM+Mono:wght@400;500&display=swap');
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
+  <title>My PWA App</title>
+  
+  <link rel="manifest" href='data:application/manifest+json,{"name":"My PWA Starter","short_name":"PWAApp","start_url":".","display":"standalone","background_color":"#f5f5f5","theme_color":"#6200ea","icons":[{"src":"https://via.placeholder.com/192/6200ea/ffffff?text=Icon","sizes":"192x192","type":"image/png"},{"src":"https://via.placeholder.com/512/6200ea/ffffff?text=Icon","sizes":"512x512","type":"image/png"}]}'>
+  <meta name="theme-color" content="#6200ea">
+  
+  <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
 
-/* ─── THEMES ─── */
-:root {
-  --bg:#0a0a0c; --s1:#111115; --s2:#18181e; --s3:#202028; --s4:#2a2a35;
-  --ln:#24242e; --ln2:#32323e;
-  --Au:#c8914e; --AuL:#e0aa68; --AuD:#7a5830; --Aub:rgba(200,145,78,.12);
-  --fg:#ede8e0; --f2:#9896a2; --f3:#585664; --f4:#383644;
-  --gr:#5a9e74; --bl:#5a7e9e; --re:#9e5a5a; --pu:#7a5c9e;
-  --nb:rgba(10,10,14,.96);
-}
-[data-t=light]{
-  --bg:#f4f2ee; --s1:#fff; --s2:#ede9e3; --s3:#e4dfd8; --s4:#d8d2c8;
-  --ln:#e0dbd2; --ln2:#ccc6bc;
-  --Au:#9e6e38; --AuD:#7a5428; --Aub:rgba(158,110,56,.1);
-  --fg:#1c1a16; --f2:#5c5850; --f3:#8a8680; --f4:#aca8a2;
-  --gr:#3a7e58; --bl:#3a5e7e; --re:#7e3a3a; --nb:rgba(244,242,238,.96);
-}
-[data-t=sepia]{
-  --bg:#1c1710; --s1:#241e14; --s2:#2c261a; --s3:#342e22; --s4:#3e362a;
-  --ln:#3a3228; --ln2:#4a4238;
-  --Au:#c8a060; --AuD:#8a6c2e; --Aub:rgba(200,160,96,.1);
-  --fg:#f0e8d8; --f2:#b0a898; --f3:#706858; --f4:#504840;
-  --gr:#6a9e78; --bl:#6a8e9e; --re:#9e6a5a; --nb:rgba(28,23,16,.96);
-}
-[data-t=midnight]{
-  --bg:#060812; --s1:#0c0e1c; --s2:#121628; --s3:#181e34; --s4:#20263e;
-  --ln:#1e2434; --ln2:#28304a;
-  --Au:#8a9ee0; --AuD:#5a6aaa; --Aub:rgba(138,158,224,.1);
-  --fg:#dce0f4; --f2:#8890aa; --f3:#505872; --f4:#343854;
-  --gr:#5a9e8a; --bl:#5a7eaa; --re:#9e5a6c; --nb:rgba(6,8,18,.96);
-}
+  <style>
+    /* --- CSS STYLES --- */
+    * {
+      box-sizing: border-box;
+      margin: 0;
+      padding: 0;
+      font-family: -apple-system, BlinkMacSystemFont, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    }
 
-/* ─── RESET ─── */
-*,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-/* Added 100dvh and overscroll-behavior to prevent browser bounce/drag */
-html,body{width:100%;height:100%;height:100dvh;overflow:hidden;overscroll-behavior:none;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
-body{background:var(--bg);color:var(--fg);transition:background .25s,color .25s;}
-input,textarea,button,select{font-family:inherit;color:inherit;}
-button{cursor:pointer;border:none;background:none;}
-textarea{resize:none;}
+    body {
+      background-color: #f5f5f5;
+      color: #333;
+      /* Padding prevents content from hiding behind the top and bottom bars */
+      padding-top: 56px; 
+      padding-bottom: 70px; 
+    }
 
-/* ─── SHELL ─── */
-#app{
-  position:fixed;
-  top:0; left:0; right:0; bottom:0;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
-}
+    /* Top Title Bar */
+    .top-bar {
+      position: fixed;
+      top: 0;
+      left: 0;
+      right: 0;
+      height: 56px;
+      background-color: #6200ea;
+      color: #ffffff;
+      display: flex;
+      align-items: center;
+      padding: 0 16px;
+      box-shadow: 0 2px 4px rgba(0, 0, 0, 0.2);
+      z-index: 1000;
+      padding-top: env(safe-area-inset-top); /* Notch support for modern phones */
+    }
 
-/* ─── TOP BAR ─── */
-#tb{
-  display:flex;align-items:center;gap:8px;
-  padding:max(env(safe-area-inset-top),12px) 18px 10px;
-  background:var(--bg);
-  border-bottom:1px solid transparent;
-  flex-shrink:0;z-index:60;
-  transition:border-color .2s,background .25s;
-}
-#tb.lined{border-bottom-color:var(--ln);}
-#tb-title{flex:1;font-family:'Libre Baskerville',serif;font-size:20px;font-weight:400;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-#tb-right{display:flex;align-items:center;gap:4px;flex-shrink:0;}
-.ham{display:flex;flex-direction:column;gap:5px;width:40px;height:40px;justify-content:center;align-items:flex-start;border-radius:10px;padding:0 10px;transition:background .12s;flex-shrink:0;}
-.ham:active{background:var(--s3);}
-.hl{height:1.5px;background:var(--f2);border-radius:99px;}
-.ib{width:40px;height:40px;border-radius:10px;display:flex;align-items:center;justify-content:center;transition:background .12s;color:var(--f2);flex-shrink:0;}
-.ib:active{background:var(--s3);}
+    .top-bar h1 {
+      font-size: 20px;
+      font-weight: 500;
+    }
 
-/* ─── SCREEN ─── */
-#screen{flex:1;position:relative;overflow:hidden;}
+    /* Page Content Formatting */
+    .page {
+      display: none;
+      padding: 20px;
+      animation: fadeIn 0.3s ease;
+    }
 
-#page{
-  position:absolute;top:0;left:0;right:0;bottom:0;
-  overflow-y:auto;overflow-x:hidden;
-  -webkit-overflow-scrolling:touch;
-  /* Increased padding to account for fixed bottom nav completely */
-  padding-bottom:calc(80px + env(safe-area-inset-bottom));
-}
-#page::-webkit-scrollbar{display:none;}
+    .page.active {
+      display: block;
+    }
 
-/* ─── BOTTOM NAV ─── */
-#bnav{
-  /* Switched to position fixed and forced min-height so it won't shrink or scroll */
-  position:fixed;
-  bottom:0;
-  left:0;
-  right:0;
-  display:flex;
-  align-items:center;
-  padding:8px 4px max(env(safe-area-inset-bottom), 12px);
-  background:var(--nb);
-  backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
-  border-top:1px solid var(--ln);
-  z-index:900;
-  transition:background .25s,border-color .25s;
-  min-height:calc(56px + env(safe-area-inset-bottom));
-}
-.nt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;user-select:none;transition:opacity .1s;}
-.nt:active{opacity:.6;}
-.nt svg{display:block;transition:stroke .2s;}
-.nt-l{font-size:9.5px;font-weight:500;letter-spacing:.03em;color:var(--f3);transition:color .2s;}
-.nt.on .nt-l{color:var(--Au);}
-.nt-p{width:3px;height:3px;border-radius:50%;background:var(--Au);opacity:0;transition:opacity .2s;margin-top:1px;}
-.nt.on .nt-p{opacity:1;}
+    @keyframes fadeIn {
+      from { opacity: 0; transform: translateY(5px); }
+      to { opacity: 1; transform: translateY(0); }
+    }
 
-/* ─── ANIMATIONS ─── */
-.fade{animation:fade .22s ease;}
-@keyframes fade{from{opacity:0;transform:translateY(6px)}to{opacity:1;transform:translateY(0)}}
-.su{animation:su .26s cubic-bezier(.32,1,.64,1);}
-@keyframes su{from{transform:translateY(100%)}to{transform:translateY(0)}}
-.sl{animation:sl .25s cubic-bezier(.32,1,.64,1);}
-@keyframes sl{from{transform:translateX(-100%)}to{transform:translateX(0)}}
+    /* Bottom Navigation Bar */
+    .bottom-nav {
+      position: fixed;
+      bottom: 0;
+      left: 0;
+      right: 0;
+      height: 65px;
+      background-color: #ffffff;
+      display: flex;
+      justify-content: space-around;
+      align-items: center;
+      box-shadow: 0 -2px 10px rgba(0, 0, 0, 0.05);
+      padding-bottom: env(safe-area-inset-bottom);
+      z-index: 1000;
+    }
 
-/* ─── DRAWER ─── */
-#dbg{position:fixed;inset:0;background:rgba(0,0,0,.55);z-index:200;backdrop-filter:blur(6px);animation:fade .18s;}
-#drw{
-  position:fixed;top:0;left:0;bottom:0;width:min(288px,82vw);
-  background:var(--s1);border-right:1px solid var(--ln);
-  z-index:201;display:flex;flex-direction:column;
-  animation:sl .25s cubic-bezier(.32,1,.64,1);
-  transition:background .25s;
-}
-.dtop{
-  padding:max(env(safe-area-inset-top),16px) 22px 18px;
-  border-bottom:1px solid var(--ln);
-}
-.dav{width:50px;height:50px;border-radius:50%;background:linear-gradient(135deg,var(--AuD),var(--Au));display:flex;align-items:center;justify-content:center;font-family:'Libre Baskerville',serif;font-size:20px;font-weight:700;color:#1a1000;margin-bottom:12px;margin-top:6px;}
-.dname{font-family:'Libre Baskerville',serif;font-size:21px;color:var(--fg);}
-.dplan{font-size:11px;color:var(--Au);font-weight:600;letter-spacing:.1em;text-transform:uppercase;margin-top:2px;}
-.dstats{display:flex;gap:18px;margin-top:12px;}
-.dsv{font-family:'DM Mono',monospace;font-size:19px;color:var(--fg);line-height:1;}
-.dsl{font-size:9.5px;color:var(--f3);margin-top:2px;letter-spacing:.06em;}
-.dnav{flex:1;overflow-y:auto;padding:10px 0;}
-.dnav::-webkit-scrollbar{display:none;}
-.di{display:flex;align-items:center;gap:13px;padding:12px 22px;cursor:pointer;transition:background .12s;}
-.di:active{background:var(--s2);}
-.di.on{background:var(--Aub);}
-.di-ico{width:18px;text-align:center;font-size:14px;color:var(--f3);}
-.di.on .di-ico{color:var(--Au);}
-.di-l{font-size:13.5px;color:var(--f2);}
-.di.on .di-l{color:var(--Au);}
-.dsep{height:1px;background:var(--ln);margin:7px 0;}
-.dfoot{padding:14px 22px;padding-bottom:max(env(safe-area-inset-bottom),16px);border-top:1px solid var(--ln);}
-.dso{font-size:13px;color:var(--re);cursor:pointer;padding:7px 0;}
-.dver{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);margin-top:6px;}
+    .nav-item {
+      background: none;
+      border: none;
+      outline: none;
+      color: #757575;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      width: 100%;
+      height: 100%;
+      transition: color 0.2s ease;
+    }
 
-/* ─── PANELS (full-screen overlays) ─── */
-.panel{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;transition:background .25s;}
-.ph{
-  display:flex;align-items:center;justify-content:space-between;gap:8px;
-  padding:max(env(safe-area-inset-top),12px) 18px 12px;
-  border-bottom:1px solid var(--ln);
-  flex-shrink:0;background:var(--bg);
-  transition:background .25s;
-}
-.ph-lft{display:flex;align-items:center;gap:10px;flex:1;min-width:0;}
-.back-btn{display:flex;align-items:center;gap:6px;color:var(--Au);font-size:13.5px;font-weight:500;cursor:pointer;flex-shrink:0;min-height:44px;}
-.ph-title{font-family:'Libre Baskerville',serif;font-size:18px;color:var(--fg);white-space:nowrap;overflow:hidden;text-overflow:ellipsis;}
-.ph-rgt{display:flex;align-items:center;gap:8px;flex-shrink:0;}
-.pscroll{flex:1;overflow-y:auto;-webkit-overflow-scrolling:touch;padding-bottom:max(env(safe-area-inset-bottom),20px);}
-.pscroll::-webkit-scrollbar{display:none;}
+    .nav-item .material-icons {
+      font-size: 24px;
+      margin-bottom: 2px;
+    }
 
-/* Buttons */
-.btn{padding:9px 18px;border-radius:9px;font-size:13px;font-weight:600;cursor:pointer;transition:all .15s;min-height:38px;}
-.btn-p{background:var(--Au);color:#1a1000;}
-.btn-p:active{opacity:.85;}
-.btn-p.ok{background:var(--gr);}
-.btn-g{background:transparent;color:var(--f2);border:1px solid var(--ln);}
-.btn-d{background:transparent;color:var(--re);border:1px solid rgba(158,90,90,.3);}
+    .nav-item .nav-label {
+      font-size: 12px;
+      font-weight: 500;
+    }
 
-/* ─── LAYOUT UTILS ─── */
-.blk{background:var(--s1);border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);margin-bottom:2px;transition:background .25s;}
-.sh{display:flex;align-items:center;justify-content:space-between;padding:16px 20px 6px;}
-.sl2{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--f3);}
-.slink{font-size:12px;color:var(--Au);font-weight:500;cursor:pointer;}
-.mdl{padding:13px 20px 5px;font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);letter-spacing:.12em;text-transform:uppercase;}
-.empty{text-align:center;padding:60px 24px;color:var(--f4);font-size:14px;line-height:2;}
-.empty a{color:var(--Au);cursor:pointer;}
-
-/* ─── LOCK SCREEN ─── */
-#lock{
-  position:fixed;inset:0;z-index:500;
-  background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px 40px max(env(safe-area-inset-bottom),40px);
-}
-.lock-logo{font-family:'Libre Baskerville',serif;font-size:48px;color:var(--Au);margin-bottom:8px;letter-spacing:-.02em;}
-.lock-sub{font-size:13px;color:var(--f3);margin-bottom:48px;letter-spacing:.04em;}
-.lock-dots{display:flex;gap:16px;margin-bottom:40px;}
-.ldot{width:14px;height:14px;border-radius:50%;background:var(--s3);border:1.5px solid var(--ln2);transition:all .15s;}
-.ldot.filled{background:var(--Au);border-color:var(--Au);}
-.lock-pad{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;width:100%;max-width:280px;}
-.lkey{
-  aspect-ratio:1;border-radius:50%;
-  background:var(--s2);border:1px solid var(--ln);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  cursor:pointer;transition:all .15s;
-  font-family:'DM Sans',sans-serif;
-}
-.lkey:active{background:var(--s3);transform:scale(.94);}
-.lkey.empty{background:transparent;border-color:transparent;cursor:default;}
-.lkey-num{font-family:'DM Mono',monospace;font-size:24px;font-weight:400;color:var(--fg);line-height:1;}
-.lkey-letters{font-size:8.5px;color:var(--f3);letter-spacing:.12em;margin-top:2px;}
-.lock-del{font-size:20px;color:var(--f2);}
-.lock-msg{font-size:13px;color:var(--re);margin-top:16px;min-height:20px;}
-.lock-setup{font-size:13px;color:var(--Au);cursor:pointer;margin-top:20px;}
-
-/* ─── HOME ─── */
-.hero{padding:20px 20px 0;}
-.hero-date{font-size:11px;color:var(--f3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:7px;}
-.hero-name{font-family:'Libre Baskerville',serif;font-size:33px;font-weight:400;color:var(--fg);line-height:1.1;letter-spacing:-.01em;}
-.hero-name em{font-style:italic;color:var(--Au);}
-.scards{display:flex;gap:8px;padding:14px 20px 0;}
-.sc{flex:1;background:var(--s1);border:1px solid var(--ln);border-radius:13px;padding:12px 8px;text-align:center;position:relative;overflow:hidden;transition:background .25s;}
-.sc::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;}
-.sc.a::before{background:linear-gradient(90deg,var(--Au),transparent);}
-.sc.b::before{background:linear-gradient(90deg,var(--gr),transparent);}
-.sc.c::before{background:linear-gradient(90deg,var(--bl),transparent);}
-.sc.d::before{background:linear-gradient(90deg,var(--pu),transparent);}
-.scv{font-family:'DM Mono',monospace;font-size:21px;font-weight:500;line-height:1;}
-.sc.a .scv{color:var(--Au);}.sc.b .scv{color:var(--gr);}.sc.c .scv{color:var(--bl);}.sc.d .scv{color:var(--pu);}
-.scl{font-size:9px;color:var(--f3);margin-top:4px;letter-spacing:.08em;text-transform:uppercase;}
-.act-grid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 20px;}
-.ag{aspect-ratio:1;border-radius:7px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:8.5px;color:var(--f4);}
-.ag.w{background:var(--Aub);color:var(--Au);}
-.ag.td{background:var(--Au);color:#1a1000;font-weight:700;}
-.qcard{margin:14px 20px 0;padding:14px 0;border-top:1px solid var(--ln);border-bottom:1px solid var(--ln);}
-.qt{font-family:'Libre Baskerville',serif;font-size:15px;font-style:italic;color:var(--f2);line-height:1.65;}
-.qa{font-size:10px;color:var(--f3);margin-top:7px;letter-spacing:.08em;}
-.otd{margin:14px 20px 0;background:var(--s1);border:1px solid var(--ln);border-left:3px solid var(--Au);border-radius:0 13px 13px 0;padding:14px 16px;cursor:pointer;transition:background .12s;}
-.otd:active{background:var(--s2);}
-.otd-e{font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--Au);margin-bottom:5px;}
-.otd-t{font-family:'Libre Baskerville',serif;font-size:16.5px;color:var(--fg);line-height:1.3;margin-bottom:4px;}
-.otd-p{font-size:12.5px;color:var(--f2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.otd-m{font-family:'DM Mono',monospace;font-size:10px;color:var(--f3);margin-top:7px;}
-
-/* ─── ENTRY ITEM ─── */
-.ei{padding:14px 20px;border-bottom:1px solid var(--ln);cursor:pointer;transition:background .12s;}
-.ei:last-child{border-bottom:none;}
-.ei:active{background:var(--s2);}
-.ei-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:5px;}
-.ei-l{display:flex;align-items:center;gap:7px;}
-.eidot{width:6px;height:6px;border-radius:50%;flex-shrink:0;}
-.eidate{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--f3);letter-spacing:.04em;}
-.eimeta{font-family:'DM Mono',monospace;font-size:10px;color:var(--f4);}
-.eititle{font-family:'Libre Baskerville',serif;font-size:18px;font-weight:400;color:var(--fg);line-height:1.2;margin-bottom:4px;}
-.eiprev{font-size:13px;color:var(--f2);line-height:1.5;display:-webkit-box;-webkit-line-clamp:2;-webkit-box-orient:vertical;overflow:hidden;}
-.eifoot{display:flex;align-items:center;gap:7px;margin-top:8px;flex-wrap:wrap;}
-.mbadge{font-size:11px;padding-left:7px;border-left:2px solid;}
-.chip{padding:2px 8px;border-radius:5px;background:var(--s3);font-size:10px;color:var(--f3);}
-
-/* ─── ENTRY DETAIL ─── */
-.ed-title{font-family:'Libre Baskerville',serif;font-size:27px;font-weight:400;color:var(--fg);line-height:1.15;padding:18px 20px 12px;}
-.echips{display:flex;gap:7px;padding:0 20px 14px;flex-wrap:wrap;}
-.ech{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:7px;background:var(--s2);border:1px solid var(--ln);font-size:11px;color:var(--f3);}
-.ecd{width:5px;height:5px;border-radius:50%;}
-.ed-para{font-size:15px;color:var(--f2);line-height:1.85;font-weight:300;padding:0 20px;margin-bottom:14px;}
-.ed-sec{font-size:10px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--f3);padding:14px 20px 8px;}
-.ed-photos{display:flex;gap:8px;overflow-x:auto;padding:0 20px 16px;}
-.ed-photos::-webkit-scrollbar{display:none;}
-.ed-photo{width:96px;height:96px;border-radius:12px;flex-shrink:0;overflow:hidden;border:1px solid var(--ln);cursor:pointer;}
-.ed-photo img{width:100%;height:100%;object-fit:cover;}
-.audio-cards{padding:0 20px 16px;display:flex;flex-direction:column;gap:8px;}
-.acard{background:var(--s2);border:1px solid var(--ln);border-radius:12px;padding:12px 14px;display:flex;align-items:center;gap:12px;}
-.aplay{width:36px;height:36px;border-radius:50%;background:var(--Au);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
-.aplay-ic{width:0;height:0;border-style:solid;border-width:6px 0 6px 11px;border-color:transparent transparent transparent #1a1000;margin-left:2px;}
-.a-lbl{font-size:13px;font-weight:500;color:var(--fg);}
-.a-dur{font-family:'DM Mono',monospace;font-size:10.5px;color:var(--f3);margin-top:2px;}
-
-/* ─── SEARCH / FILTERS ─── */
-.sbar{padding:10px 20px;border-bottom:1px solid var(--ln);}
-.sinner{position:relative;}
-.sico{position:absolute;left:12px;top:50%;transform:translateY(-50%);color:var(--f3);pointer-events:none;}
-.sinp{width:100%;background:var(--s2);border:1px solid var(--ln);border-radius:11px;padding:10px 14px 10px 38px;color:var(--fg);font-size:14px;outline:none;transition:border-color .15s;}
-.sinp::placeholder{color:var(--f4);}
-.sinp:focus{border-color:var(--Au);}
-.frow{display:flex;gap:7px;padding:9px 20px;border-bottom:1px solid var(--ln);overflow-x:auto;}
-.frow::-webkit-scrollbar{display:none;}
-.fp{padding:6px 14px;border-radius:8px;border:1px solid var(--ln2);font-size:12px;color:var(--f3);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .15s;}
-.fp.on{background:var(--Aub);border-color:var(--AuD);color:var(--Au);}
-
-/* ─── WRITE ─── */
-.wchips{display:flex;gap:6px;padding:9px 18px;border-bottom:1px solid var(--ln);overflow-x:auto;flex-shrink:0;}
-.wchips::-webkit-scrollbar{display:none;}
-.wch{display:flex;align-items:center;gap:5px;padding:5px 11px;border-radius:7px;background:var(--s2);border:1px solid var(--ln);font-size:11.5px;color:var(--f3);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .13s;}
-.wch.on{border-color:var(--AuD);color:var(--Au);background:var(--Aub);}
-.wch-d{width:5px;height:5px;border-radius:50%;}
-.jsel{display:flex;align-items:center;gap:6px;padding:6px 12px;border-radius:8px;background:var(--s2);border:1px solid var(--ln);cursor:pointer;transition:background .12s;}
-.jsel:active{background:var(--s3);}
-.jdot{width:7px;height:7px;border-radius:50%;}
-.jnm{font-size:12px;color:var(--f2);}
-.tbar{display:flex;align-items:center;gap:3px;padding:6px 14px;border-bottom:1px solid var(--ln);overflow-x:auto;flex-shrink:0;background:var(--s1);}
-.tbar::-webkit-scrollbar{display:none;}
-.tb2{min-width:32px;height:30px;border-radius:7px;background:transparent;color:var(--f3);font-size:12px;font-weight:600;display:flex;align-items:center;justify-content:center;transition:background .12s;padding:0 5px;white-space:nowrap;}
-.tb2:active{background:var(--s3);color:var(--fg);}
-.tbsep{width:1px;height:18px;background:var(--ln);margin:0 3px;flex-shrink:0;}
-.wt{width:100%;background:transparent;border:none;outline:none;padding:14px 20px 8px;font-family:'Libre Baskerville',serif;font-size:26px;font-weight:400;color:var(--fg);line-height:1.2;}
-.wt::placeholder{color:var(--s4);}
-.wb{width:100%;background:transparent;border:none;outline:none;padding:10px 20px;font-size:15.5px;color:var(--fg);line-height:1.82;font-weight:300;min-height:180px;}
-.wb::placeholder{color:var(--f4);}
-.wcbar{display:flex;align-items:center;gap:10px;padding:8px 20px;border-top:1px solid var(--ln);}
-.wcl{font-family:'DM Mono',monospace;font-size:10px;color:var(--f4);white-space:nowrap;}
-.wctrack{flex:1;height:2px;background:var(--s3);border-radius:99px;overflow:hidden;}
-.wcfill{height:100%;background:var(--Au);border-radius:99px;transition:width .3s;}
-.wcgoal{font-size:11px;color:var(--f3);white-space:nowrap;}
-.msec{padding:10px 20px;border-top:1px solid var(--ln);}
-.msec-l{font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--f4);margin-bottom:8px;}
-.mrow{display:flex;gap:7px;overflow-x:auto;padding-bottom:2px;}
-.mrow::-webkit-scrollbar{display:none;}
-.mo{display:flex;align-items:center;gap:6px;padding:7px 13px;border-radius:9px;border:1px solid var(--ln);background:var(--s2);font-size:12.5px;color:var(--f2);cursor:pointer;white-space:nowrap;flex-shrink:0;transition:all .13s;}
-.mo.on{border-color:var(--AuD);background:var(--Aub);color:var(--Au);}
-.mo-d{width:7px;height:7px;border-radius:50%;flex-shrink:0;}
-.psec{padding:10px 20px;border-top:1px solid var(--ln);}
-.psec-h{display:flex;align-items:center;justify-content:space-between;margin-bottom:10px;}
-.psec-l{font-size:9.5px;font-weight:600;letter-spacing:.12em;text-transform:uppercase;color:var(--f3);}
-.padd{padding:5px 13px;border-radius:7px;border:1px solid var(--AuD);background:var(--Aub);font-size:11.5px;color:var(--Au);cursor:pointer;font-weight:500;}
-.pstrip{display:flex;gap:8px;overflow-x:auto;padding-bottom:2px;}
-.pstrip::-webkit-scrollbar{display:none;}
-.pt{width:78px;height:78px;border-radius:11px;flex-shrink:0;overflow:hidden;position:relative;border:1px solid var(--ln);}
-.pt img{width:100%;height:100%;object-fit:cover;}
-.pt-x{position:absolute;top:4px;right:4px;width:18px;height:18px;border-radius:50%;background:rgba(0,0,0,.8);display:flex;align-items:center;justify-content:center;font-size:9px;color:#fff;cursor:pointer;z-index:2;}
-.pt-add{width:78px;height:78px;border-radius:11px;flex-shrink:0;border:1px dashed var(--ln2);background:var(--s2);display:flex;flex-direction:column;align-items:center;justify-content:center;gap:4px;cursor:pointer;transition:background .12s;}
-.pt-add:active{background:var(--s3);}
-.pt-ai{font-size:20px;color:var(--f3);}
-.pt-al{font-size:9px;color:var(--f4);letter-spacing:.06em;text-transform:uppercase;font-weight:500;}
-#photo-inp{display:none;}
-.vsec{padding:12px 20px;border-top:1px solid var(--ln);}
-.vrow{display:flex;align-items:center;gap:13px;}
-.vbtn{width:44px;height:44px;border-radius:50%;background:var(--s2);border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;transition:all .18s;}
-.vbtn.rec{background:rgba(158,90,90,.15);border-color:var(--re);}
-.vdot{width:14px;height:14px;border-radius:50%;background:var(--f3);transition:all .2s;}
-.vdot.rec{background:var(--re);animation:rp 1.1s ease-in-out infinite;}
-@keyframes rp{0%,100%{opacity:1;transform:scale(1)}50%{opacity:.45;transform:scale(.8)}}
-.vi-t{font-size:13.5px;font-weight:500;color:var(--fg);}
-.vi-s{font-size:11px;color:var(--f3);margin-top:2px;}
-.vwrap{display:flex;align-items:center;gap:2.5px;height:20px;}
-.vw{width:2.5px;border-radius:99px;background:var(--Au);animation:va .9s ease-in-out infinite;}
-.vw:nth-child(2){animation-delay:.1s}.vw:nth-child(3){animation-delay:.2s}.vw:nth-child(4){animation-delay:.3s}.vw:nth-child(5){animation-delay:.4s}.vw:nth-child(6){animation-delay:.5s}
-@keyframes va{0%,100%{height:3px}50%{height:18px}}
-.rtimer{font-family:'DM Mono',monospace;font-size:13px;color:var(--re);font-weight:500;}
-.vrecs{display:flex;flex-direction:column;gap:7px;margin-top:10px;}
-.vrec{display:flex;align-items:center;gap:10px;background:var(--s2);border:1px solid var(--ln);border-radius:10px;padding:10px 12px;}
-.vrec-p{width:32px;height:32px;border-radius:50%;background:var(--Au);display:flex;align-items:center;justify-content:center;cursor:pointer;flex-shrink:0;}
-.vrec-pi{width:0;height:0;border-style:solid;border-width:5px 0 5px 9px;border-color:transparent transparent transparent #1a1000;margin-left:2px;}
-.vrec-lb{font-size:12.5px;font-weight:500;color:var(--fg);}
-.vrec-d{font-family:'DM Mono',monospace;font-size:10px;color:var(--f3);margin-top:1px;}
-.vrec-x{font-size:13px;color:var(--f4);cursor:pointer;padding:4px;}
-.tsec{padding:10px 20px;border-top:1px solid var(--ln);}
-.tags-w{display:flex;gap:6px;flex-wrap:wrap;margin-top:8px;}
-.wtag{padding:5px 13px;border-radius:8px;border:1px solid var(--ln);background:var(--s2);font-size:12px;color:var(--f3);cursor:pointer;transition:all .13s;}
-.wtag.on{border-color:var(--AuD);color:var(--Au);background:var(--Aub);}
-.tgsec{padding:10px 20px;border-top:1px solid var(--ln);}
-.tgrid{display:grid;grid-template-columns:1fr 1fr;gap:7px;margin-top:8px;}
-.tcard{padding:13px 13px;background:var(--s2);border:1px solid var(--ln);border-radius:10px;cursor:pointer;transition:all .13s;}
-.tcard:active{background:var(--s3);}
-.tcard-n{font-size:13px;color:var(--fg);font-weight:500;margin-bottom:3px;}
-.tcard-d{font-size:11px;color:var(--f3);line-height:1.4;}
-.prsec{padding:10px 20px 18px;border-top:1px solid var(--ln);}
-.pmt{padding:11px 0;border-bottom:1px solid var(--ln);font-size:13.5px;color:var(--f2);cursor:pointer;line-height:1.45;transition:color .13s;}
-.pmt:last-child{border-bottom:none;padding-bottom:0;}
-.pmt:active{color:var(--Au);}
-
-/* ─── NOTES ─── */
-.ngrid{display:grid;grid-template-columns:1fr 1fr;gap:1px;background:var(--ln);}
-.nc{background:var(--s1);padding:15px 14px;cursor:pointer;min-height:136px;display:flex;flex-direction:column;transition:background .12s;}
-.nc:active{background:var(--s2);}
-.nc.wide{grid-column:span 2;}
-.nc-bar{height:2px;margin-bottom:11px;flex-shrink:0;}
-.nc-t{font-family:'Libre Baskerville',serif;font-size:16px;font-weight:400;color:var(--fg);line-height:1.25;margin-bottom:5px;}
-.nc-b{font-size:12.5px;color:var(--f2);line-height:1.55;flex:1;overflow:hidden;display:-webkit-box;-webkit-line-clamp:4;-webkit-box-orient:vertical;}
-.nc-d{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);margin-top:9px;}
-#nfab{
-  position:fixed;
-  bottom:calc(70px + env(safe-area-inset-bottom));
-  right:20px;
-  width:50px;height:50px;border-radius:50%;
-  background:var(--Au);color:#1a1000;font-size:26px;font-weight:300;
-  cursor:pointer;display:flex;align-items:center;justify-content:center;
-  box-shadow:0 6px 22px rgba(0,0,0,.3);z-index:50;
-  transition:transform .15s;line-height:1;
-}
-#nfab:active{transform:scale(.9);}
-.ne-bar{width:3px;flex-shrink:0;align-self:stretch;}
-.nei{flex:1;background:transparent;border:none;outline:none;font-family:'Libre Baskerville',serif;font-size:23px;font-weight:400;color:var(--fg);padding:13px 20px 13px 0;line-height:1.2;min-height:52px;}
-.nei::placeholder{color:var(--s4);}
-.neb{width:100%;flex:1;background:transparent;border:none;outline:none;font-size:15px;color:var(--fg);line-height:1.75;font-weight:300;padding:12px 20px;display:block;}
-.neb::placeholder{color:var(--f4);}
-.ncdots{display:flex;align-items:center;gap:8px;padding:12px 20px;border-top:1px solid var(--ln);flex-shrink:0;padding-bottom:max(env(safe-area-inset-bottom),16px);}
-.ncdl{font-size:9.5px;font-weight:600;letter-spacing:.1em;text-transform:uppercase;color:var(--f4);margin-right:4px;}
-.ncd{width:22px;height:22px;border-radius:50%;cursor:pointer;transition:all .15s;flex-shrink:0;}
-.ncd.sel{box-shadow:0 0 0 2px var(--bg),0 0 0 3.5px var(--Au);}
-
-/* ─── GALLERY ─── */
-.ggrid{display:grid;grid-template-columns:repeat(3,1fr);gap:1px;background:var(--ln);}
-.gc{background:var(--s1);aspect-ratio:1;overflow:hidden;cursor:pointer;position:relative;transition:opacity .15s;}
-.gc:active{opacity:.8;}
-.gc.feat{grid-column:span 2;aspect-ratio:auto;height:182px;}
-.gc img,.gc .ge{width:100%;height:100%;object-fit:cover;display:flex;align-items:center;justify-content:center;}
-.gc .ge{font-size:36px;}
-.gc .ge.big{font-size:52px;}
-.gover{position:absolute;inset:0;background:linear-gradient(transparent 40%,rgba(0,0,0,.75));display:flex;flex-direction:column;justify-content:flex-end;padding:8px 10px;}
-.gd{font-family:'DM Mono',monospace;font-size:9px;color:rgba(255,255,255,.75);}
-.gl{font-size:10px;color:rgba(255,255,255,.5);letter-spacing:.06em;text-transform:uppercase;margin-top:1px;}
-
-/* ─── PROGRESS ─── */
-.phero{margin:14px 20px 0;background:var(--s1);border:1px solid var(--ln);border-radius:17px;padding:20px 22px;display:flex;align-items:flex-end;justify-content:space-between;transition:background .25s;}
-.pbig{font-family:'Libre Baskerville',serif;font-size:80px;font-weight:400;color:var(--Au);line-height:1;letter-spacing:-.02em;}
-.pright{text-align:right;padding-bottom:4px;}
-.prl{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);letter-spacing:.1em;text-transform:uppercase;margin-bottom:4px;}
-.prv{font-family:'DM Mono',monospace;font-size:25px;line-height:1;}
-.bchart{display:flex;align-items:flex-end;gap:7px;height:78px;padding:0 20px;}
-.bc{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.bf{width:100%;border-radius:4px 4px 0 0;background:var(--s3);min-height:3px;transition:height .6s cubic-bezier(.34,1.2,.64,1);}
-.bf.on{background:linear-gradient(180deg,var(--AuL),var(--AuD));}
-.bd{font-family:'DM Mono',monospace;font-size:9px;color:var(--f4);}
-.cgrid{display:grid;grid-template-columns:repeat(7,1fr);gap:4px;padding:0 20px;}
-.cg{aspect-ratio:1;border-radius:7px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:9px;color:var(--f4);}
-.cg.w{background:var(--Aub);color:var(--Au);}
-.cg.td{background:var(--Au);color:#1a1000;font-weight:700;}
-.ms{display:flex;align-items:center;gap:12px;padding:13px 20px;border-bottom:1px solid var(--ln);}
-.ms:last-child{border-bottom:none;}
-.ms-i{width:35px;height:35px;border-radius:9px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-size:15px;flex-shrink:0;}
-.ms-t{font-size:14px;color:var(--fg);}
-.ms-d{font-size:11.5px;color:var(--f3);margin-top:1px;}
-.ms-s{font-family:'DM Mono',monospace;font-size:11px;font-weight:500;flex-shrink:0;}
-.ms-s.done{color:var(--Au);}
-.ms-s.lock{color:var(--f4);}
-
-/* ─── INSIGHTS ─── */
-.i4{display:grid;grid-template-columns:1fr 1fr;border-top:1px solid var(--ln);border-left:1px solid var(--ln);}
-.is{padding:15px 15px;border-right:1px solid var(--ln);border-bottom:1px solid var(--ln);}
-.isv{font-family:'DM Mono',monospace;font-size:25px;color:var(--Au);letter-spacing:-.02em;line-height:1;}
-.isl{font-size:11px;color:var(--f3);margin-top:4px;}
-.mbr{display:flex;align-items:center;gap:10px;padding:8px 20px;}
-.mbn{font-size:12px;color:var(--f2);width:64px;flex-shrink:0;}
-.mbb{flex:1;height:4px;background:var(--s3);border-radius:99px;overflow:hidden;}
-.mbf{height:100%;border-radius:99px;}
-.mbp{font-family:'DM Mono',monospace;font-size:10px;color:var(--f4);width:30px;text-align:right;}
-.ic{margin:0 20px 9px;padding:15px;background:var(--s1);border:1px solid var(--ln);border-radius:13px;}
-.ic-h{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
-.ic-i{width:30px;height:30px;border-radius:8px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:14px;color:var(--Au);}
-.ic-t{font-size:14px;font-weight:500;color:var(--fg);}
-.ic-b{font-size:13px;color:var(--f2);line-height:1.6;}
-.ic-hl{color:var(--Au);}
-.thwrap{display:flex;flex-wrap:wrap;gap:7px;padding:4px 20px 22px;}
-.tw{padding:5px 13px;border-radius:7px;border:1px solid var(--ln2);background:var(--s2);font-size:12px;color:var(--f3);}
-.tw.lg{font-size:14px;color:var(--fg);}
-.tw.xl{font-size:16px;color:var(--Au);border-color:var(--AuD);background:var(--Aub);}
-
-/* ─── SETTINGS ─── */
-.pblock{padding:20px;display:flex;align-items:center;gap:15px;border-bottom:1px solid var(--ln);}
-.pav{width:56px;height:56px;border-radius:50%;background:linear-gradient(135deg,var(--AuD),var(--Au));display:flex;align-items:center;justify-content:center;font-family:'Libre Baskerville',serif;font-size:22px;font-weight:700;color:#1a1000;flex-shrink:0;}
-.pname{font-family:'Libre Baskerville',serif;font-size:22px;font-weight:400;color:var(--fg);}
-.pplan{font-size:11px;color:var(--Au);font-weight:600;letter-spacing:.08em;text-transform:uppercase;margin-top:3px;}
-.psince{font-size:11px;color:var(--f4);margin-top:1px;}
-.pedit{margin-left:auto;padding:8px 16px;border-radius:9px;border:1px solid var(--ln2);background:transparent;font-size:12.5px;color:var(--f3);cursor:pointer;flex-shrink:0;min-height:38px;}
-.pedit:active{background:var(--s3);}
-.sgrp{margin:14px 0 0;}
-.sgl{padding:3px 20px 7px;font-size:10px;font-weight:600;letter-spacing:.13em;text-transform:uppercase;color:var(--f4);}
-.srow{display:flex;align-items:center;gap:11px;padding:13px 20px;border-bottom:1px solid var(--ln);cursor:pointer;transition:background .12s;min-height:52px;}
-.srow:last-child{border-bottom:none;}
-.srow:active{background:var(--s2);}
-.srl{font-size:14px;font-weight:400;color:var(--fg);}
-.srs{font-size:11.5px;color:var(--f3);margin-top:1px;}
-.srr{display:flex;align-items:center;gap:7px;flex-shrink:0;margin-left:auto;}
-.srv{font-size:12.5px;color:var(--f3);}
-.sra{font-size:17px;color:var(--f4);}
-.badge{padding:2px 9px;border-radius:5px;font-size:10px;font-weight:600;letter-spacing:.05em;}
-.badge.pro{background:var(--Aub);color:var(--Au);border:1px solid var(--AuD);}
-.badge.new{background:rgba(90,158,116,.1);color:var(--gr);border:1px solid rgba(90,158,116,.3);}
-.tgl{width:44px;height:26px;border-radius:99px;background:var(--s4);border:1px solid var(--ln);cursor:pointer;position:relative;transition:background .2s;flex-shrink:0;}
-.tgl.on{background:var(--Au);border-color:var(--Au);}
-.tgl::after{content:'';position:absolute;width:20px;height:20px;border-radius:50%;background:var(--f3);top:2px;left:2px;transition:all .2s;box-shadow:0 1px 4px rgba(0,0,0,.3);}
-.tgl.on::after{left:20px;background:#1a1000;}
-.tgrid2{display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:12px 20px;}
-.to{padding:13px 14px;border:1px solid var(--ln);border-radius:12px;cursor:pointer;transition:all .15s;}
-.to.sel{border-color:var(--Au);background:var(--Aub);}
-.to:active{opacity:.8;}
-.to-top{display:flex;align-items:center;justify-content:space-between;margin-bottom:9px;}
-.to-n{font-size:13.5px;font-weight:500;color:var(--fg);}
-.tchk{width:19px;height:19px;border-radius:50%;border:1px solid var(--ln);display:flex;align-items:center;justify-content:center;font-size:10px;color:var(--Au);}
-.tchk.sel{background:var(--Au);color:#1a1000;border-color:var(--Au);}
-.tsw{display:flex;gap:5px;}
-.tsw-d{width:17px;height:17px;border-radius:5px;border:1px solid rgba(128,128,128,.2);}
-.jrow{display:flex;align-items:center;gap:11px;padding:13px 20px;border-bottom:1px solid var(--ln);cursor:pointer;transition:background .12s;min-height:50px;}
-.jrow:active{background:var(--s2);}
-.jdot2{width:9px;height:9px;border-radius:50%;flex-shrink:0;}
-.jnm2{font-size:14px;color:var(--fg);}
-.jcnt{font-size:11.5px;color:var(--f3);margin-left:auto;}
-.signout{display:block;padding:14px 20px;font-size:14px;color:var(--re);cursor:pointer;}
-.ver{padding:2px 20px 36px;font-family:'DM Mono',monospace;font-size:10px;color:var(--f4);letter-spacing:.07em;}
-
-/* ─── PHOTO VIEWER ─── */
-#pv{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:500;display:flex;align-items:center;justify-content:center;
-  padding:max(env(safe-area-inset-top),16px) 20px max(env(safe-area-inset-bottom),16px);animation:fade .18s;}
-#pv img{max-width:100%;max-height:100%;object-fit:contain;}
-#pv-x{position:absolute;top:max(env(safe-area-inset-top),16px);right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
-
-/* ─── BOTTOM SHEET ─── */
-#mbg{position:fixed;inset:0;background:rgba(0,0,0,.6);z-index:400;backdrop-filter:blur(6px);display:flex;align-items:flex-end;animation:fade .18s;}
-.msheet{width:100%;max-height:72vh;background:var(--s1);border-radius:20px 20px 0 0;overflow:hidden;display:flex;flex-direction:column;animation:su .24s ease;}
-.msh-h{padding:14px 20px;border-bottom:1px solid var(--ln);display:flex;align-items:center;justify-content:space-between;flex-shrink:0;}
-.msh-t{font-family:'Libre Baskerville',serif;font-size:17px;color:var(--fg);}
-.msh-x{width:28px;height:28px;border-radius:50%;background:var(--s3);display:flex;align-items:center;justify-content:center;cursor:pointer;font-size:14px;color:var(--f2);}
-.msh-body{overflow-y:auto;flex:1;padding-bottom:max(env(safe-area-inset-bottom),16px);}
-.msh-body::-webkit-scrollbar{display:none;}
-.msh-it{padding:13px 20px;border-bottom:1px solid var(--ln);cursor:pointer;transition:background .12s;}
-.msh-it:last-child{border-bottom:none;}
-.msh-it:active{background:var(--s2);}
-.msh-in{font-size:14px;font-weight:500;color:var(--fg);margin-bottom:3px;}
-.msh-id{font-size:12px;color:var(--f3);}
-
-/* ─── TOAST ─── */
-#toast{
-  position:fixed;left:50%;
-  bottom:calc(70px + env(safe-area-inset-bottom));
-  transform:translateX(-50%) translateY(10px);
-  background:var(--s1);border:1px solid var(--ln);border-radius:12px;
-  padding:11px 20px;font-size:13.5px;color:var(--fg);
-  z-index:999;opacity:0;transition:all .26s;pointer-events:none;
-  white-space:nowrap;box-shadow:0 8px 32px rgba(0,0,0,.35);
-}
-#toast.show{opacity:1;transform:translateX(-50%) translateY(0);}
-
-/* ─── ONBOARDING ─── */
-#onboard{
-  position:fixed;inset:0;z-index:600;
-  background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px;
-  text-align:center;
-}
-.ob-logo{font-family:'Libre Baskerville',serif;font-size:52px;color:var(--Au);margin-bottom:8px;}
-.ob-name{font-family:'Libre Baskerville',serif;font-size:32px;font-weight:400;color:var(--fg);margin-bottom:8px;}
-.ob-sub{font-size:15px;color:var(--f2);line-height:1.6;margin-bottom:40px;max-width:260px;}
-.ob-inp{
-  width:100%;max-width:280px;background:var(--s2);border:1px solid var(--ln);
-  border-radius:13px;padding:14px 18px;font-size:16px;color:var(--fg);outline:none;
-  text-align:center;margin-bottom:14px;
-}
-.ob-inp::placeholder{color:var(--f4);}
-.ob-btn{
-  width:100%;max-width:280px;padding:15px;border-radius:13px;
-  background:var(--Au);color:#1a1000;font-size:16px;font-weight:600;
-  cursor:pointer;border:none;transition:opacity .15s;margin-bottom:12px;
-}
-.ob-btn:active{opacity:.85;}
-.ob-skip{font-size:13px;color:var(--f3);cursor:pointer;padding:8px;}
-</style>
+    .nav-item.active {
+      color: #6200ea;
+    }
+  </style>
 </head>
 <body>
-<input type="file" id="photo-inp" accept="image/*">
 
-<div id="app">
-  <div id="tb">
-    <button class="ham" onclick="openDrw()">
-      <div class="hl" style="width:20px"></div>
-      <div class="hl" style="width:15px"></div>
-      <div class="hl" style="width:10px"></div>
+  <header class="top-bar">
+    <h1 id="top-bar-title">Home</h1>
+  </header>
+
+  <main id="app-content">
+    <section id="home" class="page active">
+      <h2>Welcome Back</h2>
+      <p>This is your main dashboard. Content scrolls naturally between the top and bottom bars.</p>
+    </section>
+    
+    <section id="search" class="page">
+      <h2>Discover</h2>
+      <p>Find what you are looking for here.</p>
+    </section>
+    
+    <section id="profile" class="page">
+      <h2>Your Profile</h2>
+      <p>Manage your account settings and preferences.</p>
+    </section>
+  </main>
+
+  <nav class="bottom-nav">
+    <button class="nav-item active" data-target="home">
+      <span class="material-icons">home</span>
+      <span class="nav-label">Home</span>
     </button>
-    <span id="tb-title">Inkwell</span>
-    <div id="tb-right"></div>
-  </div>
-
-  <div id="screen">
-    <div id="page" class="fade"></div>
-  </div>
-
-  <nav id="bnav">
-    <div class="nt on" data-tab="home" onclick="go('home')">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round" stroke-linejoin="round">
-        <path d="M3 9.5L12 3l9 6.5V20a1 1 0 01-1 1H4a1 1 0 01-1-1V9.5z"/><path d="M9 21V12h6v9"/>
-      </svg>
-      <span class="nt-l">Home</span><div class="nt-p"></div>
-    </div>
-    <div class="nt" data-tab="journal" onclick="go('journal')">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-        <rect x="4" y="2" width="16" height="20" rx="2"/><path d="M8 7h8M8 11h8M8 15h5"/>
-      </svg>
-      <span class="nt-l">Journal</span><div class="nt-p"></div>
-    </div>
-    <div class="nt" data-tab="write" onclick="openWrite(null)">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-        <path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/>
-      </svg>
-      <span class="nt-l">Write</span><div class="nt-p"></div>
-    </div>
-    <div class="nt" data-tab="notes" onclick="go('notes')">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-        <path d="M14 2H6a2 2 0 00-2 2v16a2 2 0 002 2h12a2 2 0 002-2V8z"/><path d="M14 2v6h6M16 13H8M16 17H8M10 9H8"/>
-      </svg>
-      <span class="nt-l">Notes</span><div class="nt-p"></div>
-    </div>
-    <div class="nt" data-tab="me" onclick="go('me')">
-      <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.4" stroke-linecap="round">
-        <path d="M20 21v-2a4 4 0 00-4-4H8a4 4 0 00-4 4v2"/><circle cx="12" cy="7" r="4"/>
-      </svg>
-      <span class="nt-l">Me</span><div class="nt-p"></div>
-    </div>
+    <button class="nav-item" data-target="search">
+      <span class="material-icons">search</span>
+      <span class="nav-label">Search</span>
+    </button>
+    <button class="nav-item" data-target="profile">
+      <span class="material-icons">person</span>
+      <span class="nav-label">Profile</span>
+    </button>
   </nav>
-</div>
-<div id="toast"></div>
 
-<script>
-// ════════════════════════════════════════════════
-//  STORAGE
-// ════════════════════════════════════════════════
-const DB = {
-  get(k, d) { try { const v = localStorage.getItem('iw_' + k); return v != null ? JSON.parse(v) : d; } catch { return d; } },
-  set(k, v) { try { localStorage.setItem('iw_' + k, JSON.stringify(v)); } catch { toast('Storage full — export your data'); } }
-};
+  <script>
+    /* --- JAVASCRIPT LOGIC --- */
+    document.addEventListener('DOMContentLoaded', () => {
+      const navItems = document.querySelectorAll('.nav-item');
+      const pages = document.querySelectorAll('.page');
+      const topBarTitle = document.getElementById('top-bar-title');
 
-// ════════════════════════════════════════════════
-//  STATE — all fresh, no default sample data
-// ════════════════════════════════════════════════
-let A = {
-  tab: 'home',
-  theme: DB.get('theme', 'dark'),
-  settings: DB.get('settings', { rem: true, streak: true, weekly: false, faceID: false, enc: true, priv: false }),
-  entries: DB.get('entries', []),
-  notes: DB.get('notes', []),
-  name: DB.get('name', ''),
-  goal: DB.get('goal', 500),
-  pin: DB.get('pin', ''),         // 4-digit lock PIN
-  joined: DB.get('joined', ''),   // ISO date string
-  filt: 'All', nFilt: 'All', search: '',
-};
+      // Navigation Logic
+      navItems.forEach(item => {
+        item.addEventListener('click', () => {
+          // 1. Remove active state from all
+          navItems.forEach(nav => nav.classList.remove('active'));
+          pages.forEach(page => page.classList.remove('active'));
 
-let WS = {}, NS = {}, REC = { stream: null, rec: null, chunks: [], t0: null, dur: 0, timer: null };
+          // 2. Add active state to clicked tab
+          item.classList.add('active');
 
-function save() {
-  DB.set('entries', A.entries);
-  DB.set('notes', A.notes);
-  DB.set('settings', A.settings);
-}
+          // 3. Show target page
+          const targetId = item.getAttribute('data-target');
+          document.getElementById(targetId).classList.add('active');
 
-// ════════════════════════════════════════════════
-//  CONSTANTS
-// ════════════════════════════════════════════════
-const JOURNALS = [
-  { id: 'daily', name: 'Daily', c: '#c8914e' },
-  { id: 'travel', name: 'Travel', c: '#5c7e9e' },
-  { id: 'dreams', name: 'Dreams', c: '#7a5c9e' },
-  { id: 'gratitude', name: 'Gratitude', c: '#5a9e74' },
-];
-const MOODS = [
-  { l: 'Serene', c: '#5c7e9e' }, { l: 'Grateful', c: '#c8914e' }, { l: 'Proud', c: '#5a9e74' },
-  { l: 'Reflective', c: '#7a5c9e' }, { l: 'Heavy', c: '#6a6870' }, { l: 'Anxious', c: '#9e7c5c' },
-  { l: 'Strong', c: '#5a9e72' }, { l: 'Low', c: '#7c5c5c' }, { l: 'Content', c: '#5c8e7c' }, { l: 'Hopeful', c: '#7c9e5c' },
-];
-const TAGS = ['work', 'family', 'health', 'growth', 'gratitude', 'mindfulness', 'books', 'nature', 'fitness', 'rest', 'reflection', 'win', 'travel', 'creative', 'sleep', 'therapy'];
-const NC_ACC = ['#c8914e', '#5a9e74', '#7a5c9e', '#5c7e9e', '#9e7c5c', '#5c8a9e', '#9e5c5c', '#7a8a5a'];
-const TEMPLATES = [
-  { n: 'Morning Pages', d: 'Free-form stream of consciousness', t: '[Morning Pages]\n\nRight now I\'m thinking about...\n\n' },
-  { n: 'Gratitude', d: 'Three things I\'m grateful for', t: '[Gratitude]\n\n1. \n2. \n3. \n\nWhy it matters:\n\n' },
-  { n: 'Daily Review', d: 'Wins, lessons, tomorrow', t: '[Daily Review]\n\nWins:\n• \n\nLearned:\n• \n\nTomorrow:\n• \n\n' },
-  { n: 'Therapy Notes', d: 'Feelings, patterns, insights', t: '[Therapy Notes]\n\nFeeling:\n\nPattern:\n\nInsight:\n\n' },
-  { n: 'Problem Solving', d: 'Explore a challenge deeply', t: '[Problem Solving]\n\nThe problem:\n\nApproaches:\n1. \n2. \n3. \n\nBest path:\n\n' },
-  { n: 'Weekly Review', d: 'Reflect on the whole week', t: '[Weekly Review]\n\nHighlights:\n• \n\nChallenges:\n• \n\nDo differently:\n\nNext week:\n\n' },
-];
-const PROMPTS = [
-  'What made today worth remembering?',
-  'What am I carrying right now that I should put down?',
-  'What do I want to let go of?',
-  'What surprised me today?',
-  'What am I genuinely proud of?',
-  'What would I tell my past self?',
-  'What feels unresolved and why?',
-  'What am I avoiding — and what happens if I stop?',
-  'What brought me peace today?',
-  'What would "enough" look like right now?',
-];
-const TC = { dark: '#0a0a0c', light: '#f4f2ee', sepia: '#1c1710', midnight: '#060812' };
-const PT = { home: 'Inkwell', journal: 'Journal', write: 'New Entry', notes: 'Notes', gallery: 'Gallery', progress: 'Progress', insights: 'Insights', me: 'Profile' };
+          // 4. Update Top Bar Title based on the clicked nav label
+          const labelText = item.querySelector('.nav-label').textContent;
+          topBarTitle.textContent = labelText;
+        });
+      });
 
-// ════════════════════════════════════════════════
-//  THEME
-// ════════════════════════════════════════════════
-function setTheme(t) {
-  document.documentElement.setAttribute('data-t', t);
-  document.getElementById('tcm').content = TC[t] || '#0a0a0c';
-  A.theme = t;
-  DB.set('theme', t);
-}
-
-// ════════════════════════════════════════════════
-//  ONBOARDING (first launch)
-// ════════════════════════════════════════════════
-function showOnboard() {
-  const d = document.createElement('div');
-  d.id = 'onboard';
-  d.innerHTML = `
-    <div class="ob-logo">✦</div>
-    <div class="ob-name">Inkwell</div>
-    <div class="ob-sub">Your private space to think, feel, and remember. Everything stays on your device.</div>
-    <input class="ob-inp" id="ob-name" placeholder="What's your name?" maxlength="30" autocomplete="off">
-    <button class="ob-btn" onclick="finishOnboard()">Get Started</button>
-    <div class="ob-skip" onclick="finishOnboard()">Skip</div>
-  `;
-  document.body.appendChild(d);
-  setTimeout(() => document.getElementById('ob-name')?.focus(), 300);
-}
-
-function finishOnboard() {
-  const n = document.getElementById('ob-name')?.value?.trim() || 'Friend';
-  A.name = n;
-  A.joined = new Date().toISOString();
-  DB.set('name', A.name);
-  DB.set('joined', A.joined);
-  document.getElementById('onboard')?.remove();
-  go('home');
-}
-
-// ════════════════════════════════════════════════
-//  LOCK SCREEN
-// ════════════════════════════════════════════════
-let lockInput = '';
-
-function showLock(onSuccess) {
-  const isSetup = !A.pin;
-  const d = document.createElement('div');
-  d.id = 'lock';
-  d.innerHTML = `
-    <div class="lock-logo">✦</div>
-    <div style="font-family:'Libre Baskerville',serif;font-size:22px;color:var(--fg);margin-bottom:6px">${isSetup ? 'Set a PIN' : 'Inkwell'}</div>
-    <div class="lock-sub">${isSetup ? 'Choose a 4-digit PIN to protect your journal' : 'Enter your PIN'}</div>
-    <div class="lock-dots" id="ldots">
-      <div class="ldot" id="ld0"></div><div class="ldot" id="ld1"></div>
-      <div class="ldot" id="ld2"></div><div class="ldot" id="ld3"></div>
-    </div>
-    <div class="lock-pad">
-      ${[1,2,3,4,5,6,7,8,9,'','0','⌫'].map(k => {
-        if (k === '') return `<div class="lkey empty"></div>`;
-        if (k === '⌫') return `<div class="lkey" onclick="lockDel()"><div class="lock-del">⌫</div></div>`;
-        const letters = {2:'ABC',3:'DEF',4:'GHI',5:'JKL',6:'MNO',7:'PQRS',8:'TUV',9:'WXYZ'};
-        return `<div class="lkey" onclick="lockTap('${k}')">
-          <div class="lkey-num">${k}</div>
-          ${letters[k] ? `<div class="lkey-letters">${letters[k]}</div>` : ''}
-        </div>`;
-      }).join('')}
-    </div>
-    <div class="lock-msg" id="lock-msg"></div>
-    ${!isSetup ? `<div class="lock-setup" onclick="forgotPin()">Forgot PIN</div>` : ''}
-  `;
-  document.body.appendChild(d);
-  lockInput = '';
-  d._onSuccess = onSuccess;
-  d._isSetup = isSetup;
-  d._confirm = '';
-}
-
-function lockTap(k) {
-  const d = document.getElementById('lock');
-  if (!d || lockInput.length >= 4) return;
-  lockInput += k;
-  for (let i = 0; i < 4; i++) {
-    document.getElementById('ld' + i)?.classList.toggle('filled', i < lockInput.length);
-  }
-  if (lockInput.length === 4) {
-    setTimeout(() => {
-      if (d._isSetup) {
-        if (!d._confirm) {
-          d._confirm = lockInput;
-          lockInput = '';
-          for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-          document.getElementById('lock-msg').textContent = 'Confirm your PIN';
-          d.querySelector('.lock-sub').textContent = 'Enter it again to confirm';
-        } else if (d._confirm === lockInput) {
-          A.pin = lockInput; DB.set('pin', A.pin);
-          document.getElementById('lock')?.remove();
-          toast('PIN set');
-          d._onSuccess?.();
-        } else {
-          d._confirm = ''; lockInput = '';
-          for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-          document.getElementById('lock-msg').textContent = 'PINs don\'t match — try again';
-          d.querySelector('.lock-sub').textContent = 'Choose a 4-digit PIN to protect your journal';
-        }
-      } else {
-        if (lockInput === A.pin) {
-          document.getElementById('lock')?.remove();
-          d._onSuccess?.();
-        } else {
-          lockInput = '';
-          for (let i = 0; i < 4; i++) document.getElementById('ld' + i)?.classList.remove('filled');
-          document.getElementById('lock-msg').textContent = 'Incorrect PIN — try again';
-        }
+      // Service Worker Registration (Requires an external sw.js file to function fully)
+      if ('serviceWorker' in navigator) {
+        window.addEventListener('load', () => {
+          navigator.serviceWorker.register('/sw.js')
+            .then(reg => console.log('SW setup ready. Create sw.js to enable offline mode!'))
+            .catch(err => console.log('SW registration will fail until sw.js is created.', err));
+        });
       }
-    }, 100);
-  }
-}
-
-function lockDel() {
-  if (!lockInput.length) return;
-  lockInput = lockInput.slice(0, -1);
-  for (let i = 0; i < 4; i++) {
-    document.getElementById('ld' + i)?.classList.toggle('filled', i < lockInput.length);
-  }
-}
-
-function forgotPin() {
-  if (confirm('Reset PIN? This will require your data export password or clear the PIN.')) {
-    A.pin = ''; DB.set('pin', '');
-    document.getElementById('lock')?.remove();
-    toast('PIN cleared');
-    go('home');
-  }
-}
-
-// ════════════════════════════════════════════════
-//  NAV
-// ════════════════════════════════════════════════
-function go(tab) {
-  A.tab = tab;
-  document.querySelectorAll('.nt').forEach(n => {
-    const on = n.dataset.tab === tab;
-    n.classList.toggle('on', on);
-    n.style.color = on ? 'var(--Au)' : 'var(--f3)';
-  });
-  document.getElementById('tb-title').textContent = PT[tab] || tab;
-  document.getElementById('tb').classList.toggle('lined', tab !== 'home');
-  document.getElementById('tb-right').innerHTML = tab === 'journal'
-    ? `<button class="ib" onclick="document.querySelector('.sinp')?.focus()">
-        <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--f2)" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg>
-      </button>` : '';
-  renderPage();
-}
-
-function renderPage() {
-  const p = document.getElementById('page');
-  p.className = 'fade';
-  const fns = { home: rHome, journal: rJournal, notes: rNotes, gallery: rGallery, progress: rProgress, insights: rInsights, me: rMe };
-  p.innerHTML = (fns[A.tab] || rHome)();
-  document.getElementById('nfab')?.style && (document.getElementById('nfab').style.display = A.tab === 'notes' ? 'flex' : 'none');
-}
-
-// ════════════════════════════════════════════════
-//  HOME
-// ════════════════════════════════════════════════
-function rHome() {
-  const now = new Date(), h = now.getHours();
-  const greet = h < 12 ? 'morning' : h < 17 ? 'afternoon' : 'evening';
-  const ds = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
-  const tw = A.entries.reduce((a, e) => a + (e.words || 0), 0);
-  const streak = calcStreak();
-  const days = buildCalDays();
-
-  // On This Day
-  const otd = getOnThisDay();
-
-  const recentHTML = A.entries.length === 0
-    ? `<div class="empty">No entries yet.<br><a onclick="openWrite(null)">✦ Write your first entry →</a></div>`
-    : A.entries.slice(0, 4).map(eItem).join('');
-
-  return `
-  <div class="hero">
-    <div class="hero-date">${ds}</div>
-    <div class="hero-name">Good ${greet},<br><em>${A.name || 'you'}.</em></div>
-  </div>
-  <div class="scards">
-    <div class="sc a"><div class="scv">${streak}</div><div class="scl">Streak</div></div>
-    <div class="sc b"><div class="scv">${A.entries.length}</div><div class="scl">Entries</div></div>
-    <div class="sc c"><div class="scv">${tw >= 1000 ? (Math.round(tw / 100) / 10) + 'k' : tw}</div><div class="scl">Words</div></div>
-    <div class="sc d"><div class="scv">${A.notes.length}</div><div class="scl">Notes</div></div>
-  </div>
-  ${otd ? `<div class="otd" onclick="viewEntry(${otd.id})">
-    <div class="otd-e">✦ On This Day — ${otd.yearsAgo} year${otd.yearsAgo > 1 ? 's' : ''} ago</div>
-    <div class="otd-t">${otd.title}</div>
-    <div class="otd-p">${otd.body.split('\n')[0]}</div>
-    <div class="otd-m">${otd.date} · ${otd.words || 0} words</div>
-  </div>` : ''}
-  <div class="sh" style="padding-top:16px"><span class="sl2">This Month</span><span class="slink" onclick="go('progress')">Progress →</span></div>
-  <div class="act-grid">${days.map(d => `<div class="ag${d.w ? ' w' : ''}${d.td ? ' td' : ''}">${d.n}</div>`).join('')}</div>
-  <div class="sh" style="padding-top:18px"><span class="sl2">Recent Entries</span><span class="slink" onclick="go('journal')">See all →</span></div>
-  ${A.entries.length > 0 ? `<div class="blk">${recentHTML}</div>` : recentHTML}`;
-}
-
-function calcStreak() {
-  if (!A.entries.length) return 0;
-  const today = new Date(); today.setHours(0, 0, 0, 0);
-  const dates = new Set(A.entries.map(e => {
-    const d = new Date(e.ts || Date.now()); d.setHours(0, 0, 0, 0); return d.getTime();
-  }));
-  let streak = 0, cur = today.getTime();
-  while (dates.has(cur)) { streak++; cur -= 86400000; }
-  return streak;
-}
-
-function buildCalDays() {
-  const now = new Date();
-  const year = now.getFullYear(), month = now.getMonth();
-  const daysInMonth = new Date(year, month + 1, 0).getDate();
-  const today = now.getDate();
-  const writtenDays = new Set(A.entries.filter(e => {
-    const d = new Date(e.ts || 0);
-    return d.getFullYear() === year && d.getMonth() === month;
-  }).map(e => new Date(e.ts || 0).getDate()));
-  return Array.from({ length: daysInMonth }, (_, i) => ({
-    n: i + 1, w: writtenDays.has(i + 1), td: i + 1 === today
-  }));
-}
-
-function getOnThisDay() {
-  if (!A.entries.length) return null;
-  const now = new Date();
-  const m = now.getMonth(), d = now.getDate(), y = now.getFullYear();
-  const match = A.entries.find(e => {
-    const ed = new Date(e.ts || 0);
-    return ed.getMonth() === m && ed.getDate() === d && ed.getFullYear() < y;
-  });
-  if (!match) return null;
-  return { ...match, yearsAgo: y - new Date(match.ts || 0).getFullYear() };
-}
-
-function eItem(e) {
-  return `<div class="ei" onclick="viewEntry(${e.id})">
-    <div class="ei-top">
-      <div class="ei-l"><div class="eidot" style="background:${e.mc || '#888'}"></div><span class="eidate">${e.date}</span></div>
-      <span class="eimeta">${e.words || 0}w${e.photos?.length ? ` · ${e.photos.length}▣` : ''}${e.recordings?.length ? ' · 🎙' : ''}</span>
-    </div>
-    <div class="eititle">${e.title || 'Untitled'}</div>
-    <div class="eiprev">${(e.body || '').split('\n').find(l => l.trim()) || ''}</div>
-    <div class="eifoot">
-      ${e.mood ? `<span class="mbadge" style="border-left-color:${e.mc};color:${e.mc}">${e.mood}</span>` : ''}
-      ${(e.tags || []).slice(0, 2).map(t => `<span class="chip">${t}</span>`).join('')}
-    </div>
-  </div>`;
-}
-
-// ════════════════════════════════════════════════
-//  ENTRY DETAIL
-// ════════════════════════════════════════════════
-function viewEntry(id) {
-  const e = A.entries.find(x => x.id === id); if (!e) return;
-  const p = document.createElement('div'); p.id = 'edet'; p.className = 'panel su';
-  p.innerHTML = `
-    <div class="ph">
-      <div class="ph-lft">
-        <div class="back-btn" onclick="document.getElementById('edet')?.remove()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--Au)" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back
-        </div>
-      </div>
-      <div class="ph-rgt">
-        <button class="btn btn-g" onclick="openWrite(${e.id});document.getElementById('edet')?.remove()">Edit</button>
-        <button class="btn btn-d" onclick="delEntry(${e.id})">Delete</button>
-      </div>
-    </div>
-    <div class="pscroll">
-      <div class="ed-title">${e.title || 'Untitled'}</div>
-      <div class="echips">
-        ${e.mood ? `<div class="ech"><div class="ecd" style="background:${e.mc}"></div>${e.mood}</div>` : ''}
-        ${e.loc ? `<div class="ech">📍 ${e.loc}</div>` : ''}
-        ${e.wx ? `<div class="ech">🌤 ${e.wx}</div>` : ''}
-        ${(e.tags || []).map(t => `<div class="ech">${t}</div>`).join('')}
-        <div class="ech">${e.words || 0} words</div>
-        <div class="ech">${e.date}</div>
-      </div>
-      <div style="height:1px;background:var(--ln);margin:0 20px 16px"></div>
-      ${(e.body || '').split('\n\n').map(par => `<p class="ed-para">${par.replace(/\n/g, '<br>')}</p>`).join('')}
-      ${e.photos?.length ? `<div class="ed-sec">Photos</div><div class="ed-photos">${e.photos.map(s => `<div class="ed-photo" onclick="showPhoto('${s}')"><img src="${s}" loading="lazy"></div>`).join('')}</div>` : ''}
-      ${e.recordings?.length ? `<div class="ed-sec">Voice Notes</div><div class="audio-cards">${e.recordings.map((r, i) => `<div class="acard"><div class="aplay" onclick="playAudio('${r.data}',this)"><div class="aplay-ic"></div></div><div style="flex:1"><div class="a-lbl">Voice note ${i + 1}</div><div class="a-dur">${fmtD(r.dur || 0)}</div></div></div>`).join('')}</div>` : ''}
-      <div style="height:30px"></div>
-    </div>`;
-  document.getElementById('screen').appendChild(p);
-}
-
-function delEntry(id) {
-  if (!confirm('Delete this entry?')) return;
-  A.entries = A.entries.filter(e => e.id !== id); save();
-  document.getElementById('edet')?.remove(); renderPage(); toast('Entry deleted');
-}
-
-function showPhoto(src) {
-  const v = document.createElement('div'); v.id = 'pv';
-  v.innerHTML = `<img src="${src}"><div id="pv-x" onclick="document.getElementById('pv')?.remove()">✕</div>`;
-  document.body.appendChild(v);
-}
-
-function playAudio(data, btn) {
-  const a = new Audio(data);
-  btn.innerHTML = '<div style="display:flex;gap:3px;align-items:center"><div style="width:3px;height:14px;background:#1a1000;border-radius:2px"></div><div style="width:3px;height:14px;background:#1a1000;border-radius:2px"></div></div>';
-  a.play().catch(() => toast('Could not play audio'));
-  a.onended = () => { btn.innerHTML = '<div class="aplay-ic"></div>'; };
-}
-
-function fmtD(s) { const m = Math.floor(s / 60); return `${m}:${String(s % 60).padStart(2, '0')}`; }
-
-// ════════════════════════════════════════════════
-//  JOURNAL LIST
-// ════════════════════════════════════════════════
-function rJournal() {
-  const filts = ['All', 'Serene', 'Proud', 'Reflective', 'Heavy', 'Has Photos', 'Has Audio'];
-  let data = A.entries.filter(e => {
-    if (A.filt === 'Has Photos') return e.photos?.length > 0;
-    if (A.filt === 'Has Audio') return e.recordings?.length > 0;
-    if (A.filt !== 'All') return e.mood === A.filt;
-    if (A.search) return (e.title || '').toLowerCase().includes(A.search.toLowerCase()) || (e.body || '').toLowerCase().includes(A.search.toLowerCase());
-    return true;
-  });
-  const grp = {};
-  data.forEach(e => { if (!grp[e.month]) grp[e.month] = []; grp[e.month].push(e); });
-  return `
-  <div class="sbar"><div class="sinner">
-    <span class="sico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
-    <input class="sinp" placeholder="Search entries, moods, places…" value="${A.search}" oninput="A.search=this.value;renderPage()">
-  </div></div>
-  <div class="frow">${filts.map(f => `<div class="fp${A.filt === f ? ' on' : ''}" onclick="A.filt='${f}';renderPage()">${f}</div>`).join('')}</div>
-  ${!data.length ? `<div class="empty">No entries found.<br><a onclick="openWrite(null)">✦ Write your first entry →</a></div>` : ''}
-  ${Object.entries(grp).map(([m, es]) => `<div class="mdl">${m}</div><div class="blk">${es.map(eItem).join('')}</div>`).join('')}`;
-}
-
-// ════════════════════════════════════════════════
-//  WRITE
-// ════════════════════════════════════════════════
-function openWrite(editId) {
-  const ed = editId ? A.entries.find(e => e.id === editId) : null;
-  WS = {
-    id: ed?.id || null, title: ed?.title || '', body: ed?.body || '',
-    mood: ed?.mood || null, mc: ed?.mc || null,
-    tags: [...(ed?.tags || [])], photos: [...(ed?.photos || [])], recs: [...(ed?.recordings || [])],
-    journal: JOURNALS.find(j => j.id === ed?.journal) || JOURNALS[0],
-    loc: ed?.loc || '', wx: ed?.wx || '',
-  };
-  REC = { stream: null, rec: null, chunks: [], t0: null, dur: 0, timer: null };
-  const p = document.createElement('div'); p.id = 'wpanel'; p.className = 'panel su';
-  document.getElementById('screen').appendChild(p);
-  renderWP();
-}
-
-function renderWP() {
-  const p = document.getElementById('wpanel'); if (!p) return;
-  const w = WS, wc = w.body.trim() ? w.body.trim().split(/\s+/).length : 0, pct = Math.min((wc / A.goal) * 100, 100);
-  p.innerHTML = `
-    <div class="ph">
-      <div class="ph-lft">
-        <div class="back-btn" onclick="closeWrite()">Discard</div>
-        <div class="jsel" onclick="cycleJ()">
-          <div class="jdot" id="jdot" style="background:${w.journal.c}"></div>
-          <span class="jnm" id="jnm">${w.journal.name}</span>
-          <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="var(--f3)" stroke-width="1.4" stroke-linecap="round"/></svg>
-        </div>
-      </div>
-      <div class="ph-rgt"><button class="btn btn-p" id="sbtn" onclick="saveEntry()">${w.id ? 'Update' : 'Save'}</button></div>
-    </div>
-    <div class="wchips">
-      <div class="wch">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
-      ${w.mood ? `<div class="wch on" id="mchip"><div class="wch-d" style="background:${w.mc}"></div>${w.mood} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span></div>` : ''}
-      <div class="wch">🔒 Private</div>
-    </div>
-    <div class="tbar">
-      <button class="tb2" onclick="iFmt('**','**')"><b>B</b></button>
-      <button class="tb2" onclick="iFmt('*','*')"><i>I</i></button>
-      <button class="tb2" onclick="iFmt('# ','')">H1</button>
-      <button class="tb2" onclick="iFmt('## ','')">H2</button>
-      <div class="tbsep"></div>
-      <button class="tb2" onclick="iFmt('\\n• ','')">•</button>
-      <button class="tb2" onclick="iFmt('> ','')">❝</button>
-      <button class="tb2" onclick="iFmt('\\n---\\n','')">—</button>
-      <div class="tbsep"></div>
-      <button class="tb2" onclick="trigCam()">📷</button>
-      <button class="tb2" onclick="trigLib()">🖼</button>
-      <button class="tb2" onclick="togRec()">⏺</button>
-      <div class="tbsep"></div>
-      <button class="tb2" onclick="showTmpls()" style="padding:0 8px;font-size:11px">Templates</button>
-      <button class="tb2" onclick="showPrompts()" style="padding:0 8px;font-size:11px">Prompts</button>
-    </div>
-    <div class="pscroll" id="wscroll">
-      <textarea class="wt" id="wt" placeholder="Untitled entry…" rows="2">${w.title}</textarea>
-      <div style="height:1px;background:var(--ln);margin:0 20px"></div>
-      <textarea class="wb" id="wb" placeholder="No rules. No judgment.&#10;This space is entirely yours…" rows="12">${w.body}</textarea>
-      <div class="wcbar">
-        <span class="wcl" id="wcn">${wc} words</span>
-        <div class="wctrack"><div class="wcfill" id="wcf" style="width:${pct}%"></div></div>
-        <span class="wcgoal">/ ${A.goal}</span>
-      </div>
-      <div class="msec">
-        <div class="msec-l">How are you feeling?</div>
-        <div class="mrow">${MOODS.map(m => `<div class="mo${w.mood === m.l ? ' on' : ''}" onclick="pickMood('${m.l}','${m.c}')"><div class="mo-d" style="background:${m.c}"></div>${m.l}</div>`).join('')}</div>
-      </div>
-      <div class="psec">
-        <div class="psec-h"><span class="psec-l">Photos</span><div class="padd" onclick="trigCam()">+ Attach</div></div>
-        <div class="pstrip" id="pstrip">${rStrip()}</div>
-      </div>
-      <div class="vsec">
-        <div class="msec-l">Voice Notes</div>
-        <div class="vrow">
-          <div class="vbtn" id="vbtn" onclick="togRec()"><div class="vdot" id="vdot"></div></div>
-          <div style="flex:1"><div class="vi-t" id="vit">Tap to record</div><div class="vi-s" id="vis">Records audio memo</div></div>
-          <div id="vwrap"></div>
-          <span class="rtimer" id="rtmr" style="display:none">0:00</span>
-        </div>
-        <div class="vrecs" id="vrecs">${rRecs()}</div>
-      </div>
-      <div class="tsec">
-        <div class="msec-l">Tags</div>
-        <div class="tags-w">${TAGS.map(t => `<div class="wtag${w.tags.includes(t) ? ' on' : ''}" onclick="togTag('${t}')">${t}</div>`).join('')}</div>
-      </div>
-      <div class="tgsec">
-        <div class="msec-l">Templates</div>
-        <div class="tgrid">${TEMPLATES.map((t, i) => `<div class="tcard" onclick="applyT(${i})"><div class="tcard-n">${t.n}</div><div class="tcard-d">${t.d}</div></div>`).join('')}</div>
-      </div>
-      <div class="prsec">
-        <div class="msec-l" style="margin-bottom:6px">Writing Prompts</div>
-        ${PROMPTS.map((p, i) => `<div class="pmt" onclick="applyP(${i})">${p}</div>`).join('')}
-      </div>
-      <div style="height:24px"></div>
-    </div>`;
-  bindWP();
-}
-
-function bindWP() {
-  const ta = document.getElementById('wb'); if (!ta) return;
-  ta.addEventListener('input', () => {
-    WS.body = ta.value;
-    const w = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
-    const wn = document.getElementById('wcn'), wf = document.getElementById('wcf');
-    if (wn) wn.textContent = w + ' words';
-    if (wf) wf.style.width = Math.min((w / A.goal) * 100, 100) + '%';
-  });
-  document.getElementById('wt')?.addEventListener('input', e => WS.title = e.target.value);
-}
-
-function rStrip() {
-  return WS.photos.map((s, i) => `<div class="pt"><img src="${s}" loading="lazy"><div class="pt-x" onclick="rmPhoto(${i})">✕</div></div>`).join('') +
-    `<div class="pt-add" onclick="trigCam()"><div class="pt-ai">📷</div><div class="pt-al">Camera</div></div>
-     <div class="pt-add" onclick="trigLib()"><div class="pt-ai" style="font-size:20px">🖼</div><div class="pt-al">Library</div></div>`;
-}
-
-function rRecs() {
-  return WS.recs.map((r, i) => `<div class="vrec">
-    <div class="vrec-p" onclick="playAudio('${r.data}',this)"><div class="vrec-pi"></div></div>
-    <div style="flex:1"><div class="vrec-lb">Voice note ${i + 1}</div><div class="vrec-d">${fmtD(r.dur || 0)}</div></div>
-    <div class="vrec-x" onclick="rmRec(${i})">✕</div>
-  </div>`).join('');
-}
-
-// Photo
-function trigCam() { const i = document.getElementById('photo-inp'); i.setAttribute('capture', 'environment'); i.removeAttribute('multiple'); i.onchange = hdlPhoto; i.click(); }
-function trigLib() { const i = document.getElementById('photo-inp'); i.removeAttribute('capture'); i.setAttribute('multiple', 'multiple'); i.onchange = hdlPhoto; i.click(); }
-function hdlPhoto(e) {
-  const files = Array.from(e.target.files || []); if (!files.length) return;
-  Promise.all(files.map(f => new Promise(res => { const r = new FileReader(); r.onload = ev => res(ev.target.result); r.readAsDataURL(f); })))
-    .then(rs => { WS.photos.push(...rs); const s = document.getElementById('pstrip'); if (s) s.innerHTML = rStrip(); toast(`${rs.length} photo${rs.length > 1 ? 's' : ''} attached`); });
-  e.target.value = '';
-}
-function rmPhoto(i) { WS.photos.splice(i, 1); const s = document.getElementById('pstrip'); if (s) s.innerHTML = rStrip(); }
-
-// Voice recording
-async function togRec() { if (!REC.rec || REC.rec.state === 'inactive') await startRec(); else stopRec(); }
-async function startRec() {
-  try {
-    const stream = await navigator.mediaDevices.getUserMedia({ audio: { echoCancellation: true, noiseSuppression: true } });
-    REC.stream = stream; REC.chunks = []; REC.t0 = Date.now(); REC.dur = 0;
-    const opts = MediaRecorder.isTypeSupported('audio/webm;codecs=opus') ? { mimeType: 'audio/webm;codecs=opus' } :
-      MediaRecorder.isTypeSupported('audio/mp4') ? { mimeType: 'audio/mp4' } : {};
-    REC.rec = new MediaRecorder(stream, opts);
-    REC.rec.ondataavailable = e => { if (e.data.size > 0) REC.chunks.push(e.data); };
-    REC.rec.onstop = procRec;
-    REC.rec.start(100);
-    document.getElementById('vbtn')?.classList.add('rec');
-    document.getElementById('vdot')?.classList.add('rec');
-    document.getElementById('vit').textContent = 'Recording…';
-    document.getElementById('vis').textContent = 'Tap to stop';
-    document.getElementById('vwrap').innerHTML = '<div class="vwrap"><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div><div class="vw"></div></div>';
-    const rt = document.getElementById('rtmr'); if (rt) rt.style.display = 'block';
-    REC.timer = setInterval(() => { REC.dur = Math.floor((Date.now() - REC.t0) / 1000); const t = document.getElementById('rtmr'); if (t) t.textContent = fmtD(REC.dur); }, 1000);
-  } catch { toast('Microphone access denied — enable it in browser settings'); }
-}
-function stopRec() {
-  if (REC.rec && REC.rec.state !== 'inactive') REC.rec.stop();
-  REC.stream?.getTracks().forEach(t => t.stop());
-  clearInterval(REC.timer);
-  document.getElementById('vbtn')?.classList.remove('rec');
-  document.getElementById('vdot')?.classList.remove('rec');
-  document.getElementById('vit').textContent = 'Tap to record';
-  document.getElementById('vis').textContent = 'Records audio memo';
-  document.getElementById('vwrap').innerHTML = '';
-  const rt = document.getElementById('rtmr'); if (rt) rt.style.display = 'none';
-}
-function procRec() {
-  if (!REC.chunks.length) return;
-  const blob = new Blob(REC.chunks, { type: REC.rec?.mimeType || 'audio/webm' });
-  const rd = new FileReader();
-  rd.onload = ev => { WS.recs.push({ data: ev.target.result, dur: REC.dur }); const vr = document.getElementById('vrecs'); if (vr) vr.innerHTML = rRecs(); toast('Voice note saved'); REC.chunks = []; };
-  rd.readAsDataURL(blob);
-}
-function rmRec(i) { WS.recs.splice(i, 1); const vr = document.getElementById('vrecs'); if (vr) vr.innerHTML = rRecs(); }
-
-// Mood / journal / tags / formatting
-function pickMood(l, c) {
-  WS.mood = l; WS.mc = c;
-  document.querySelectorAll('.mo').forEach(m => m.classList.toggle('on', m.textContent.trim().startsWith(l)));
-  const chips = document.querySelector('.wchips');
-  if (chips) { let mc = document.getElementById('mchip'); if (!mc) { mc = document.createElement('div'); mc.id = 'mchip'; mc.className = 'wch on'; chips.insertBefore(mc, chips.children[1]); } mc.innerHTML = `<div class="wch-d" style="background:${c}"></div>${l} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span>`; }
-}
-function clearMood() { WS.mood = null; WS.mc = null; document.getElementById('mchip')?.remove(); document.querySelectorAll('.mo').forEach(m => m.classList.remove('on')); }
-function cycleJ() { const i = JOURNALS.indexOf(WS.journal); WS.journal = JOURNALS[(i + 1) % JOURNALS.length]; document.getElementById('jdot').style.background = WS.journal.c; document.getElementById('jnm').textContent = WS.journal.name; }
-function togTag(t) { const i = WS.tags.indexOf(t); if (i >= 0) WS.tags.splice(i, 1); else WS.tags.push(t); document.querySelectorAll('.wtag').forEach(el => { if (el.textContent.trim() === t) el.classList.toggle('on', WS.tags.includes(t)); }); }
-function iFmt(pre, post) {
-  const ta = document.getElementById('wb'); if (!ta) return;
-  const s = ta.selectionStart, e2 = ta.selectionEnd, v = ta.value;
-  ta.value = v.substring(0, s) + pre.replace(/\\n/g, '\n') + v.substring(s, e2) + post + v.substring(e2);
-  const np = s + pre.replace(/\\n/g, '\n').length + (e2 - s);
-  ta.selectionStart = ta.selectionEnd = np; WS.body = ta.value; ta.focus();
-  const wc = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
-  const wn = document.getElementById('wcn'), wf = document.getElementById('wcf');
-  if (wn) wn.textContent = wc + ' words'; if (wf) wf.style.width = Math.min((wc / A.goal) * 100, 100) + '%';
-}
-function applyT(i) {
-  const ta = document.getElementById('wb'); if (!ta) return;
-  const b = ta.value; ta.value = b + (b && !b.endsWith('\n') ? '\n\n' : '') + TEMPLATES[i].t;
-  WS.body = ta.value;
-  const wc = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
-  const wn = document.getElementById('wcn'), wf = document.getElementById('wcf');
-  if (wn) wn.textContent = wc + ' words'; if (wf) wf.style.width = Math.min((wc / A.goal) * 100, 100) + '%';
-  ta.focus(); toast('Template inserted');
-}
-function applyP(i) { const ta = document.getElementById('wb'); if (!ta) return; const b = ta.value; ta.value = b + (b && !b.endsWith('\n') ? '\n\n' : '') + PROMPTS[i] + ' '; WS.body = ta.value; ta.focus(); }
-function showTmpls() { sheetModal('Templates', TEMPLATES.map((t, i) => `<div class="msh-it" onclick="applyT(${i});closeMod()"><div class="msh-in">${t.n}</div><div class="msh-id">${t.d}</div></div>`).join('')); }
-function showPrompts() { sheetModal('Writing Prompts', PROMPTS.map((p, i) => `<div class="msh-it" onclick="applyP(${i});closeMod()"><div style="font-size:14px;color:var(--f2);line-height:1.45">${p}</div></div>`).join('')); }
-function sheetModal(title, html) { closeMod(); const bg = document.createElement('div'); bg.id = 'mbg'; bg.onclick = e => { if (e.target === bg) bg.remove(); }; bg.innerHTML = `<div class="msheet"><div class="msh-h"><span class="msh-t">${title}</span><div class="msh-x" onclick="document.getElementById('mbg')?.remove()">✕</div></div><div class="msh-body">${html}</div></div>`; document.body.appendChild(bg); }
-function closeMod() { document.getElementById('mbg')?.remove(); }
-
-function saveEntry() {
-  const title = document.getElementById('wt')?.value || WS.title;
-  const body = document.getElementById('wb')?.value || WS.body;
-  if (!title.trim() && !body.trim()) { toast('Write something first'); return; }
-  const wc = body.trim() ? body.trim().split(/\s+/).length : 0;
-  const now = new Date();
-  const dateStr = now.toLocaleDateString('en-US', { month: 'short', day: 'numeric', year: 'numeric' }).toUpperCase();
-  const month = now.toLocaleDateString('en-US', { month: 'long', year: 'numeric' }).toUpperCase();
-  const entry = {
-    id: WS.id || Date.now(), ts: WS.id ? A.entries.find(e => e.id === WS.id)?.ts || now.getTime() : now.getTime(),
-    date: WS.id ? A.entries.find(e => e.id === WS.id)?.date || dateStr : dateStr,
-    month, title: title || 'Untitled', body: body || '',
-    mood: WS.mood || '', mc: WS.mc || '#888', words: wc,
-    tags: WS.tags, photos: WS.photos, recordings: WS.recs,
-    journal: WS.journal.id, loc: WS.loc || '', wx: WS.wx || '',
-  };
-  if (WS.id) A.entries = A.entries.map(e => e.id === WS.id ? entry : e); else A.entries.unshift(entry);
-  save();
-  const btn = document.getElementById('sbtn'); if (btn) { btn.textContent = '✓ Saved'; btn.classList.add('ok'); }
-  toast('Entry saved');
-  setTimeout(closeWrite, 1100);
-}
-function closeWrite() { stopRec(); document.getElementById('wpanel')?.remove(); go(A.tab === 'write' ? 'home' : A.tab); }
-
-// ════════════════════════════════════════════════
-//  NOTES
-// ════════════════════════════════════════════════
-function rNotes() {
-  const pinned = A.notes.filter(n => n.pinned), rest = A.notes.filter(n => !n.pinned);
-  return `<div class="frow">${['All', 'Pinned'].map(f => `<div class="fp${A.nFilt === f ? ' on' : ''}" onclick="A.nFilt='${f}';renderPage()">${f}</div>`).join('')}</div>
-  ${pinned.length ? `<div class="mdl">Pinned</div><div class="ngrid" style="border-top:1px solid var(--ln)">${pinned.map(n => nCard(n)).join('')}</div>` : ''}
-  <div class="mdl">Notes</div>
-  <div class="ngrid" style="border-top:1px solid var(--ln)">
-    ${rest.length ? rest.map((n, i) => nCard(n, i === 0 && !pinned.length)).join('') : `<div style="grid-column:span 2;padding:36px;text-align:center;color:var(--f4);font-size:14px;background:var(--s1)">No notes yet — tap + to create one</div>`}
-  </div>
-  <button id="nfab" onclick="openNote(null)" style="display:flex">+</button>`;
-}
-function nCard(n, wide = false) {
-  return `<div class="nc${wide ? ' wide' : ''}" onclick="openNote(${n.id})">
-    <div class="nc-bar" style="background:${n.acc}"></div>
-    <div class="nc-t">${n.title}</div>
-    <div class="nc-b">${n.body}</div>
-    <div class="nc-d">${n.date}</div>
-  </div>`;
-}
-function openNote(id) {
-  const ex = id ? A.notes.find(n => n.id === id) : null;
-  NS = { id: ex?.id || null, title: ex?.title || '', body: ex?.body || '', acc: ex?.acc || NC_ACC[0], pinned: ex?.pinned || false };
-  const p = document.createElement('div'); p.id = 'npanel'; p.className = 'panel su';
-  p.innerHTML = `
-    <div class="ph">
-      <div class="ph-lft"><div class="back-btn" onclick="document.getElementById('npanel')?.remove()">Cancel</div></div>
-      <div class="ph-rgt">
-        ${ex ? `<button class="btn btn-d" onclick="delNote(${ex.id})">Delete</button>` : ''}
-        <button class="btn btn-p" onclick="saveNote()">Save</button>
-      </div>
-    </div>
-    <div style="border-bottom:1px solid var(--ln);display:flex;align-items:stretch;padding-left:20px">
-      <div id="ne-bar" style="width:3px;background:${NS.acc};flex-shrink:0;align-self:stretch"></div>
-      <input id="ne-t" type="text" style="flex:1;background:transparent;border:none;outline:none;font-family:'Libre Baskerville',serif;font-size:23px;color:var(--fg);padding:13px 18px 13px 14px;line-height:1.2;min-height:52px" placeholder="Note title…" value="${NS.title}">
-    </div>
-    <textarea id="ne-b" style="flex:1;width:100%;background:transparent;border:none;outline:none;padding:12px 20px;font-size:15px;color:var(--fg);line-height:1.75;font-weight:300;display:block;-webkit-overflow-scrolling:touch" placeholder="Start writing…">${NS.body}</textarea>
-    <div class="ncdots">
-      <span class="ncdl">Accent</span>
-      ${NC_ACC.map(c => `<div class="ncd${NS.acc === c ? ' sel' : ''}" data-c="${c}" style="background:${c}" onclick="pickAcc('${c}')"></div>`).join('')}
-      <div style="margin-left:auto;display:flex;align-items:center;gap:8px;font-size:12px;color:var(--f3)">
-        Pin <div class="tgl${NS.pinned ? ' on' : ''}" id="pintgl" onclick="NS.pinned=!NS.pinned;this.classList.toggle('on',NS.pinned)"></div>
-      </div>
-    </div>`;
-  document.getElementById('screen').appendChild(p);
-  document.getElementById('ne-t').addEventListener('input', e => NS.title = e.target.value);
-  document.getElementById('ne-b').addEventListener('input', e => NS.body = e.target.value);
-}
-function pickAcc(c) { NS.acc = c; document.querySelectorAll('.ncd').forEach(d => d.classList.toggle('sel', d.dataset.c === c)); document.getElementById('ne-bar').style.background = c; }
-function saveNote() {
-  const t = document.getElementById('ne-t')?.value || NS.title, b = document.getElementById('ne-b')?.value || NS.body;
-  if (!t.trim() && !b.trim()) { toast('Write something first'); return; }
-  const ds = new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' }).toUpperCase();
-  if (NS.id) A.notes = A.notes.map(n => n.id === NS.id ? { ...n, title: t, body: b, acc: NS.acc, pinned: NS.pinned } : n);
-  else A.notes.unshift({ id: Date.now(), title: t || 'Untitled', body: b, date: ds, pinned: NS.pinned, acc: NS.acc });
-  save(); document.getElementById('npanel')?.remove(); renderPage(); toast('Note saved');
-}
-function delNote(id) { if (!confirm('Delete this note?')) return; A.notes = A.notes.filter(n => n.id !== id); save(); document.getElementById('npanel')?.remove(); renderPage(); toast('Note deleted'); }
-
-// ════════════════════════════════════════════════
-//  GALLERY
-// ════════════════════════════════════════════════
-function rGallery() {
-  const photos = A.entries.flatMap(e => (e.photos || []).map(s => ({ src: s, date: e.date, lbl: e.title })));
-  if (!photos.length) return `<div class="empty" style="padding-top:80px">No photos yet.<br>Attach photos to journal entries<br>to see them here.</div>`;
-  const cells = photos.map((p, i) => `<div class="gc${i === 0 ? ' feat' : ''}" onclick="showPhoto('${p.src}')"><img src="${p.src}" loading="lazy"><div class="gover"><div class="gd">${p.date}</div><div class="gl">${p.lbl}</div></div></div>`);
-  return `<div class="mdl">All Photos · ${photos.length}</div><div class="ggrid">${cells.join('')}</div>`;
-}
-
-// ════════════════════════════════════════════════
-//  PROGRESS
-// ════════════════════════════════════════════════
-function rProgress() {
-  const streak = calcStreak();
-  const tw = A.entries.reduce((a, e) => a + (e.words || 0), 0);
-  const days = buildCalDays();
-  // Weekly bar: last 7 days
-  const bars = Array.from({ length: 7 }, (_, i) => {
-    const d = new Date(); d.setDate(d.getDate() - (6 - i)); d.setHours(0, 0, 0, 0);
-    const label = ['S', 'M', 'T', 'W', 'T', 'F', 'S'][d.getDay()];
-    const written = A.entries.some(e => { const ed = new Date(e.ts || 0); ed.setHours(0, 0, 0, 0); return ed.getTime() === d.getTime(); });
-    return { d: label, on: written, h: written ? 60 + Math.random() * 35 : 0 };
-  });
-  const ms = [
-    { n: 'First Entry', d: 'Write your very first journal entry', done: A.entries.length >= 1 },
-    { n: '7-Day Streak', d: 'Journal every day for a week', done: streak >= 7 },
-    { n: '10 Entries', d: 'Write 10 journal entries', done: A.entries.length >= 10 },
-    { n: '30-Day Streak', d: '30 consecutive days', done: streak >= 30 },
-    { n: '50 Entries', d: 'Write 50 journal entries', done: A.entries.length >= 50 },
-    { n: '10k Words', d: '10,000 words written', done: tw >= 10000 },
-    { n: '100 Entries', d: 'Write 100 journal entries', done: A.entries.length >= 100 },
-    { n: '90-Day Streak', d: '90 consecutive days', done: streak >= 90 },
-  ];
-  return `<div class="phero">
-    <div>
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--f3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px">Current Streak</div>
-      <div class="pbig">${streak}</div>
-      <div style="font-size:11.5px;color:var(--f3);margin-top:5px">${streak > 0 ? 'Keep it up!' : 'Start today'}</div>
-    </div>
-    <div class="pright">
-      <div class="prl">Entries</div><div class="prv" style="color:var(--gr)">${A.entries.length}</div>
-      <div class="prl" style="margin-top:14px">Words</div>
-      <div class="prv" style="color:var(--bl)">${tw >= 1000 ? (Math.round(tw / 100) / 10) + 'k' : tw}</div>
-    </div>
-  </div>
-  <div class="sh" style="padding-top:16px"><span class="sl2">Last 7 Days</span></div>
-  <div class="bchart">${bars.map(b => `<div class="bc"><div class="bf${b.on ? ' on' : ''}" style="height:${b.on ? b.h : 8}%"></div><div class="bd">${b.d}</div></div>`).join('')}</div>
-  <div class="sh"><span class="sl2">This Month</span></div>
-  <div class="cgrid">${days.map(d => `<div class="cg${d.w ? ' w' : ''}${d.td ? ' td' : ''}">${d.n}</div>`).join('')}</div>
-  <div class="sh"><span class="sl2">Milestones</span></div>
-  <div class="blk">${ms.map(m => `<div class="ms"><div class="ms-i" style="${m.done ? 'background:var(--Aub);color:var(--Au)' : ''}">${m.done ? '✦' : '○'}</div><div style="flex:1"><div class="ms-t" style="${!m.done ? 'color:var(--f2)' : ''}">${m.n}</div><div class="ms-d">${m.d}</div></div><div class="ms-s${m.done ? ' done' : ' lock'}">${m.done ? 'Earned' : 'Locked'}</div></div>`).join('')}</div>
-  <div style="height:20px"></div>`;
-}
-
-// ════════════════════════════════════════════════
-//  INSIGHTS
-// ════════════════════════════════════════════════
-function rInsights() {
-  const tot = A.entries.length, tw = A.entries.reduce((a, e) => a + (e.words || 0), 0), avgW = tot ? Math.round(tw / tot) : 0;
-  const mc = {}; A.entries.forEach(e => { if (e.mood) mc[e.mood] = (mc[e.mood] || 0) + 1; });
-  const topM = Object.entries(mc).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
-  const moodTotals = Object.values(mc).reduce((a, v) => a + v, 0);
-  const md = Object.entries(mc).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([l, v]) => ({
-    l, p: Math.round((v / moodTotals) * 100), c: MOODS.find(m => m.l === l)?.c || '#888'
-  }));
-  const nPh = A.entries.reduce((a, e) => a + (e.photos?.length || 0), 0);
-  const nRec = A.entries.reduce((a, e) => a + (e.recordings?.length || 0), 0);
-  if (!tot) return `<div class="empty" style="padding-top:80px">Start journaling to see your insights.<br><a onclick="openWrite(null)">✦ Write your first entry →</a></div>`;
-  const ws = [{ w: 'growth', s: 2 }, { w: 'clarity', s: 1 }, { w: 'rest', s: 0 }, { w: 'reflection', s: 2 }, { w: 'gratitude', s: 1 }, { w: 'family', s: 0 }, { w: 'progress', s: 1 }, { w: 'purpose', s: 2 }];
-  return `<div class="i4">
-    <div class="is"><div class="isv">${tot}</div><div class="isl">Total entries</div></div>
-    <div class="is"><div class="isv">${avgW}</div><div class="isl">Avg words</div></div>
-    <div class="is"><div class="isv">${nPh}</div><div class="isl">Photos</div></div>
-    <div class="is"><div class="isv">${topM}</div><div class="isl">Top mood</div></div>
-  </div>
-  ${md.length ? `<div class="sh" style="padding-top:18px"><span class="sl2">Mood Breakdown</span></div>${md.map(m => `<div class="mbr"><div class="mbn">${m.l}</div><div class="mbb"><div class="mbf" style="width:${m.p}%;background:${m.c}"></div></div><div class="mbp">${m.p}%</div></div>`).join('')}` : ''}
-  <div class="sh"><span class="sl2">Patterns</span></div>
-  ${[
-    { i: '↗', t: 'Keep Going', b: `You've written <span class="ic-hl">${tot} ${tot === 1 ? 'entry' : 'entries'}</span> and ${tw >= 1000 ? (Math.round(tw / 100) / 10) + 'k' : tw} words. Every entry counts.` },
-    { i: '▣', t: 'Visual Memory', b: `<span class="ic-hl">${nPh} photo${nPh !== 1 ? 's' : ''}</span> attached. Photos make memories richer and more vivid.` },
-    { i: '🎙', t: 'Voice Notes', b: `<span class="ic-hl">${nRec} recording${nRec !== 1 ? 's' : ''}</span> saved. Your most complete entries use multiple media types.` },
-  ].map(c => `<div class="ic"><div class="ic-h"><div class="ic-i">${c.i}</div><div class="ic-t">${c.t}</div></div><div class="ic-b">${c.b}</div></div>`).join('')}
-  <div class="sh"><span class="sl2">Themes</span></div>
-  <div class="thwrap">${ws.map(({ w, s }) => `<div class="tw${s === 1 ? ' lg' : s === 2 ? ' xl' : ''}">${w}</div>`).join('')}</div>`;
-}
-
-// ════════════════════════════════════════════════
-//  ME / SETTINGS
-// ════════════════════════════════════════════════
-function rMe() {
-  const tw = A.entries.reduce((a, e) => a + (e.words || 0), 0), s = A.settings;
-  const streak = calcStreak();
-  const joinDate = A.joined ? new Date(A.joined).toLocaleDateString('en-US', { month: 'long', year: 'numeric' }) : 'Today';
-  const tData = [
-    { k: 'dark', n: 'Dark', sw: ['#0a0a0c', '#111115', '#c8914e', '#ede8e0'] },
-    { k: 'light', n: 'Light', sw: ['#f4f2ee', '#fff', '#9e6e38', '#1c1a16'] },
-    { k: 'sepia', n: 'Sepia', sw: ['#1c1710', '#241e14', '#c8a060', '#f0e8d8'] },
-    { k: 'midnight', n: 'Midnight', sw: ['#060812', '#0c0e1c', '#8a9ee0', '#dce0f4'] },
-  ];
-  return `<div class="pblock">
-    <div class="pav">${(A.name || '?').charAt(0).toUpperCase()}</div>
-    <div style="flex:1">
-      <div class="pname">${A.name || 'Your Journal'}</div>
-      <div class="pplan">Inkwell</div>
-      <div class="psince">Since ${joinDate}</div>
-    </div>
-    <button class="pedit" onclick="editName()">Edit</button>
-  </div>
-  <div style="display:grid;grid-template-columns:1fr 1fr;gap:9px;padding:16px 20px 0">
-    ${[{ v: streak, l: 'Streak', c: 'Au' }, { v: A.entries.length, l: 'Entries', c: 'gr' }, { v: tw >= 1000 ? (Math.round(tw / 100) / 10) + 'k' : tw, l: 'Words', c: 'bl' }, { v: A.notes.length, l: 'Notes', c: 'f2' }].map(s => `<div style="padding:13px;background:var(--s1);border:1px solid var(--ln);border-radius:13px;text-align:center"><div style="font-family:'DM Mono',monospace;font-size:24px;color:var(--${s.c});line-height:1">${s.v}</div><div style="font-size:10px;color:var(--f3);margin-top:5px;letter-spacing:.06em">${s.l}</div></div>`).join('')}
-  </div>
-
-  <div class="sgrp"><div class="sgl">Journals</div><div class="blk">
-    ${JOURNALS.map(j => `<div class="jrow"><div class="jdot2" style="background:${j.c}"></div><div class="jnm2">${j.name}</div><div class="jcnt">${A.entries.filter(e => e.journal === j.id).length} entries</div></div>`).join('')}
-  </div></div>
-
-  <div class="sgrp"><div class="sgl">Appearance</div>
-    <div class="tgrid2">${tData.map(t => `<div class="to${A.theme === t.k ? ' sel' : ''}" onclick="chTheme('${t.k}')"><div class="to-top"><span class="to-n">${t.n}</span><div class="tchk${A.theme === t.k ? ' sel' : ''}">${A.theme === t.k ? '✓' : ''}</div></div><div class="tsw">${t.sw.map(c => `<div class="tsw-d" style="background:${c}"></div>`).join('')}</div></div>`).join('')}</div>
-    <div class="blk" style="margin-top:2px">
-      <div class="srow" onclick="setGoal()"><div style="flex:1"><div class="srl">Daily writing goal</div><div class="srs">${A.goal} words</div></div><div class="srr"><span class="sarr">›</span></div></div>
-    </div>
-  </div>
-
-  <div class="sgrp"><div class="sgl">Lock & Security</div><div class="blk">
-    <div class="srow" onclick="setupPin()"><div style="flex:1"><div class="srl">${A.pin ? 'Change PIN' : 'Set PIN Lock'}</div><div class="srs">${A.pin ? 'App is locked with a 4-digit PIN' : 'Protect your journal with a PIN'}</div></div><div class="srr">${A.pin ? '<span style="font-size:11px;color:var(--gr);font-weight:600">ON</span>' : ''}<span class="sarr">›</span></div></div>
-    ${A.pin ? `<div class="srow" onclick="removePin()"><div style="flex:1"><div class="srl" style="color:var(--re)">Remove PIN Lock</div></div></div>` : ''}
-    <div class="srow" style="${!A.pin ? 'border-bottom:none' : ''}"><div style="flex:1"><div class="srl">End-to-end encryption</div><div class="srs">Entries encrypted locally</div></div><div class="srr"><div class="tgl${s.enc ? ' on' : ''}" id="t-enc" onclick="togS('enc')"></div></div></div>
-  </div></div>
-
-  <div class="sgrp"><div class="sgl">Notifications</div><div class="blk">
-    ${[{ l: 'Daily reminder', sub: '8:00 PM every day', k: 'rem' }, { l: 'Streak alerts', sub: 'Before losing streak', k: 'streak' }, { l: 'Weekly summary', sub: 'Email digest Sundays', k: 'weekly' }].map(r => `<div class="srow"><div style="flex:1"><div class="srl">${r.l}</div><div class="srs">${r.sub}</div></div><div class="srr"><div class="tgl${s[r.k] ? ' on' : ''}" id="t-${r.k}" onclick="togS('${r.k}')"></div></div></div>`).join('')}
-  </div></div>
-
-  <div class="sgrp"><div class="sgl">Data & Transfer</div><div class="blk">
-    <div class="srow" onclick="exportData()"><div style="flex:1"><div class="srl">Export all data</div><div class="srs">Download JSON backup — use to transfer to a new phone</div></div><div class="srr"><span class="sarr">›</span></div></div>
-    <div class="srow" onclick="importData()"><div style="flex:1"><div class="srl">Import data</div><div class="srs">Restore from a JSON backup file</div></div><div class="srr"><span class="sarr">›</span></div></div>
-    <div class="srow" style="border-bottom:none" onclick="clearData()"><div style="flex:1"><div class="srl" style="color:var(--re)">Delete all data</div><div class="srs">Permanently erase everything</div></div><div class="srr"><span class="sra" style="color:var(--re)">›</span></div></div>
-  </div></div>
-
-  <div class="sgrp"><div class="sgl">About</div><div class="blk">
-    ${['Privacy Policy', 'Rate Inkwell', 'Send Feedback'].map((l, i, arr) => `<div class="srow"${i === arr.length - 1 ? ' style="border-bottom:none"' : ''}><div class="srl">${l}</div><span class="sra">›</span></div>`).join('')}
-  </div></div>
-  <div class="ver">Inkwell · ${A.theme} theme</div>`;
-}
-
-function togS(k) { A.settings[k] = !A.settings[k]; DB.set('settings', A.settings); const el = document.getElementById('t-' + k); if (el) el.classList.toggle('on', A.settings[k]); }
-function chTheme(t) { setTheme(t); renderPage(); }
-function editName() { const n = prompt('Your name:', A.name); if (n?.trim()) { A.name = n.trim(); DB.set('name', A.name); renderPage(); toast('Name updated'); } }
-function setGoal() { const g = parseInt(prompt('Daily goal (words):', A.goal)); if (g > 0) { A.goal = g; DB.set('goal', g); renderPage(); toast('Goal set to ' + g + ' words'); } }
-function setupPin() { showLock(() => { renderPage(); }); document.getElementById('lock')._isSetup = true; document.getElementById('lock')._confirm = ''; }
-function removePin() { if (confirm('Remove PIN lock?')) { A.pin = ''; DB.set('pin', ''); renderPage(); toast('PIN removed'); } }
-
-function exportData() {
-  const blob = new Blob([JSON.stringify({ entries: A.entries, notes: A.notes, settings: A.settings, name: A.name, goal: A.goal, joined: A.joined, exportedAt: new Date().toISOString(), version: 1 }, null, 2)], { type: 'application/json' });
-  const a = document.createElement('a'); a.href = URL.createObjectURL(blob); a.download = 'inkwell-backup-' + new Date().toISOString().split('T')[0] + '.json'; a.click(); URL.revokeObjectURL(a.href);
-  toast('Data exported — save this file somewhere safe');
-}
-
-function importData() {
-  if (!confirm('Import will merge with existing data. Continue?')) return;
-  const i = document.createElement('input'); i.type = 'file'; i.accept = '.json';
-  i.onchange = e => {
-    const f = e.target.files[0]; if (!f) return;
-    const r = new FileReader();
-    r.onload = ev => {
-      try {
-        const d = JSON.parse(ev.target.result);
-        if (d.entries) {
-          // Merge — avoid duplicates by id
-          const existingIds = new Set(A.entries.map(e => e.id));
-          const newEntries = d.entries.filter(e => !existingIds.has(e.id));
-          A.entries = [...newEntries, ...A.entries].sort((a, b) => (b.ts || 0) - (a.ts || 0));
-        }
-        if (d.notes) {
-          const existingIds = new Set(A.notes.map(n => n.id));
-          const newNotes = d.notes.filter(n => !existingIds.has(n.id));
-          A.notes = [...newNotes, ...A.notes];
-        }
-        if (d.name && !A.name) { A.name = d.name; DB.set('name', A.name); }
-        if (d.goal) { A.goal = d.goal; DB.set('goal', A.goal); }
-        if (d.joined && !A.joined) { A.joined = d.joined; DB.set('joined', A.joined); }
-        save(); renderPage();
-        toast(`Imported: ${d.entries?.length || 0} entries, ${d.notes?.length || 0} notes`);
-      } catch { toast('Invalid backup file'); }
-    };
-    r.readAsText(f);
-  };
-  i.click();
-}
-
-function clearData() {
-  if (!confirm('Delete ALL data? This cannot be undone.')) return;
-  if (!confirm('Are you absolutely sure? All entries, notes and settings will be lost.')) return;
-  A.entries = []; A.notes = []; A.settings = { rem: true, streak: true, weekly: false, faceID: false, enc: true, priv: false };
-  save(); renderPage(); toast('All data cleared');
-}
-
-// ════════════════════════════════════════════════
-//  DRAWER
-// ════════════════════════════════════════════════
-function openDrw() {
-  if (document.getElementById('drw')) return;
-  const streak = calcStreak();
-  const bg = document.createElement('div'); bg.id = 'dbg'; bg.onclick = closeDrw;
-  const d = document.createElement('div'); d.id = 'drw';
-  const nav = [
-    { id: 'home', ico: '⌂', l: 'Home' }, { id: 'journal', ico: '≡', l: 'Journal' }, { id: 'write', ico: '✎', l: 'New Entry' },
-    null,
-    { id: 'notes', ico: '◻', l: 'Notes' }, { id: 'gallery', ico: '▣', l: 'Gallery' },
-    null,
-    { id: 'progress', ico: '◎', l: 'Progress' }, { id: 'insights', ico: '◉', l: 'Insights' },
-    null,
-    { id: 'me', ico: '◯', l: 'Profile & Settings' },
-  ];
-  d.innerHTML = `
-    <div class="dtop">
-      <div class="dav">${(A.name || '?').charAt(0).toUpperCase()}</div>
-      <div class="dname">${A.name || 'Your Journal'}</div>
-      <div class="dplan">Inkwell</div>
-      <div class="dstats">
-        <div><div class="dsv">${streak}</div><div class="dsl">Streak</div></div>
-        <div><div class="dsv">${A.entries.length}</div><div class="dsl">Entries</div></div>
-        <div><div class="dsv">${A.notes.length}</div><div class="dsl">Notes</div></div>
-      </div>
-    </div>
-    <div class="dnav">
-      ${nav.map(it => it === null ? `<div class="dsep"></div>` : `<div class="di${A.tab === it.id ? ' on' : ''}" onclick="drwGo('${it.id}')"><div class="di-ico">${it.ico}</div><div class="di-l">${it.l}</div></div>`).join('')}
-    </div>
-    <div class="dfoot">
-      <div class="dver">Inkwell</div>
-    </div>`;
-  document.getElementById('screen').appendChild(bg);
-  document.getElementById('screen').appendChild(d);
-}
-function closeDrw() { document.getElementById('dbg')?.remove(); document.getElementById('drw')?.remove(); }
-function drwGo(tab) { closeDrw(); if (tab === 'write') openWrite(null); else go(tab); }
-
-// ════════════════════════════════════════════════
-//  TOAST
-// ════════════════════════════════════════════════
-let _tt;
-function toast(msg) {
-  const t = document.getElementById('toast');
-  t.textContent = msg; t.classList.add('show');
-  clearTimeout(_tt); _tt = setTimeout(() => t.classList.remove('show'), 2600);
-}
-
-// ════════════════════════════════════════════════
-//  INIT
-// ════════════════════════════════════════════════
-setTheme(A.theme);
-
-// Show lock if PIN is set, otherwise onboard or go home
-if (A.pin) {
-  showLock(() => {
-    if (!A.name) showOnboard();
-    else go('home');
-  });
-} else if (!A.name) {
-  showOnboard();
-} else {
-  go('home');
-}
-
-// Service Worker
-if ('serviceWorker' in navigator) {
-  window.addEventListener('load', () => {
-    navigator.serviceWorker.register('./sw.js', { scope: './' })
-      .then(() => console.log('✦ Inkwell ready'))
-      .catch(e => console.warn('SW:', e));
-  });
-}
-
-// Android back button
-window.addEventListener('popstate', () => {
-  for (const id of ['mbg', 'wpanel', 'npanel', 'edet', 'dbg', 'pv', 'onboard']) {
-    const el = document.getElementById(id);
-    if (el) { el.remove(); if (id === 'wpanel') stopRec(); return; }
-  }
-});
-
-// Prevent body scroll bounce
-document.addEventListener('touchmove', e => {
-  if (e.target === document.body || e.target === document.documentElement) e.preventDefault();
-}, { passive: false });
-</script>
+    });
+  </script>
 </body>
 </html>
