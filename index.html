@@ -16,16 +16,14 @@
 
 /* ── SAFE AREA VARS ── */
 :root {
-  /* These are the real device safe areas */
-  --sat: env(safe-area-inset-top, 44px);
-  --sab: env(safe-area-inset-bottom, 34px);
+  /* Real device safe areas — default 0px so no phantom gaps on Android/browser */
+  --sat: env(safe-area-inset-top, 0px);
+  --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
   --sar: env(safe-area-inset-right, 0px);
 
-  /* Minimum top bar height = safe area + button row */
-  --tb-h: calc(var(--sat) + 52px);
-  /* Minimum bottom nav height = safe area + tab row */
-  --nav-h: calc(var(--sab) + 58px);
+  /* Nav height: tab row (58px) + home indicator only if device has one */
+  --nav-h: calc(58px + env(safe-area-inset-bottom, 0px));
 
   /* Colors: dark theme default */
   --bg:#0a0a0c; --s1:#111115; --s2:#18181e; --s3:#202028; --s4:#2a2a35;
@@ -139,8 +137,7 @@ textarea { resize: none; }
   position: absolute; inset: 0;
   overflow-y: auto; overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  /* Extra bottom padding so content clears the nav bar */
-  padding-bottom: calc(var(--nav-h) + 16px);
+  padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px) + 16px);
 }
 #page::-webkit-scrollbar { display: none; }
 
@@ -148,12 +145,12 @@ textarea { resize: none; }
 #bnav {
   flex-shrink: 0;
   display: flex; align-items: flex-start;
-  /* Top row of tabs gets 10px, then sab for home indicator */
-  padding: 10px 4px 0;
-  /* Min height = 58px tab area + home indicator */
-  min-height: var(--nav-h);
-  /* Extra space at bottom for home indicator */
-  padding-bottom: max(var(--sab), 8px);
+  padding-top: 8px;
+  padding-left: 4px;
+  padding-right: 4px;
+  /* Only pad for home indicator when device actually has one */
+  padding-bottom: env(safe-area-inset-bottom, 0px);
+  /* No min-height — let content define height naturally */
   background: var(--nav-bg);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid var(--ln);
@@ -232,7 +229,7 @@ textarea { resize: none; }
 .dsep { height: 1px; background: var(--ln); margin: 7px 0; }
 .dfoot {
   padding-top: 14px; padding-left: 22px; padding-right: 22px;
-  padding-bottom: max(var(--sab), 20px);
+  padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px);
   border-top: 1px solid var(--ln);
 }
 .dso { font-size: 13px; color: var(--re); cursor: pointer; padding: 7px 0; }
@@ -465,7 +462,7 @@ textarea { resize: none; }
 .nc-d { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--f4); margin-top: 9px; }
 #nfab {
   position: fixed;
-  bottom: calc(var(--nav-h) + 14px);
+  bottom: calc(58px + env(safe-area-inset-bottom, 0px) + 14px);
   right: max(var(--sar), 20px);
   width: 50px; height: 50px; border-radius: 50%;
   background: var(--Au); color: #1a1000; font-size: 26px; font-weight: 300;
@@ -479,7 +476,7 @@ textarea { resize: none; }
 .nei::placeholder { color: var(--s4); }
 .neb { width: 100%; flex: 1; background: transparent; border: none; outline: none; font-size: 15px; color: var(--fg); line-height: 1.75; font-weight: 300; padding: 12px 20px; display: block; }
 .neb::placeholder { color: var(--f4); }
-.ncdots { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--ln); flex-shrink: 0; padding-bottom: max(var(--sab), 16px); }
+.ncdots { display: flex; align-items: center; gap: 8px; padding: 12px 20px; border-top: 1px solid var(--ln); flex-shrink: 0; padding-bottom: max(env(safe-area-inset-bottom, 0px), 16px); }
 .ncdl { font-size: 9.5px; font-weight: 600; letter-spacing: .1em; text-transform: uppercase; color: var(--f4); margin-right: 4px; }
 .ncd { width: 22px; height: 22px; border-radius: 50%; cursor: pointer; transition: all .15s; flex-shrink: 0; }
 .ncd.sel { box-shadow: 0 0 0 2px var(--bg), 0 0 0 3.5px var(--Au); }
@@ -605,8 +602,7 @@ textarea { resize: none; }
 #toast {
   position: fixed;
   left: 50%;
-  /* Sits above nav bar with extra breathing room */
-  bottom: calc(var(--nav-h) + 12px);
+  bottom: calc(58px + env(safe-area-inset-bottom, 0px) + 12px);
   transform: translateX(-50%) translateY(10px);
   background: var(--s1); border: 1px solid var(--ln); border-radius: 12px;
   padding: 11px 20px; font-size: 13.5px; color: var(--fg);
