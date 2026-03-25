@@ -48,20 +48,32 @@
 
 /* ─── RESET ─── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
-body{background:var(--bg);color:var(--fg);transition:background .25s,color .25s;}
+html, body {
+  position: fixed;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  overflow: hidden;
+  font-family: 'DM Sans', system-ui, sans-serif;
+  -webkit-font-smoothing: antialiased;
+}
+
+body {
+  background: var(--bg);
+  color: var(--fg);
+  transition: background .25s, color .25s;
+}
 input,textarea,button,select{font-family:inherit;color:inherit;}
 button{cursor:pointer;border:none;background:none;}
 textarea{resize:none;}
 
 /* ─── SHELL ─── */
-#app{
-  position:fixed;
-  /* inset:0 does NOT work for us — we want the nav to sit at the real bottom */
-  top:0; left:0; right:0; bottom:0;
-  display:flex;
-  flex-direction:column;
-  overflow:hidden;
+#app {
+  position: fixed;
+  inset: 0;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
 }
 
 /* ─── TOP BAR ─── */
@@ -106,22 +118,15 @@ textarea{resize:none;}
    Key fix: use a REAL fixed footer approach — flex child, no position:fixed,
    padding-bottom covers the home indicator on iPhones, zero on Android. */
 #bnav {
-  /* Lock it to the absolute bottom of the screen */
-  position: fixed;
-  bottom: 0;
-  left: 0;
-  right: 0;
-  
   display: flex;
   align-items: center;
-  
-  /* Safe padding: guarantees at least 8px bottom padding, plus any OS safe area */
-  padding: 8px 4px calc(env(safe-area-inset-bottom, 0px) + 8px);
-  
+  /* Use max() to ensure it never gets squished on Androids without safe areas */
+  padding: 8px 4px max(env(safe-area-inset-bottom), 12px);
   background: var(--nb);
   backdrop-filter: blur(24px);
   -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid var(--ln);
+  flex-shrink: 0;
   z-index: 60;
   transition: background .25s, border-color .25s;
 }
@@ -208,11 +213,17 @@ textarea{resize:none;}
 .empty a{color:var(--Au);cursor:pointer;}
 
 /* ─── LOCK SCREEN ─── */
-#lock{
-  position:fixed;inset:0;z-index:500;
-  background:var(--bg);
-  display:flex;flex-direction:column;align-items:center;justify-content:center;
-  padding:40px 40px max(env(safe-area-inset-bottom),40px);
+##lock {
+  position: fixed;
+  inset: 0;
+  z-index: 500;
+  background: var(--bg);
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  /* Changed padding so it naturally centers without pushing up */
+  padding: 20px;
 }
 .lock-logo{font-family:'Libre Baskerville',serif;font-size:48px;color:var(--Au);margin-bottom:8px;letter-spacing:-.02em;}
 .lock-sub{font-size:13px;color:var(--f3);margin-bottom:48px;letter-spacing:.04em;}
