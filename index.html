@@ -47,7 +47,8 @@
 
 /* ─── RESET ─── */
 *,*::before,*::after{box-sizing:border-box;margin:0;padding:0;-webkit-tap-highlight-color:transparent;}
-html,body{width:100%;height:100%;overflow:hidden;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
+/* Added 100dvh and overscroll-behavior to prevent browser bounce/drag */
+html,body{width:100%;height:100%;height:100dvh;overflow:hidden;overscroll-behavior:none;font-family:'DM Sans',system-ui,sans-serif;-webkit-font-smoothing:antialiased;}
 body{background:var(--bg);color:var(--fg);transition:background .25s,color .25s;}
 input,textarea,button,select{font-family:inherit;color:inherit;}
 button{cursor:pointer;border:none;background:none;}
@@ -65,7 +66,6 @@ textarea{resize:none;}
 /* ─── TOP BAR ─── */
 #tb{
   display:flex;align-items:center;gap:8px;
-  /* Reduced hardcoded 44px to 12px fallback */
   padding:max(env(safe-area-inset-top),12px) 18px 10px;
   background:var(--bg);
   border-bottom:1px solid transparent;
@@ -88,23 +88,27 @@ textarea{resize:none;}
   position:absolute;top:0;left:0;right:0;bottom:0;
   overflow-y:auto;overflow-x:hidden;
   -webkit-overflow-scrolling:touch;
-  /* Reduced 16px bottom gap buffer to 8px */
-  padding-bottom:calc(58px + env(safe-area-inset-bottom) + 8px);
+  /* Increased padding to account for fixed bottom nav completely */
+  padding-bottom:calc(80px + env(safe-area-inset-bottom));
 }
 #page::-webkit-scrollbar{display:none;}
 
 /* ─── BOTTOM NAV ─── */
 #bnav{
+  /* Switched to position fixed and forced min-height so it won't shrink or scroll */
+  position:fixed;
+  bottom:0;
+  left:0;
+  right:0;
   display:flex;
   align-items:center;
-  /* Added max(env, 8px) fallback to prevent squishing on Android */
-  padding:8px 4px max(env(safe-area-inset-bottom), 8px);
+  padding:8px 4px max(env(safe-area-inset-bottom), 12px);
   background:var(--nb);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-top:1px solid var(--ln);
-  flex-shrink:0;
-  z-index:60;
+  z-index:900;
   transition:background .25s,border-color .25s;
+  min-height:calc(56px + env(safe-area-inset-bottom));
 }
 .nt{flex:1;display:flex;flex-direction:column;align-items:center;gap:3px;padding:4px 0;cursor:pointer;user-select:none;transition:opacity .1s;}
 .nt:active{opacity:.6;}
@@ -132,7 +136,6 @@ textarea{resize:none;}
   transition:background .25s;
 }
 .dtop{
-  /* Reduced hardcoded 44px to 16px fallback */
   padding:max(env(safe-area-inset-top),16px) 22px 18px;
   border-bottom:1px solid var(--ln);
 }
@@ -160,7 +163,6 @@ textarea{resize:none;}
 .panel{position:fixed;inset:0;background:var(--bg);z-index:100;display:flex;flex-direction:column;transition:background .25s;}
 .ph{
   display:flex;align-items:center;justify-content:space-between;gap:8px;
-  /* Reduced hardcoded 44px to 12px fallback */
   padding:max(env(safe-area-inset-top),12px) 18px 12px;
   border-bottom:1px solid var(--ln);
   flex-shrink:0;background:var(--bg);
@@ -384,8 +386,7 @@ textarea{resize:none;}
 .nc-d{font-family:'DM Mono',monospace;font-size:9.5px;color:var(--f4);margin-top:9px;}
 #nfab{
   position:fixed;
-  /* Reduced bottom 14px buffer to 10px */
-  bottom:calc(58px + env(safe-area-inset-bottom) + 10px);
+  bottom:calc(70px + env(safe-area-inset-bottom));
   right:20px;
   width:50px;height:50px;border-radius:50%;
   background:var(--Au);color:#1a1000;font-size:26px;font-weight:300;
@@ -506,7 +507,6 @@ textarea{resize:none;}
 
 /* ─── PHOTO VIEWER ─── */
 #pv{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:500;display:flex;align-items:center;justify-content:center;
-  /* Reduced hardcoded 44px to 16px fallback */
   padding:max(env(safe-area-inset-top),16px) 20px max(env(safe-area-inset-bottom),16px);animation:fade .18s;}
 #pv img{max-width:100%;max-height:100%;object-fit:contain;}
 #pv-x{position:absolute;top:max(env(safe-area-inset-top),16px);right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
@@ -528,8 +528,7 @@ textarea{resize:none;}
 /* ─── TOAST ─── */
 #toast{
   position:fixed;left:50%;
-  /* Reduced bottom 12px buffer to 8px */
-  bottom:calc(58px + env(safe-area-inset-bottom) + 8px);
+  bottom:calc(70px + env(safe-area-inset-bottom));
   transform:translateX(-50%) translateY(10px);
   background:var(--s1);border:1px solid var(--ln);border-radius:12px;
   padding:11px 20px;font-size:13.5px;color:var(--fg);
