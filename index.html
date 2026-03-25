@@ -16,14 +16,14 @@
 
 /* ── SAFE AREA VARS ── */
 :root {
-  /* Real device safe areas — default 0px so no phantom gaps on Android/browser */
+  /* Real device safe areas — 0px default so no phantom gaps */
   --sat: env(safe-area-inset-top, 0px);
   --sab: env(safe-area-inset-bottom, 0px);
   --sal: env(safe-area-inset-left, 0px);
   --sar: env(safe-area-inset-right, 0px);
 
-  /* Nav height: tab row (58px) + home indicator only if device has one */
-  --nav-h: calc(58px + env(safe-area-inset-bottom, 0px));
+  /* Nav height: just the tab row, no extra home indicator padding */
+  --nav-h: 58px;
 
   /* Colors: dark theme default */
   --bg:#0a0a0c; --s1:#111115; --s2:#18181e; --s3:#202028; --s4:#2a2a35;
@@ -79,18 +79,16 @@ textarea { resize: none; }
 }
 
 /* ── TOP BAR ──
-   Height = status bar (dynamic island / notch) + button row (52px)
-   Padding-top pushes content below the status bar */
+   max() ensures we clear at least 44px (standard status bar)
+   even on devices where env() returns 0 */
 #tb {
   display: flex;
   align-items: center;
   gap: 8px;
-  /* TOP: at least 44px (status bar) + 12px breathing room */
-  padding-top: max(var(--sat), 44px);
+  padding-top: max(env(safe-area-inset-top, 0px), 44px);
   padding-bottom: 10px;
   padding-left: 18px;
   padding-right: 18px;
-  min-height: calc(max(var(--sat), 44px) + 52px);
   background: var(--bg);
   border-bottom: 1px solid transparent;
   flex-shrink: 0;
@@ -137,20 +135,15 @@ textarea { resize: none; }
   position: absolute; inset: 0;
   overflow-y: auto; overflow-x: hidden;
   -webkit-overflow-scrolling: touch;
-  padding-bottom: calc(58px + env(safe-area-inset-bottom, 0px) + 16px);
+  padding-bottom: calc(var(--nav-h) + 16px);
 }
 #page::-webkit-scrollbar { display: none; }
 
 /* ── BOTTOM NAV ── */
 #bnav {
   flex-shrink: 0;
-  display: flex; align-items: flex-start;
-  padding-top: 8px;
-  padding-left: 4px;
-  padding-right: 4px;
-  /* Only pad for home indicator when device actually has one */
-  padding-bottom: env(safe-area-inset-bottom, 0px);
-  /* No min-height — let content define height naturally */
+  display: flex; align-items: center;
+  padding: 8px 4px;
   background: var(--nav-bg);
   backdrop-filter: blur(24px); -webkit-backdrop-filter: blur(24px);
   border-top: 1px solid var(--ln);
@@ -197,8 +190,7 @@ textarea { resize: none; }
   /* Right-side safe area not needed here (left drawer) */
 }
 .dtop {
-  /* Push content below status bar + give breathing room */
-  padding-top: max(var(--sat), 44px);
+  padding-top: max(env(safe-area-inset-top, 0px), 44px);
   padding-bottom: 18px;
   padding-left: 22px;
   padding-right: 22px;
@@ -250,15 +242,12 @@ textarea { resize: none; }
 /* Panel header — sits directly below status bar */
 .ph {
   display: flex; align-items: center; justify-content: space-between; gap: 8px;
-  /* Push row below status bar */
-  padding-top: max(var(--sat), 44px);
+  padding-top: max(env(safe-area-inset-top, 0px), 44px);
   padding-bottom: 12px;
   padding-left: 18px; padding-right: 18px;
   border-bottom: 1px solid var(--ln);
   flex-shrink: 0;
   background: var(--bg);
-  /* Min height so it never collapses */
-  min-height: calc(max(var(--sat), 44px) + 52px);
   transition: background .25s;
 }
 .ph-lft { display: flex; align-items: center; gap: 10px; flex: 1; min-width: 0; }
@@ -462,7 +451,7 @@ textarea { resize: none; }
 .nc-d { font-family: 'DM Mono', monospace; font-size: 9.5px; color: var(--f4); margin-top: 9px; }
 #nfab {
   position: fixed;
-  bottom: calc(58px + env(safe-area-inset-bottom, 0px) + 14px);
+  bottom: calc(var(--nav-h) + 14px);
   right: max(var(--sar), 20px);
   width: 50px; height: 50px; border-radius: 50%;
   background: var(--Au); color: #1a1000; font-size: 26px; font-weight: 300;
@@ -602,7 +591,7 @@ textarea { resize: none; }
 #toast {
   position: fixed;
   left: 50%;
-  bottom: calc(58px + env(safe-area-inset-bottom, 0px) + 12px);
+  bottom: calc(var(--nav-h) + 12px);
   transform: translateX(-50%) translateY(10px);
   background: var(--s1); border: 1px solid var(--ln); border-radius: 12px;
   padding: 11px 20px; font-size: 13.5px; color: var(--fg);
