@@ -719,165 +719,8 @@ textarea{resize:none;}
 .signout{display:block;padding:14px 20px;font-size:14px;color:var(--re);cursor:pointer;}
 .ver{padding:2px 20px 36px;font-family:'DM Mono',monospace;font-size:10px;color:var(--f4);letter-spacing:.07em;}
 
-/* ─── SWIPE-TO-DELETE ─── */
-.sw-wrap{position:relative;overflow:hidden;border-bottom:1px solid var(--ln);}
-.sw-wrap:last-child{border-bottom:none;}
-.sw-bg{position:absolute;top:0;right:0;bottom:0;width:88px;background:var(--re);display:flex;align-items:center;justify-content:center;flex-direction:column;gap:3px;}
-.sw-bg svg{opacity:.9;}
-.sw-bg-lbl{font-size:9px;color:rgba(255,255,255,.8);letter-spacing:.08em;text-transform:uppercase;font-weight:600;}
-.sw-inner{background:var(--s1);will-change:transform;}
-.sw-inner .ei{border-bottom:none;}
-.sw-inner .nc{border-bottom:none;}
-
-/* ─── SEARCH HIGHLIGHT ─── */
-mark{background:rgba(200,145,78,.18);color:var(--Au);border-radius:3px;padding:0 2px;font-style:normal;}
-
-/* ─── MOOD CALENDAR ─── */
-.cal-dow{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:6px 20px 3px;}
-.cal-dow span{font-family:'DM Mono',monospace;font-size:8px;color:var(--f4);text-align:center;letter-spacing:.04em;}
-.mood-cal{display:grid;grid-template-columns:repeat(7,1fr);gap:3px;padding:0 20px;}
-.mc-d{aspect-ratio:1;border-radius:6px;background:var(--s2);display:flex;align-items:center;justify-content:center;font-family:'DM Mono',monospace;font-size:8.5px;color:var(--f4);position:relative;overflow:hidden;cursor:default;}
-.mc-d.td{outline:2px solid var(--Au);outline-offset:-2px;}
-.mc-d.has-entry{color:#fff;}
-.mc-d.has-entry::before{content:'';position:absolute;inset:0;opacity:.85;}
-.mc-d.empty-cell{background:transparent;}
-
-/* ─── TODAY'S GOAL RING ─── */
-.goal-ring-card{
-  margin:14px 20px 0;
-  background:var(--s1);border:1px solid var(--ln);border-radius:16px;
-  padding:16px 18px;display:flex;align-items:center;gap:16px;
-  cursor:pointer;transition:background .12s;
-}
-.goal-ring-card:active{background:var(--s2);}
-.ring-wrap{position:relative;width:68px;height:68px;flex-shrink:0;}
-.ring-wrap svg{transform:rotate(-90deg);}
-.ring-track{stroke:var(--s3);fill:none;}
-.ring-fill{stroke:var(--Au);fill:none;stroke-linecap:round;transition:stroke-dashoffset .5s cubic-bezier(.4,0,.2,1);}
-.ring-center{position:absolute;inset:0;display:flex;flex-direction:column;align-items:center;justify-content:center;}
-.ring-pct{font-family:'DM Mono',monospace;font-size:15px;font-weight:500;color:var(--fg);line-height:1;}
-.ring-lbl{font-size:7.5px;color:var(--f3);letter-spacing:.07em;text-transform:uppercase;margin-top:2px;}
-.goal-info{flex:1;min-width:0;}
-.goal-title{font-size:14px;font-weight:500;color:var(--fg);margin-bottom:3px;}
-.goal-sub{font-size:12px;color:var(--f3);line-height:1.45;}
-.goal-cta{display:inline-block;margin-top:7px;font-size:12.5px;color:var(--Au);font-weight:500;}
-
-/* ─── DAILY PROMPT CARD ─── */
-.prompt-card{
-  margin:12px 20px 0;
-  background:var(--s1);border:1px solid var(--ln);border-radius:16px;
-  padding:16px 18px;overflow:hidden;position:relative;
-}
-.prompt-card::before{content:'';position:absolute;top:0;left:0;right:0;height:2px;background:linear-gradient(90deg,var(--Au),var(--pu),var(--bl));}
-.prompt-eyebrow{font-size:9px;font-weight:600;letter-spacing:.14em;text-transform:uppercase;color:var(--Au);margin-bottom:8px;}
-.prompt-q{font-family:'Libre Baskerville',serif;font-size:16px;font-style:italic;color:var(--fg);line-height:1.55;margin-bottom:12px;}
-.prompt-cta{
-  display:inline-flex;align-items:center;gap:6px;
-  padding:7px 14px;border-radius:9px;
-  background:var(--Aub);border:1px solid var(--AuD);
-  font-size:12px;font-weight:500;color:var(--Au);cursor:pointer;
-  transition:all .12s;
-}
-.prompt-cta:active{opacity:.8;transform:scale(.97);}
-
-/* ─── STREAK BADGE ─── */
-.streak-pill{
-  display:inline-flex;align-items:center;gap:5px;
-  padding:4px 12px 4px 10px;border-radius:99px;
-  background:linear-gradient(135deg,var(--AuD),var(--Au));
-  font-size:10px;font-weight:700;color:#1a1000;
-  letter-spacing:.04em;margin-top:8px;
-}
-
-/* ─── FOCUS MODE ─── */
-#focus-ov{
-  position:fixed;inset:0;background:var(--bg);z-index:300;
-  display:flex;flex-direction:column;animation:fade .2s ease;
-}
-.focus-hd{
-  display:flex;align-items:center;justify-content:space-between;
-  padding:max(env(safe-area-inset-top),44px) 22px 13px;
-  border-bottom:1px solid var(--ln);flex-shrink:0;
-}
-.focus-exit{font-size:13.5px;color:var(--Au);font-weight:500;cursor:pointer;padding:4px 0;}
-.focus-wc{font-family:'DM Mono',monospace;font-size:11px;color:var(--f4);}
-.focus-area{
-  flex:1;width:100%;background:transparent;border:none;outline:none;
-  padding:22px 28px;font-size:19px;line-height:1.88;color:var(--fg);
-  font-family:'Libre Baskerville',serif;font-weight:400;
-  overflow-y:auto;-webkit-overflow-scrolling:touch;
-}
-.focus-area::placeholder{color:var(--f4);}
-.focus-ft{
-  display:flex;align-items:center;justify-content:center;gap:12px;
-  padding:12px 22px;padding-bottom:max(env(safe-area-inset-bottom),14px);
-  border-top:1px solid var(--ln);flex-shrink:0;
-}
-.focus-save{
-  padding:10px 36px;border-radius:99px;
-  background:var(--Au);color:#1a1000;font-size:14px;font-weight:600;
-  border:none;cursor:pointer;transition:opacity .15s;
-}
-.focus-save:active{opacity:.85;}
-
-/* ─── KEYBOARD PUSH ─── */
-#kb-sp{flex-shrink:0;transition:height .22s ease;}
-
-/* ─── SHARE SHEET ─── */
-.share-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:8px;padding:14px 18px;}
-.share-opt{display:flex;flex-direction:column;align-items:center;gap:6px;padding:10px 6px;border-radius:12px;cursor:pointer;transition:background .12s;}
-.share-opt:active{background:var(--s3);}
-.share-ico{width:50px;height:50px;border-radius:15px;display:flex;align-items:center;justify-content:center;font-size:22px;border:1px solid var(--ln);background:var(--s2);}
-.share-lbl{font-size:11px;color:var(--f2);text-align:center;line-height:1.3;}
-
-/* ─── WRITING STATS BAR ─── */
-.write-stats-bar{
-  display:flex;align-items:center;gap:14px;
-  padding:6px 20px 7px;border-top:1px solid var(--ln);
-  background:var(--s1);flex-shrink:0;
-}
-.wsb-item{font-family:'DM Mono',monospace;font-size:10px;color:var(--f4);}
-.wsb-item span{color:var(--Au);}
-.focus-mode-btn{
-  margin-left:auto;display:flex;align-items:center;gap:4px;
-  font-size:11px;color:var(--f3);cursor:pointer;padding:4px 8px;
-  border-radius:6px;border:1px solid var(--ln);transition:all .12s;
-}
-.focus-mode-btn:active{background:var(--s3);}
-
-/* ─── TOAST VARIANTS ─── */
-#toast.ok{border-color:rgba(90,158,116,.5);color:var(--gr);}
-#toast.warn{border-color:rgba(158,90,90,.5);color:var(--re);}
-
-/* ─── BUTTON HAPTIC FEEL ─── */
-.btn-p:active,.btn-g:active,.btn-d:active,.padd:active{transform:scale(.97);}
-.lkey:active{transform:scale(.92)!important;}
-
-/* ─── ENTRY READING TIME ─── */
-.read-time{font-size:10px;color:var(--f4);font-family:'DM Mono',monospace;}
-
-/* ─── ENHANCED ENTRY ITEM ─── */
-.ei-journal-dot{width:4px;height:4px;border-radius:50%;flex-shrink:0;opacity:.7;}
-
-/* ─── PROGRESS REAL BARS ─── */
-.prog-week-bar{
-  display:flex;align-items:flex-end;gap:6px;
-  height:80px;padding:0 20px;
-}
-.pwb{flex:1;display:flex;flex-direction:column;align-items:center;gap:5px;}
-.pwb-fill{width:100%;border-radius:5px 5px 0 0;min-height:4px;background:var(--s3);transition:height .5s cubic-bezier(.34,1.2,.64,1);}
-.pwb-fill.on{background:linear-gradient(180deg,var(--AuL),var(--AuD));}
-.pwb-lbl{font-family:'DM Mono',monospace;font-size:9px;color:var(--f4);}
-
-/* ─── NOTES SEARCH ─── */
-.notes-sbar{padding:10px 20px;border-bottom:1px solid var(--ln);}
-
-@supports (padding-bottom: env(safe-area-inset-bottom)) {
-  @media (-webkit-touch-callout: default) {
-    #bnav { padding-bottom: env(safe-area-inset-bottom); }
-  }
-}
-
+/* ─── PHOTO VIEWER ─── */
+#pv{position:fixed;inset:0;background:rgba(0,0,0,.96);z-index:500;display:flex;align-items:center;justify-content:center;padding:max(env(safe-area-inset-top),44px) 20px max(env(safe-area-inset-bottom),20px);animation:fade .18s;}
 #pv img{max-width:100%;max-height:100%;object-fit:contain;}
 #pv-x{position:absolute;top:max(env(safe-area-inset-top),44px);right:20px;width:40px;height:40px;border-radius:50%;background:rgba(255,255,255,.15);color:#fff;font-size:18px;display:flex;align-items:center;justify-content:center;cursor:pointer;}
 
@@ -1368,177 +1211,170 @@ function rHome() {
   const ds = now.toLocaleDateString('en-US', { weekday: 'long', month: 'long', day: 'numeric' });
   const tw = A.entries.reduce((a, e) => a + (e.words || 0), 0);
   const streak = calcStreak();
+  const days = buildCalDays();
+
+  // On This Day
   const otd = getOnThisDay();
-  const todayW = A.entries.filter(e => new Date(e.ts||0).toDateString()===now.toDateString()).reduce((a,e)=>a+(e.words||0),0);
-  const pct = Math.min((todayW / A.goal) * 100, 100);
-  const R = 28, C = +(2 * Math.PI * R).toFixed(1), off = +(C - (pct/100)*C).toFixed(1);
-  const doy = Math.floor((now - new Date(now.getFullYear(),0,0)) / 86400000);
-  const todayPrompt = PROMPTS[doy % PROMPTS.length];
+
   const recentHTML = A.entries.length === 0
-    ? `<div class="empty" style="padding:48px 24px 32px">No entries yet.<br><br><a onclick="openWrite(null)" style="color:var(--Au);cursor:pointer;font-weight:500">✦ Write your first entry →</a></div>`
-    : A.entries.slice(0,5).map(eItem).join('');
+    ? `<div class="empty">No entries yet.<br><a onclick="openWrite(null)">✦ Write your first entry →</a></div>`
+    : A.entries.slice(0, 4).map(eItem).join('');
+
   return `
   <div class="hero">
     <div class="hero-date">${ds}</div>
     <div class="hero-name">Good ${greet},<br><em>${A.name || 'you'}.</em></div>
-    ${streak >= 2 ? `<div class="streak-pill">${streak >= 30 ? '🔥' : streak >= 7 ? '⚡' : '✦'} ${streak}-day streak</div>` : ''}
   </div>
   <div class="scards">
     <div class="sc a"><div class="scv">${streak}</div><div class="scl">Streak</div></div>
     <div class="sc b"><div class="scv">${A.entries.length}</div><div class="scl">Entries</div></div>
-    <div class="sc c"><div class="scv">${tw>=1000?(Math.round(tw/100)/10)+'k':tw}</div><div class="scl">Words</div></div>
+    <div class="sc c"><div class="scv">${tw >= 1000 ? (Math.round(tw / 100) / 10) + 'k' : tw}</div><div class="scl">Words</div></div>
     <div class="sc d"><div class="scv">${A.notes.length}</div><div class="scl">Notes</div></div>
   </div>
-  <div class="goal-ring-card" onclick="openWrite(null)">
-    <div class="ring-wrap">
-      <svg width="68" height="68" viewBox="0 0 68 68">
-        <circle class="ring-track" cx="34" cy="34" r="${R}" stroke-width="5"/>
-        <circle class="ring-fill" cx="34" cy="34" r="${R}" stroke-width="5" stroke-dasharray="${C}" stroke-dashoffset="${off}"/>
-      </svg>
-      <div class="ring-center">
-        <div class="ring-pct">${pct>=100?'✓':Math.round(pct)+'%'}</div>
-        <div class="ring-lbl">today</div>
-      </div>
-    </div>
-    <div class="goal-info">
-      <div class="goal-title">${todayW===0?'Start writing today':todayW+' words today'}</div>
-      <div class="goal-sub">${pct>=100?'Daily goal reached! Keep going.':A.goal-todayW+' words to your '+A.goal+'-word goal'}</div>
-      <div class="goal-cta">Tap to write →</div>
-    </div>
-  </div>
-  <div class="prompt-card">
-    <div class="prompt-eyebrow">✦ Today's prompt</div>
-    <div class="prompt-q">${todayPrompt}</div>
-    <div class="prompt-cta" onclick="event.stopPropagation();openWriteWithPrompt(${doy % PROMPTS.length})">
-      <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round"><path d="M12 20h9"/><path d="M16.5 3.5a2.121 2.121 0 013 3L7 19l-4 1 1-4L16.5 3.5z"/></svg>
-      Write from this
-    </div>
-  </div>
-  ${otd?`<div class="otd" onclick="viewEntry(${otd.id})">
-    <div class="otd-e">✦ On This Day — ${otd.yearsAgo} year${otd.yearsAgo>1?'s':''} ago</div>
+  ${otd ? `<div class="otd" onclick="viewEntry(${otd.id})">
+    <div class="otd-e">✦ On This Day — ${otd.yearsAgo} year${otd.yearsAgo > 1 ? 's' : ''} ago</div>
     <div class="otd-t">${otd.title}</div>
-    <div class="otd-p">${(otd.body||'').split('\n').find(l=>l.trim())||''}</div>
-    <div class="otd-m">${otd.date} · ${otd.words||0} words</div>
-  </div>`:''}
-  <div class="sh" style="padding-top:20px"><span class="sl2">This Month</span><span class="slink" onclick="go('progress')">Progress →</span></div>
-  <div class="cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-  <div class="mood-cal">${buildMoodCal()}</div>
-  <div class="sh" style="padding-top:20px"><span class="sl2">Recent Entries</span><span class="slink" onclick="go('journal')">See all →</span></div>
-  ${A.entries.length>0?`<div class="blk">${recentHTML}</div>`:recentHTML}
-  <div style="height:10px"></div>`;
+    <div class="otd-p">${otd.body.split('\n')[0]}</div>
+    <div class="otd-m">${otd.date} · ${otd.words || 0} words</div>
+  </div>` : ''}
+  <div class="sh" style="padding-top:16px"><span class="sl2">This Month</span><span class="slink" onclick="go('progress')">Progress →</span></div>
+  <div class="act-grid">${days.map(d => `<div class="ag${d.w ? ' w' : ''}${d.td ? ' td' : ''}">${d.n}</div>`).join('')}</div>
+  <div class="sh" style="padding-top:18px"><span class="sl2">Recent Entries</span><span class="slink" onclick="go('journal')">See all →</span></div>
+  ${A.entries.length > 0 ? `<div class="blk">${recentHTML}</div>` : recentHTML}`;
 }
 
 function calcStreak() {
   if (!A.entries.length) return 0;
-  const today = new Date(); today.setHours(0,0,0,0);
-  const dates = new Set(A.entries.map(e=>{const d=new Date(e.ts||0);d.setHours(0,0,0,0);return d.getTime();}));
-  let s=0, cur=dates.has(today.getTime())?today.getTime():today.getTime()-86400000;
-  while(dates.has(cur)){s++;cur-=86400000;}
-  return s;
+  const today = new Date(); today.setHours(0, 0, 0, 0);
+  const dates = new Set(A.entries.map(e => {
+    const d = new Date(e.ts || Date.now()); d.setHours(0, 0, 0, 0); return d.getTime();
+  }));
+  let streak = 0, cur = today.getTime();
+  while (dates.has(cur)) { streak++; cur -= 86400000; }
+  return streak;
 }
 
-function buildMoodCal() {
-  const now = new Date(), y=now.getFullYear(), m=now.getMonth();
-  const firstDay=new Date(y,m,1).getDay(), dim=new Date(y,m+1,0).getDate(), today=now.getDate();
-  const dayMoods={};
-  A.entries.filter(e=>{const d=new Date(e.ts||0);return d.getFullYear()===y&&d.getMonth()===m;})
-    .forEach(e=>{const d=new Date(e.ts||0).getDate();if(!dayMoods[d])dayMoods[d]=e.mc||'';});
-  let h='';
-  for(let i=0;i<firstDay;i++) h+=`<div class="mc-d empty-cell"></div>`;
-  for(let d=1;d<=dim;d++){
-    const mc=dayMoods[d], isTd=d===today;
-    h+=`<div class="mc-d${isTd?' td':''}${mc?' has-entry':''}">
-      ${mc?`<div style="position:absolute;inset:0;background:${mc};opacity:.82;border-radius:6px"></div>`:''}
-      <span style="position:relative;z-index:1;${mc?'color:#fff':''}">${d}</span>
-    </div>`;
-  }
-  return h;
+function buildCalDays() {
+  const now = new Date();
+  const year = now.getFullYear(), month = now.getMonth();
+  const daysInMonth = new Date(year, month + 1, 0).getDate();
+  const today = now.getDate();
+  const writtenDays = new Set(A.entries.filter(e => {
+    const d = new Date(e.ts || 0);
+    return d.getFullYear() === year && d.getMonth() === month;
+  }).map(e => new Date(e.ts || 0).getDate()));
+  return Array.from({ length: daysInMonth }, (_, i) => ({
+    n: i + 1, w: writtenDays.has(i + 1), td: i + 1 === today
+  }));
 }
 
 function getOnThisDay() {
   if (!A.entries.length) return null;
-  const now=new Date(), m=now.getMonth(), d=now.getDate(), y=now.getFullYear();
-  const match=A.entries.find(e=>{const ed=new Date(e.ts||0);return ed.getMonth()===m&&ed.getDate()===d&&ed.getFullYear()<y;});
-  if(!match) return null;
-  return {...match, yearsAgo: y-new Date(match.ts||0).getFullYear()};
+  const now = new Date();
+  const m = now.getMonth(), d = now.getDate(), y = now.getFullYear();
+  const match = A.entries.find(e => {
+    const ed = new Date(e.ts || 0);
+    return ed.getMonth() === m && ed.getDate() === d && ed.getFullYear() < y;
+  });
+  if (!match) return null;
+  return { ...match, yearsAgo: y - new Date(match.ts || 0).getFullYear() };
 }
 
-function openWriteWithPrompt(idx) {
-  openWrite(null);
-  setTimeout(()=>{const ta=document.getElementById('wb');if(ta){ta.value=PROMPTS[idx]+'
-
-';WS.body=ta.value;ta.focus();ta.setSelectionRange(ta.value.length,ta.value.length);}},350);
-}
-
-function hl(text, q) {
-  if (!q || !text) return text || '';
-  const re = new RegExp('(' + q.replace(/[.*+?^${}()|[\]\\]/g,'\\$&') + ')', 'gi');
-  return text.replace(re, '<mark>$1</mark>');
-}
-
-function readTime(words) {
-  const m = Math.ceil((words||0) / 200);
-  return m <= 1 ? '1 min read' : m + ' min read';
-}
-
-function eItem(e, q) {
-  const title = q ? hl(e.title||'Untitled',q) : (e.title||'Untitled');
-  const prev = (e.body||'').split('\n').find(l=>l.trim())||'';
-  const prevHL = q ? hl(prev,q) : prev;
-  const j = e.journal ? JOURNALS.find(j=>j.id===e.journal) : null;
+function eItem(e) {
   return `<div class="ei" onclick="viewEntry(${e.id})">
     <div class="ei-top">
-      <div class="ei-l">
-        <div class="eidot" style="background:${e.mc||'#888'}"></div>
-        <span class="eidate">${e.date}</span>
-        ${j?`<div class="ei-journal-dot" style="background:${j.c}"></div>`:''}
-      </div>
-      <span class="eimeta">${readTime(e.words)}${e.photos?.length?` · ${e.photos.length}▣`:''}${e.recordings?.length?' · 🎙':''}</span>
+      <div class="ei-l"><div class="eidot" style="background:${e.mc || '#888'}"></div><span class="eidate">${e.date}</span></div>
+      <span class="eimeta">${e.words || 0}w${e.photos?.length ? ` · ${e.photos.length}▣` : ''}${e.recordings?.length ? ' · 🎙' : ''}</span>
     </div>
-    <div class="eititle">${title}</div>
-    <div class="eiprev">${prevHL}</div>
+    <div class="eititle">${e.title || 'Untitled'}</div>
+    <div class="eiprev">${(e.body || '').split('\n').find(l => l.trim()) || ''}</div>
     <div class="eifoot">
-      ${e.mood?`<span class="mbadge" style="border-left-color:${e.mc};color:${e.mc}">${e.mood}</span>`:''}
-      ${(e.tags||[]).slice(0,2).map(t=>`<span class="chip">${t}</span>`).join('')}
+      ${e.mood ? `<span class="mbadge" style="border-left-color:${e.mc};color:${e.mc}">${e.mood}</span>` : ''}
+      ${(e.tags || []).slice(0, 2).map(t => `<span class="chip">${t}</span>`).join('')}
     </div>
   </div>`;
 }
+
+// ════════════════════════════════════════════════
+//  ENTRY DETAIL
+// ════════════════════════════════════════════════
+function viewEntry(id) {
+  const e = A.entries.find(x => x.id === id); if (!e) return;
+  const p = document.createElement('div'); p.id = 'edet'; p.className = 'panel su';
+  p.innerHTML = `
+    <div class="ph">
+      <div class="ph-lft">
+        <div class="back-btn" onclick="document.getElementById('edet')?.remove()">
+          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--Au)" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back
+        </div>
+      </div>
+      <div class="ph-rgt">
+        <button class="btn btn-g" onclick="openWrite(${e.id});document.getElementById('edet')?.remove()">Edit</button>
+        <button class="btn btn-d" onclick="delEntry(${e.id})">Delete</button>
+      </div>
+    </div>
+    <div class="pscroll">
+      <div class="ed-title">${e.title || 'Untitled'}</div>
+      <div class="echips">
+        ${e.mood ? `<div class="ech"><div class="ecd" style="background:${e.mc}"></div>${e.mood}</div>` : ''}
+        ${e.loc ? `<div class="ech">📍 ${e.loc}</div>` : ''}
+        ${e.wx ? `<div class="ech">🌤 ${e.wx}</div>` : ''}
+        ${(e.tags || []).map(t => `<div class="ech">${t}</div>`).join('')}
+        <div class="ech">${e.words || 0} words</div>
+        <div class="ech">${e.date}</div>
+      </div>
+      <div style="height:1px;background:var(--ln);margin:0 20px 16px"></div>
+      ${(e.body || '').split('\n\n').map(par => `<p class="ed-para">${par.replace(/\n/g, '<br>')}</p>`).join('')}
+      ${e.photos?.length ? `<div class="ed-sec">Photos</div><div class="ed-photos">${e.photos.map(s => `<div class="ed-photo" onclick="showPhoto('${s}')"><img src="${s}" loading="lazy"></div>`).join('')}</div>` : ''}
+      ${e.recordings?.length ? `<div class="ed-sec">Voice Notes</div><div class="audio-cards">${e.recordings.map((r, i) => `<div class="acard"><div class="aplay" onclick="playAudio('${r.data}',this)"><div class="aplay-ic"></div></div><div style="flex:1"><div class="a-lbl">Voice note ${i + 1}</div><div class="a-dur">${fmtD(r.dur || 0)}</div></div></div>`).join('')}</div>` : ''}
+      <div style="height:30px"></div>
+    </div>`;
+  document.getElementById('screen').appendChild(p);
+}
+
+function delEntry(id) {
+  if (!confirm('Delete this entry?')) return;
+  A.entries = A.entries.filter(e => e.id !== id); save();
+  document.getElementById('edet')?.remove(); renderPage(); toast('Entry deleted');
+}
+
+function showPhoto(src) {
+  const v = document.createElement('div'); v.id = 'pv';
+  v.innerHTML = `<img src="${src}"><div id="pv-x" onclick="document.getElementById('pv')?.remove()">✕</div>`;
+  document.body.appendChild(v);
+}
+
+function playAudio(data, btn) {
+  const a = new Audio(data);
+  btn.innerHTML = '<div style="display:flex;gap:3px;align-items:center"><div style="width:3px;height:14px;background:#1a1000;border-radius:2px"></div><div style="width:3px;height:14px;background:#1a1000;border-radius:2px"></div></div>';
+  a.play().catch(() => toast('Could not play audio'));
+  a.onended = () => { btn.innerHTML = '<div class="aplay-ic"></div>'; };
+}
+
+function fmtD(s) { const m = Math.floor(s / 60); return `${m}:${String(s % 60).padStart(2, '0')}`; }
 
 // ════════════════════════════════════════════════
 //  JOURNAL LIST
 // ════════════════════════════════════════════════
 function rJournal() {
-  const moods = [...new Set(A.entries.map(e=>e.mood).filter(Boolean))];
-  const filts = ['All','Has Photos','Has Audio',...moods];
+  const filts = ['All', 'Serene', 'Proud', 'Reflective', 'Heavy', 'Has Photos', 'Has Audio'];
   let data = A.entries.filter(e => {
-    if (A.filt==='Has Photos') return e.photos?.length>0;
-    if (A.filt==='Has Audio') return e.recordings?.length>0;
-    if (A.filt!=='All') return e.mood===A.filt;
-    if (A.search) return (e.title||'').toLowerCase().includes(A.search.toLowerCase())||(e.body||'').toLowerCase().includes(A.search.toLowerCase())||((e.tags||[]).some(t=>t.toLowerCase().includes(A.search.toLowerCase())));
+    if (A.filt === 'Has Photos') return e.photos?.length > 0;
+    if (A.filt === 'Has Audio') return e.recordings?.length > 0;
+    if (A.filt !== 'All') return e.mood === A.filt;
+    if (A.search) return (e.title || '').toLowerCase().includes(A.search.toLowerCase()) || (e.body || '').toLowerCase().includes(A.search.toLowerCase());
     return true;
   });
   const grp = {};
-  data.forEach(e=>{if(!grp[e.month])grp[e.month]=[];grp[e.month].push(e);});
-  const q = A.search;
-  const rows = Object.entries(grp).map(([m,es])=>`<div class="mdl">${m} <span style="color:var(--f4);font-size:8.5px">${es.length} ${es.length===1?'entry':'entries'}</span></div><div class="blk">${es.map(e=>swipeRow(e,q)).join('')}</div>`).join('');
+  data.forEach(e => { if (!grp[e.month]) grp[e.month] = []; grp[e.month].push(e); });
   return `
   <div class="sbar"><div class="sinner">
     <span class="sico"><svg width="15" height="15" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6" stroke-linecap="round"><circle cx="11" cy="11" r="8"/><path d="m21 21-4.35-4.35"/></svg></span>
-    <input class="sinp" placeholder="Search entries, moods, tags…" value="${A.search}" oninput="A.search=this.value;renderPage()">
+    <input class="sinp" placeholder="Search entries, moods, places…" value="${A.search}" oninput="A.search=this.value;renderPage()">
   </div></div>
-  <div class="frow">${filts.map(f=>`<div class="fp${A.filt===f?' on':''}" onclick="A.filt='${f}';A.search='';renderPage()">${f}</div>`).join('')}</div>
-  ${!data.length?`<div class="empty">No entries found.<br><a onclick="A.filt='All';A.search='';renderPage()">Clear filters →</a></div>`:''}
-  ${rows}`;
-}
-
-function swipeRow(e, q) {
-  return `<div class="sw-wrap" id="sw-${e.id}">
-    <div class="sw-bg" onclick="delEntry(${e.id})">
-      <svg width="18" height="20" viewBox="0 0 18 20" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round"><path d="M1 5h16M6 5V3h6v2M7 9v6M11 9v6M2 5l1 12a2 2 0 002 2h8a2 2 0 002-2L16 5"/></svg>
-      <span class="sw-bg-lbl">Delete</span>
-    </div>
-    <div class="sw-inner" ontouchstart="swStart(event,${e.id})" ontouchmove="swMove(event,${e.id})" ontouchend="swEnd(event,${e.id})">${eItem(e,q)}</div>
-  </div>`;
+  <div class="frow">${filts.map(f => `<div class="fp${A.filt === f ? ' on' : ''}" onclick="A.filt='${f}';renderPage()">${f}</div>`).join('')}</div>
+  ${!data.length ? `<div class="empty">No entries found.<br><a onclick="openWrite(null)">✦ Write your first entry →</a></div>` : ''}
+  ${Object.entries(grp).map(([m, es]) => `<div class="mdl">${m}</div><div class="blk">${es.map(eItem).join('')}</div>`).join('')}`;
 }
 
 // ════════════════════════════════════════════════
@@ -1561,7 +1397,7 @@ function openWrite(editId) {
 
 function renderWP() {
   const p = document.getElementById('wpanel'); if (!p) return;
-  const w = WS, wc = w.body.trim()?w.body.trim().split(/\s+/).length:0, pct = Math.min((wc/A.goal)*100,100);
+  const w = WS, wc = w.body.trim() ? w.body.trim().split(/\s+/).length : 0, pct = Math.min((wc / A.goal) * 100, 100);
   p.innerHTML = `
     <div class="ph">
       <div class="ph-lft">
@@ -1572,13 +1408,11 @@ function renderWP() {
           <svg width="10" height="10" viewBox="0 0 10 10" fill="none"><path d="M2 3.5L5 6.5L8 3.5" stroke="var(--f3)" stroke-width="1.4" stroke-linecap="round"/></svg>
         </div>
       </div>
-      <div class="ph-rgt">
-        <button class="btn btn-p" id="sbtn" onclick="saveEntry()">${w.id?'Update':'Save'}</button>
-      </div>
+      <div class="ph-rgt"><button class="btn btn-p" id="sbtn" onclick="saveEntry()">${w.id ? 'Update' : 'Save'}</button></div>
     </div>
     <div class="wchips">
-      <div class="wch">${new Date().toLocaleDateString('en-US',{month:'short',day:'numeric'})}</div>
-      ${w.mood?`<div class="wch on" id="mchip"><div class="wch-d" style="background:${w.mc}"></div>${w.mood} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span></div>`:''}
+      <div class="wch">${new Date().toLocaleDateString('en-US', { month: 'short', day: 'numeric' })}</div>
+      ${w.mood ? `<div class="wch on" id="mchip"><div class="wch-d" style="background:${w.mc}"></div>${w.mood} <span onclick="clearMood()" style="margin-left:4px;opacity:.5">✕</span></div>` : ''}
       <div class="wch">🔒 Private</div>
     </div>
     <div class="tbar">
@@ -1598,15 +1432,6 @@ function renderWP() {
       <button class="tb2" onclick="showTmpls()" style="padding:0 8px;font-size:11px">Templates</button>
       <button class="tb2" onclick="showPrompts()" style="padding:0 8px;font-size:11px">Prompts</button>
     </div>
-    <div class="write-stats-bar">
-      <span class="wsb-item"><span id="wsb-wc">${wc}</span> words</span>
-      <span class="wsb-item"><span id="wsb-rt">${Math.ceil(wc/200)||0}</span> min read</span>
-      <span class="wsb-item">Goal: <span id="wsb-pct">${Math.round(pct)}%</span></span>
-      <div class="focus-mode-btn" onclick="openFocus()">
-        <svg width="12" height="12" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round"><path d="M8 3H5a2 2 0 00-2 2v3m18 0V5a2 2 0 00-2-2h-3m0 18h3a2 2 0 002-2v-3M3 16v3a2 2 0 002 2h3"/></svg>
-        Focus
-      </div>
-    </div>
     <div class="pscroll" id="wscroll">
       <textarea class="wt" id="wt" placeholder="Untitled entry…" rows="2">${w.title}</textarea>
       <div style="height:1px;background:var(--ln);margin:0 20px"></div>
@@ -1618,7 +1443,7 @@ function renderWP() {
       </div>
       <div class="msec">
         <div class="msec-l">How are you feeling?</div>
-        <div class="mrow">${MOODS.map(m=>`<div class="mo${w.mood===m.l?' on':''}" onclick="pickMood('${m.l}','${m.c}')"><div class="mo-d" style="background:${m.c}"></div>${m.l}</div>`).join('')}</div>
+        <div class="mrow">${MOODS.map(m => `<div class="mo${w.mood === m.l ? ' on' : ''}" onclick="pickMood('${m.l}','${m.c}')"><div class="mo-d" style="background:${m.c}"></div>${m.l}</div>`).join('')}</div>
       </div>
       <div class="psec">
         <div class="psec-h"><span class="psec-l">Photos</span><div class="padd" onclick="trigCam()">+ Attach</div></div>
@@ -1636,22 +1461,21 @@ function renderWP() {
       </div>
       <div class="tsec">
         <div class="msec-l">Tags</div>
-        <div class="tags-w">${TAGS.map(t=>`<div class="wtag${w.tags.includes(t)?' on':''}" onclick="togTag('${t}')">${t}</div>`).join('')}</div>
+        <div class="tags-w">${TAGS.map(t => `<div class="wtag${w.tags.includes(t) ? ' on' : ''}" onclick="togTag('${t}')">${t}</div>`).join('')}</div>
       </div>
       <div class="tgsec">
         <div class="msec-l">Templates</div>
-        <div class="tgrid">${TEMPLATES.map((t,i)=>`<div class="tcard" onclick="applyT(${i})"><div class="tcard-n">${t.n}</div><div class="tcard-d">${t.d}</div></div>`).join('')}</div>
+        <div class="tgrid">${TEMPLATES.map((t, i) => `<div class="tcard" onclick="applyT(${i})"><div class="tcard-n">${t.n}</div><div class="tcard-d">${t.d}</div></div>`).join('')}</div>
       </div>
       <div class="prsec">
         <div class="msec-l" style="margin-bottom:6px">Writing Prompts</div>
-        ${PROMPTS.map((p,i)=>`<div class="pmt" onclick="applyP(${i})">${p}</div>`).join('')}
+        ${PROMPTS.map((p, i) => `<div class="pmt" onclick="applyP(${i})">${p}</div>`).join('')}
       </div>
       <div style="height:24px"></div>
-    </div>
-    <div id="kb-sp" style="height:0"></div>`;
+    </div>`;
   bindWP();
-  initKbPush();
 }
+
 function bindWP() {
   const ta = document.getElementById('wb'); if (!ta) return;
   ta.addEventListener('input', () => {
@@ -1860,6 +1684,83 @@ function rGallery() {
 }
 
 // ════════════════════════════════════════════════
+//  PROGRESS
+// ════════════════════════════════════════════════
+function rProgress() {
+  const streak = calcStreak();
+  const tw = A.entries.reduce((a, e) => a + (e.words || 0), 0);
+  const days = buildCalDays();
+  // Weekly bar: last 7 days
+  const bars = Array.from({ length: 7 }, (_, i) => {
+    const d = new Date(); d.setDate(d.getDate() - (6 - i)); d.setHours(0, 0, 0, 0);
+    const label = ['S', 'M', 'T', 'W', 'T', 'F', 'S'][d.getDay()];
+    const written = A.entries.some(e => { const ed = new Date(e.ts || 0); ed.setHours(0, 0, 0, 0); return ed.getTime() === d.getTime(); });
+    return { d: label, on: written, h: written ? 60 + Math.random() * 35 : 0 };
+  });
+  const ms = [
+    { n: 'First Entry', d: 'Write your very first journal entry', done: A.entries.length >= 1 },
+    { n: '7-Day Streak', d: 'Journal every day for a week', done: streak >= 7 },
+    { n: '10 Entries', d: 'Write 10 journal entries', done: A.entries.length >= 10 },
+    { n: '30-Day Streak', d: '30 consecutive days', done: streak >= 30 },
+    { n: '50 Entries', d: 'Write 50 journal entries', done: A.entries.length >= 50 },
+    { n: '10k Words', d: '10,000 words written', done: tw >= 10000 },
+    { n: '100 Entries', d: 'Write 100 journal entries', done: A.entries.length >= 100 },
+    { n: '90-Day Streak', d: '90 consecutive days', done: streak >= 90 },
+  ];
+  return `<div class="phero">
+    <div>
+      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--f3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px">Current Streak</div>
+      <div class="pbig">${streak}</div>
+      <div style="font-size:11.5px;color:var(--f3);margin-top:5px">${streak > 0 ? 'Keep it up!' : 'Start today'}</div>
+    </div>
+    <div class="pright">
+      <div class="prl">Entries</div><div class="prv" style="color:var(--gr)">${A.entries.length}</div>
+      <div class="prl" style="margin-top:14px">Words</div>
+      <div class="prv" style="color:var(--bl)">${tw >= 1000 ? (Math.round(tw / 100) / 10) + 'k' : tw}</div>
+    </div>
+  </div>
+  <div class="sh" style="padding-top:16px"><span class="sl2">Last 7 Days</span></div>
+  <div class="bchart">${bars.map(b => `<div class="bc"><div class="bf${b.on ? ' on' : ''}" style="height:${b.on ? b.h : 8}%"></div><div class="bd">${b.d}</div></div>`).join('')}</div>
+  <div class="sh"><span class="sl2">This Month</span></div>
+  <div class="cgrid">${days.map(d => `<div class="cg${d.w ? ' w' : ''}${d.td ? ' td' : ''}">${d.n}</div>`).join('')}</div>
+  <div class="sh"><span class="sl2">Milestones</span></div>
+  <div class="blk">${ms.map(m => `<div class="ms"><div class="ms-i" style="${m.done ? 'background:var(--Aub);color:var(--Au)' : ''}">${m.done ? '✦' : '○'}</div><div style="flex:1"><div class="ms-t" style="${!m.done ? 'color:var(--f2)' : ''}">${m.n}</div><div class="ms-d">${m.d}</div></div><div class="ms-s${m.done ? ' done' : ' lock'}">${m.done ? 'Earned' : 'Locked'}</div></div>`).join('')}</div>
+  <div style="height:20px"></div>`;
+}
+
+// ════════════════════════════════════════════════
+//  INSIGHTS
+// ════════════════════════════════════════════════
+function rInsights() {
+  const tot = A.entries.length, tw = A.entries.reduce((a, e) => a + (e.words || 0), 0), avgW = tot ? Math.round(tw / tot) : 0;
+  const mc = {}; A.entries.forEach(e => { if (e.mood) mc[e.mood] = (mc[e.mood] || 0) + 1; });
+  const topM = Object.entries(mc).sort((a, b) => b[1] - a[1])[0]?.[0] || '—';
+  const moodTotals = Object.values(mc).reduce((a, v) => a + v, 0);
+  const md = Object.entries(mc).sort((a, b) => b[1] - a[1]).slice(0, 4).map(([l, v]) => ({
+    l, p: Math.round((v / moodTotals) * 100), c: MOODS.find(m => m.l === l)?.c || '#888'
+  }));
+  const nPh = A.entries.reduce((a, e) => a + (e.photos?.length || 0), 0);
+  const nRec = A.entries.reduce((a, e) => a + (e.recordings?.length || 0), 0);
+  if (!tot) return `<div class="empty" style="padding-top:80px">Start journaling to see your insights.<br><a onclick="openWrite(null)">✦ Write your first entry →</a></div>`;
+  const ws = [{ w: 'growth', s: 2 }, { w: 'clarity', s: 1 }, { w: 'rest', s: 0 }, { w: 'reflection', s: 2 }, { w: 'gratitude', s: 1 }, { w: 'family', s: 0 }, { w: 'progress', s: 1 }, { w: 'purpose', s: 2 }];
+  return `<div class="i4">
+    <div class="is"><div class="isv">${tot}</div><div class="isl">Total entries</div></div>
+    <div class="is"><div class="isv">${avgW}</div><div class="isl">Avg words</div></div>
+    <div class="is"><div class="isv">${nPh}</div><div class="isl">Photos</div></div>
+    <div class="is"><div class="isv">${topM}</div><div class="isl">Top mood</div></div>
+  </div>
+  ${md.length ? `<div class="sh" style="padding-top:18px"><span class="sl2">Mood Breakdown</span></div>${md.map(m => `<div class="mbr"><div class="mbn">${m.l}</div><div class="mbb"><div class="mbf" style="width:${m.p}%;background:${m.c}"></div></div><div class="mbp">${m.p}%</div></div>`).join('')}` : ''}
+  <div class="sh"><span class="sl2">Patterns</span></div>
+  ${[
+    { i: '↗', t: 'Keep Going', b: `You've written <span class="ic-hl">${tot} ${tot === 1 ? 'entry' : 'entries'}</span> and ${tw >= 1000 ? (Math.round(tw / 100) / 10) + 'k' : tw} words. Every entry counts.` },
+    { i: '▣', t: 'Visual Memory', b: `<span class="ic-hl">${nPh} photo${nPh !== 1 ? 's' : ''}</span> attached. Photos make memories richer and more vivid.` },
+    { i: '🎙', t: 'Voice Notes', b: `<span class="ic-hl">${nRec} recording${nRec !== 1 ? 's' : ''}</span> saved. Your most complete entries use multiple media types.` },
+  ].map(c => `<div class="ic"><div class="ic-h"><div class="ic-i">${c.i}</div><div class="ic-t">${c.t}</div></div><div class="ic-b">${c.b}</div></div>`).join('')}
+  <div class="sh"><span class="sl2">Themes</span></div>
+  <div class="thwrap">${ws.map(({ w, s }) => `<div class="tw${s === 1 ? ' lg' : s === 2 ? ' xl' : ''}">${w}</div>`).join('')}</div>`;
+}
+
+// ════════════════════════════════════════════════
 //  ME / SETTINGS
 // ════════════════════════════════════════════════
 function rMe() {
@@ -2018,311 +1919,6 @@ function toast(msg) {
   const t = document.getElementById('toast');
   t.textContent = msg; t.classList.add('show');
   clearTimeout(_tt); _tt = setTimeout(() => t.classList.remove('show'), 2600);
-}
-
-// ════════════════════════════════════════════════
-//  SWIPE-TO-DELETE
-// ════════════════════════════════════════════════
-const _sw = {}; // track swipe state per id
-
-function swStart(e, id) {
-  const t = e.touches[0];
-  _sw[id] = { x0: t.clientX, dx: 0, open: false };
-}
-function swMove(e, id) {
-  if (!_sw[id]) return;
-  const t = e.touches[0];
-  const dx = t.clientX - _sw[id].x0;
-  if (dx > 0 && !_sw[id].open) return; // ignore rightward swipe unless open
-  const clamp = Math.max(-88, Math.min(0, dx + (_sw[id].open ? -88 : 0)));
-  _sw[id].dx = clamp;
-  const inner = document.querySelector(`#sw-${id} .sw-inner`);
-  if (inner) inner.style.transform = `translateX(${clamp}px)`;
-}
-function swEnd(e, id) {
-  if (!_sw[id]) return;
-  const dx = _sw[id].dx;
-  const wrap = document.getElementById('sw-' + id);
-  const inner = wrap?.querySelector('.sw-inner');
-  if (!inner) return;
-  if (dx < -44) {
-    // open
-    inner.style.transition = 'transform .22s ease';
-    inner.style.transform = 'translateX(-88px)';
-    _sw[id].open = true;
-    // close other open rows
-    Object.keys(_sw).forEach(k => { if (k != id && _sw[k]?.open) { swClose(k); } });
-  } else {
-    swClose(id);
-  }
-  setTimeout(() => { if (inner) inner.style.transition = ''; }, 250);
-}
-function swClose(id) {
-  const inner = document.querySelector(`#sw-${id} .sw-inner`);
-  if (inner) { inner.style.transition = 'transform .22s ease'; inner.style.transform = 'translateX(0)'; setTimeout(()=>inner&&(inner.style.transition=''),250); }
-  if (_sw[id]) _sw[id].open = false;
-}
-
-// ════════════════════════════════════════════════
-//  FOCUS MODE
-// ════════════════════════════════════════════════
-function openFocus() {
-  const body = document.getElementById('wb')?.value || WS.body;
-  const ov = document.createElement('div'); ov.id = 'focus-ov';
-  ov.innerHTML = `
-    <div class="focus-hd">
-      <div class="focus-exit" onclick="closeFocus()">← Back to editor</div>
-      <div class="focus-wc" id="focus-wc">${body.trim()?body.trim().split(/\s+/).length:0} words</div>
-    </div>
-    <textarea class="focus-area" id="focus-ta" placeholder="Write freely…">${body}</textarea>
-    <div class="focus-ft">
-      <button class="focus-save" onclick="closeFocus(true)">Done</button>
-    </div>`;
-  document.body.appendChild(ov);
-  const ta = document.getElementById('focus-ta');
-  ta.focus(); ta.setSelectionRange(ta.value.length, ta.value.length);
-  ta.addEventListener('input', () => {
-    const wc = ta.value.trim() ? ta.value.trim().split(/\s+/).length : 0;
-    const el = document.getElementById('focus-wc'); if(el) el.textContent = wc + ' words';
-  });
-}
-function closeFocus(save) {
-  const ta = document.getElementById('focus-ta');
-  if (save && ta) {
-    const val = ta.value;
-    WS.body = val;
-    const wb = document.getElementById('wb'); if(wb) wb.value = val;
-    const wc = val.trim() ? val.trim().split(/\s+/).length : 0;
-    const wn = document.getElementById('wcn'), wf = document.getElementById('wcf');
-    if(wn) wn.textContent = wc+' words'; if(wf) wf.style.width=Math.min((wc/A.goal)*100,100)+'%';
-    // update stats bar
-    const wsWc=document.getElementById('wsb-wc'), wsRt=document.getElementById('wsb-rt'), wsPct=document.getElementById('wsb-pct');
-    if(wsWc) wsWc.textContent=wc; if(wsRt) wsRt.textContent=Math.ceil(wc/200)||0; if(wsPct) wsPct.textContent=Math.round(Math.min((wc/A.goal)*100,100))+'%';
-  }
-  document.getElementById('focus-ov')?.remove();
-}
-
-// ════════════════════════════════════════════════
-//  KEYBOARD PUSH (visualViewport)
-// ════════════════════════════════════════════════
-function initKbPush() {
-  if (!window.visualViewport) return;
-  const handler = () => {
-    const sp = document.getElementById('kb-sp'); if (!sp) { window.visualViewport.removeEventListener('resize', handler); return; }
-    const gap = window.innerHeight - window.visualViewport.height;
-    sp.style.height = gap > 100 ? gap + 'px' : '0px';
-    if (gap > 100) {
-      // scroll the write area so cursor is visible
-      setTimeout(() => {
-        const wb = document.getElementById('wb');
-        const sc = document.getElementById('wscroll');
-        if (wb && sc) sc.scrollTop = wb.offsetTop + wb.scrollHeight;
-      }, 100);
-    }
-  };
-  window.visualViewport.addEventListener('resize', handler);
-}
-
-// ════════════════════════════════════════════════
-//  SHARE ENTRY
-// ════════════════════════════════════════════════
-function shareEntry(e) {
-  const text = `${e.title}\n\n${e.body}\n\n— ${e.date} · Inkwell`;
-  sheetModal('Share Entry', `<div class="share-grid">
-    <div class="share-opt" onclick="shareNative('${e.id}')"><div class="share-ico">↗</div><div class="share-lbl">Share</div></div>
-    <div class="share-opt" onclick="copyEntry('${e.id}')"><div class="share-ico">⎘</div><div class="share-lbl">Copy text</div></div>
-    <div class="share-opt" onclick="closeMod()"><div class="share-ico">✕</div><div class="share-lbl">Cancel</div></div>
-  </div>`);
-}
-function shareNative(id) {
-  const e = A.entries.find(x=>x.id==id); if(!e) return; closeMod();
-  const text = `${e.title}\n\n${e.body}\n\n— ${e.date}`;
-  if (navigator.share) navigator.share({ title: e.title, text }).catch(()=>{});
-  else { navigator.clipboard.writeText(text).then(()=>toast('Copied!')); }
-}
-function copyEntry(id) {
-  const e = A.entries.find(x=>x.id==id); if(!e) return; closeMod();
-  const text = `${e.title}\n\n${e.body}`;
-  navigator.clipboard?.writeText(text).then(()=>toast('Entry copied!')).catch(()=>toast('Copy failed'));
-}
-
-// ════════════════════════════════════════════════
-//  NOTIFICATION SCHEDULING
-// ════════════════════════════════════════════════
-async function scheduleReminder() {
-  if (!('Notification' in window)) { toast('Notifications not supported'); return; }
-  const perm = await Notification.requestPermission();
-  if (perm === 'granted') {
-    toast('Reminder set for 8:00 PM daily');
-    A.settings.rem = true; DB.set('settings', A.settings);
-    // Schedule via Service Worker if available
-    if ('serviceWorker' in navigator && navigator.serviceWorker.controller) {
-      navigator.serviceWorker.controller.postMessage({ type: 'SCHEDULE_REMINDER' });
-    }
-  } else {
-    toast('Permission denied — enable in phone settings');
-  }
-}
-
-// ════════════════════════════════════════════════
-//  ENHANCED PROGRESS PAGE
-// ════════════════════════════════════════════════
-function rProgress() {
-  const streak = calcStreak();
-  const tw = A.entries.reduce((a,e)=>a+(e.words||0),0);
-  const now = new Date();
-
-  // Real last-7-days bars
-  const bars = Array.from({length:7},(_,i)=>{
-    const d = new Date(); d.setDate(d.getDate()-(6-i)); d.setHours(0,0,0,0);
-    const dayEntries = A.entries.filter(e=>{const ed=new Date(e.ts||0);ed.setHours(0,0,0,0);return ed.getTime()===d.getTime();});
-    const words = dayEntries.reduce((a,e)=>a+(e.words||0),0);
-    const lbl = ['S','M','T','W','T','F','S'][d.getDay()];
-    const isToday = d.toDateString()===now.toDateString();
-    return {lbl, words, on: words>0, today: isToday};
-  });
-  const maxW = Math.max(...bars.map(b=>b.words), 1);
-
-  const calDays = buildMoodCal();
-
-  const ms = [
-    {n:'First Entry',d:'Start your journaling journey',done:A.entries.length>=1},
-    {n:'7-Day Streak',d:'Write every day for a week',done:streak>=7},
-    {n:'10 Entries',d:'Write 10 journal entries',done:A.entries.length>=10},
-    {n:'1,000 Words',d:'Reach 1,000 total words',done:tw>=1000},
-    {n:'30-Day Streak',d:'30 consecutive days',done:streak>=30},
-    {n:'50 Entries',d:'Write 50 journal entries',done:A.entries.length>=50},
-    {n:'10k Words',d:'Write 10,000 total words',done:tw>=10000},
-    {n:'100 Entries',d:'Write 100 journal entries',done:A.entries.length>=100},
-    {n:'90-Day Streak',d:'90 consecutive days',done:streak>=90},
-  ];
-
-  const todayW = A.entries.filter(e=>new Date(e.ts||0).toDateString()===now.toDateString()).reduce((a,e)=>a+(e.words||0),0);
-
-  return `<div class="phero">
-    <div>
-      <div style="font-family:'DM Mono',monospace;font-size:10px;color:var(--f3);letter-spacing:.12em;text-transform:uppercase;margin-bottom:5px">Current Streak</div>
-      <div class="pbig">${streak}</div>
-      <div style="font-size:11.5px;color:var(--f3);margin-top:5px">${streak===0?'Start today':streak===1?'Great start!':streak<7?'Building momentum':'Outstanding!'}</div>
-    </div>
-    <div class="pright">
-      <div class="prl">Entries</div><div class="prv" style="color:var(--gr)">${A.entries.length}</div>
-      <div class="prl" style="margin-top:14px">Words</div>
-      <div class="prv" style="color:var(--bl)">${tw>=1000?(Math.round(tw/100)/10)+'k':tw}</div>
-      <div class="prl" style="margin-top:14px">Today</div>
-      <div class="prv" style="color:var(--Au)">${todayW}</div>
-    </div>
-  </div>
-  <div class="sh" style="padding-top:16px"><span class="sl2">Last 7 Days</span></div>
-  <div class="prog-week-bar">${bars.map(b=>`<div class="pwb">
-    <div class="pwb-fill${b.on?' on':''}" style="height:${b.on?Math.max(10,Math.round((b.words/maxW)*100))+'%':'4px'}" title="${b.words} words"></div>
-    <div class="pwb-lbl" style="${b.today?'color:var(--Au)':''}">${b.lbl}</div>
-  </div>`).join('')}</div>
-  <div class="sh"><span class="sl2">Mood Calendar</span></div>
-  <div class="cal-dow"><span>S</span><span>M</span><span>T</span><span>W</span><span>T</span><span>F</span><span>S</span></div>
-  <div class="mood-cal" style="padding:0 20px">${calDays}</div>
-  <div class="sh" style="padding-top:18px"><span class="sl2">Milestones</span></div>
-  <div class="blk">${ms.map(m=>`<div class="ms"><div class="ms-i" style="${m.done?'background:var(--Aub)':''}">${m.done?'<span style="color:var(--Au)">✦</span>':'<span style="color:var(--f4)">○</span>'}</div><div style="flex:1"><div class="ms-t" style="${!m.done?'color:var(--f2)':''}">${m.n}</div><div class="ms-d">${m.d}</div></div><div class="ms-s${m.done?' done':' lock'}">${m.done?'Earned':'Locked'}</div></div>`).join('')}</div>
-  <div style="height:20px"></div>`;
-}
-
-// ════════════════════════════════════════════════
-//  ENHANCED INSIGHTS
-// ════════════════════════════════════════════════
-function rInsights() {
-  const tot=A.entries.length;
-  if(!tot) return `<div class="empty" style="padding-top:80px">Start journaling to see your insights.<br><br><a onclick="openWrite(null)" style="color:var(--Au);cursor:pointer">✦ Write your first entry →</a></div>`;
-
-  const tw=A.entries.reduce((a,e)=>a+(e.words||0),0);
-  const avgW=Math.round(tw/tot);
-  const nPh=A.entries.reduce((a,e)=>a+(e.photos?.length||0),0);
-  const nRec=A.entries.reduce((a,e)=>a+(e.recordings?.length||0),0);
-  const streak=calcStreak();
-
-  // Mood breakdown
-  const mc={}; A.entries.forEach(e=>{if(e.mood)mc[e.mood]=(mc[e.mood]||0)+1;});
-  const topM=Object.entries(mc).sort((a,b)=>b[1]-a[1])[0]?.[0]||'—';
-  const moodList=Object.entries(mc).sort((a,b)=>b[1]-a[1]).slice(0,5);
-  const moodTotal=Object.values(mc).reduce((a,v)=>a+v,0);
-
-  // Writing time analysis
-  const hourCounts=Array(24).fill(0);
-  A.entries.forEach(e=>{if(e.ts)hourCounts[new Date(e.ts).getHours()]++;});
-  const peakHour=hourCounts.indexOf(Math.max(...hourCounts));
-  const peakLabel=peakHour<12?(peakHour===0?'midnight':''+peakHour+'am'):peakHour===12?'noon':''+(peakHour-12)+'pm';
-
-  // Tag cloud
-  const tagCounts={};
-  A.entries.forEach(e=>(e.tags||[]).forEach(t=>{tagCounts[t]=(tagCounts[t]||0)+1;}));
-  const topTags=Object.entries(tagCounts).sort((a,b)=>b[1]-a[1]).slice(0,8);
-
-  // Journal breakdown
-  const jCounts={};
-  A.entries.forEach(e=>{const j=e.journal||'daily';jCounts[j]=(jCounts[j]||0)+1;});
-
-  return `<div class="i4">
-    <div class="is"><div class="isv">${tot}</div><div class="isl">Total entries</div></div>
-    <div class="is"><div class="isv">${avgW}</div><div class="isl">Avg words</div></div>
-    <div class="is"><div class="isv">${streak}</div><div class="isl">Day streak</div></div>
-    <div class="is"><div class="isv">${topM}</div><div class="isl">Top mood</div></div>
-  </div>
-
-  ${moodList.length?`<div class="sh" style="padding-top:18px"><span class="sl2">Mood Breakdown</span></div>
-  ${moodList.map(([l,v])=>{const mc2=MOODS.find(m=>m.l===l)?.c||'#888';const p=Math.round((v/moodTotal)*100);return `<div class="mbr"><div class="mbn">${l}</div><div class="mbb"><div class="mbf" style="width:${p}%;background:${mc2}"></div></div><div class="mbp">${p}%</div></div>`}).join('')}`:''}
-
-  <div class="sh"><span class="sl2">Writing Patterns</span></div>
-  ${[
-    {i:'⏰',t:'Peak writing time',b:`You write most often at <span class="ic-hl">${peakLabel}</span>. Your entries are richest when written in that window.`},
-    {i:'📊',t:'Consistency',b:`${A.entries.length} total entries. You've written on <span class="ic-hl">${new Set(A.entries.map(e=>new Date(e.ts||0).toDateString())).size} different days</span>.`},
-    {i:'▣',t:'Visual memory',b:`<span class="ic-hl">${nPh} photo${nPh!==1?'s':''}</span> across ${A.entries.filter(e=>e.photos?.length).length} entries. Photos make memories vivid.`},
-    {i:'🎙',t:'Voice notes',b:`<span class="ic-hl">${nRec} recording${nRec!==1?'s':''}</span> saved. Multi-media entries tend to be your most complete.`},
-    {i:'✎',t:'Writing depth',b:`Average entry is <span class="ic-hl">${avgW} words</span> — about ${Math.ceil(avgW/200)} min to read. ${avgW>250?'You write with real depth.':avgW>100?'Good length. Try going deeper.':'Try expanding your entries.'}`},
-  ].map(c=>`<div class="ic"><div class="ic-h"><div class="ic-i">${c.i}</div><div class="ic-t">${c.t}</div></div><div class="ic-b">${c.b}</div></div>`).join('')}
-
-  ${topTags.length?`<div class="sh"><span class="sl2">Your Themes</span></div>
-  <div class="thwrap">${topTags.map(([t,v])=>`<div class="tw${v>=3?' xl':v>=2?' lg':''}" title="${v} entries">${t}</div>`).join('')}</div>`:''}
-
-  ${Object.keys(jCounts).length>1?`<div class="sh"><span class="sl2">By Journal</span></div>
-  <div class="blk">${Object.entries(jCounts).map(([j,v])=>{const jd=JOURNALS.find(x=>x.id===j)||{name:j,c:'#888'};return `<div class="ms"><div class="ms-i" style="background:${jd.c}22"><span style="color:${jd.c};font-size:11px;font-weight:600">${v}</span></div><div style="flex:1"><div class="ms-t">${jd.name}</div></div><div class="ms-s done">${Math.round(v/tot*100)}%</div></div>`}).join('')}</div>`:''}`;
-}
-
-// ════════════════════════════════════════════════
-//  ENHANCED ENTRY DETAIL (with share button)
-// ════════════════════════════════════════════════
-function viewEntry(id) {
-  const e = A.entries.find(x=>x.id===id); if(!e) return;
-  const wc = e.words||0;
-  const p = document.createElement('div'); p.id='edet'; p.className='panel su';
-  p.innerHTML = `
-    <div class="ph">
-      <div class="ph-lft">
-        <div class="back-btn" onclick="document.getElementById('edet')?.remove()">
-          <svg width="16" height="16" viewBox="0 0 24 24" fill="none" stroke="var(--Au)" stroke-width="1.8" stroke-linecap="round"><path d="M19 12H5M12 19l-7-7 7-7"/></svg> Back
-        </div>
-      </div>
-      <div class="ph-rgt">
-        <button class="btn btn-g" onclick="shareEntry(A.entries.find(x=>x.id===${e.id}))">Share</button>
-        <button class="btn btn-g" onclick="openWrite(${e.id});document.getElementById('edet')?.remove()">Edit</button>
-        <button class="btn btn-d" onclick="delEntry(${e.id})">Delete</button>
-      </div>
-    </div>
-    <div class="pscroll">
-      <div class="ed-title">${e.title||'Untitled'}</div>
-      <div class="echips">
-        ${e.mood?`<div class="ech"><div class="ecd" style="background:${e.mc}"></div>${e.mood}</div>`:''}
-        ${e.loc?`<div class="ech">📍 ${e.loc}</div>`:''}
-        ${e.wx?`<div class="ech">🌤 ${e.wx}</div>`:''}
-        ${(e.tags||[]).map(t=>`<div class="ech">${t}</div>`).join('')}
-        <div class="ech">${wc} words · ${Math.ceil(wc/200)||1} min read</div>
-        <div class="ech">${e.date}</div>
-      </div>
-      <div style="height:1px;background:var(--ln);margin:0 20px 16px"></div>
-      ${(e.body||'').split('\n\n').map(par=>`<p class="ed-para">${par.replace(/\n/g,'<br>')}</p>`).join('')}
-      ${e.photos?.length?`<div class="ed-sec">Photos</div><div class="ed-photos">${e.photos.map(s=>`<div class="ed-photo" onclick="showPhoto('${s}')"><img src="${s}" loading="lazy"></div>`).join('')}</div>`:''}
-      ${e.recordings?.length?`<div class="ed-sec">Voice Notes</div><div class="audio-cards">${e.recordings.map((r,i)=>`<div class="acard"><div class="aplay" onclick="playAudio('${r.data}',this)"><div class="aplay-ic"></div></div><div style="flex:1"><div class="a-lbl">Voice note ${i+1}</div><div class="a-dur">${fmtD(r.dur||0)}</div></div></div>`).join('')}</div>`:''}
-      <div style="height:30px"></div>
-    </div>`;
-  document.getElementById('screen').appendChild(p);
 }
 
 // ════════════════════════════════════════════════
