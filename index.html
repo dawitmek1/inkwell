@@ -67,6 +67,7 @@ textarea{resize:none;}
 #tb{
   display:flex;align-items:center;gap:8px;
   /* Push below status bar / notch / Dynamic Island */
+  padding:max(env(safe-area-inset-top),44px) 18px 10px;
   background:var(--bg);
   border-bottom:1px solid transparent;
   flex-shrink:0;z-index:60;
@@ -105,6 +106,7 @@ textarea{resize:none;}
   /* This is the critical part:
      env() = real home indicator height (34px on iPhone, 0 on Android/browser)
      No fallback value = true zero on devices without home indicator */
+  padding-bottom:env(safe-area-inset-bottom,0px);
   background:var(--nb);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-top:1px solid var(--ln);
