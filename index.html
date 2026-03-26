@@ -106,7 +106,6 @@ textarea{resize:none;}
   /* This is the critical part:
      env() = real home indicator height (34px on iPhone, 0 on Android/browser)
      No fallback value = true zero on devices without home indicator */
-  padding-bottom:env(safe-area-inset-bottom,0px);
   background:var(--nb);
   backdrop-filter:blur(24px);-webkit-backdrop-filter:blur(24px);
   border-top:1px solid var(--ln);
